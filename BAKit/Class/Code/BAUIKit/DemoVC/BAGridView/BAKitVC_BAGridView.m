@@ -35,6 +35,8 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
 @property(nonatomic, strong) NSMutableArray  <BAGridItemModel *> *gridDataArray;
 @property(nonatomic, strong) NSMutableArray  <BAGridItemModel *> *gridDataArray2;
 
+@property(nonatomic, assign) BOOL isSelectCell;
+@property(nonatomic, strong) BAGridView_Config *ba_GridViewConfig;
 
 @end
 
@@ -71,7 +73,7 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
 {
     self.title = @"BAGridView";
     self.view.backgroundColor = BAKit_Color_White;
-    
+    self.isSelectCell = NO;
 }
 
 - (void)test
@@ -105,36 +107,72 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    self.gridView = nil;
+    self.gridDataArray = nil;
+    
     switch (indexPath.row) {
         case 0:
         {
-            self.gridView.hidden = NO;
+            self.isSelectCell = !self.isSelectCell;
+            if (self.isSelectCell)
+            {
+                self.ba_GridViewConfig.gridViewType = BAGridViewTypeTitleImage;
+                cell.textLabel.text = @"1、图上文下(点击更换样式)";
+            }
+            else
+            {
+                self.ba_GridViewConfig.gridViewType = BAGridViewTypeImageTitle;
+                cell.textLabel.text = @"1、文上图下(点击更换样式)";
+            }
             
+            self.tableView.tableFooterView = [UIView new];
             UIView *footView = [self.view viewWithTag:100];
             
             if (!footView)
             {
                 footView = [UIView new];
                 footView.backgroundColor = [UIColor redColor];
-                footView.frame = CGRectMake(0, 0, BAKit_SCREEN_WIDTH, kGridView_H);
+                footView.frame = CGRectMake(0, 20, BAKit_SCREEN_WIDTH, kGridView_H2);
                 footView.tag = 100;
                 self.gridView.frame = footView.bounds;
                 [footView addSubview:self.gridView];
             }
-            
             self.tableView.tableFooterView = footView;
         }
             break;
         case 1:
         {
+            self.ba_GridViewConfig.gridViewType = BAGridViewTypeBgImageTitle;
+            self.tableView.tableFooterView = [UIView new];
+            
             UIView *footView = [self.view viewWithTag:101];
             
             if (!footView)
             {
                 footView = [UIView new];
                 footView.backgroundColor = [UIColor redColor];
-                footView.frame = CGRectMake(0, 0, BAKit_SCREEN_WIDTH, kGridView_H2);
+                footView.frame = CGRectMake(0, 20, BAKit_SCREEN_WIDTH, kGridView_H2);
                 footView.tag = 101;
+                self.gridView.frame = footView.bounds;
+                [footView addSubview:self.gridView];
+            }
+            self.tableView.tableFooterView = footView;
+        }
+            break;
+        case 2:
+        {
+            self.ba_GridViewConfig.gridViewType = BAGridViewTypeTitleDesc;
+            self.tableView.tableFooterView = [UIView new];
+            
+            UIView *footView = [self.view viewWithTag:102];
+            
+            if (!footView)
+            {
+                footView = [UIView new];
+                footView.backgroundColor = [UIColor redColor];
+                footView.frame = CGRectMake(0, 20, BAKit_SCREEN_WIDTH, kGridView_H2);
+                footView.tag = 102;
                 self.gridView2.frame = footView.bounds;
                 [footView addSubview:self.gridView2];
             }
@@ -142,6 +180,7 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
             self.tableView.tableFooterView = footView;
         }
             break;
+            
             
         default:
             break;
@@ -158,8 +197,6 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     return FLT_MIN;
 }
 
-
-
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
@@ -174,13 +211,14 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     if (!_tableView)
     {
         _tableView = [[UITableView alloc] init];
-        self.tableView.backgroundColor = BAKit_Color_Gray_11;
+        self.tableView.backgroundColor = BAKit_Color_Gray_10_pod;
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         
         self.tableView.estimatedRowHeight = 44;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         
+        self.tableView.tableFooterView = [UIView new];
         [self.view addSubview:self.tableView];
     }
     return _tableView;
@@ -190,39 +228,50 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
 {
     if (!_dataArray)
     {
-        _dataArray = @[@"图上文下", @"两行文字"];
+        _dataArray = @[@"图上文下 / 文上图下(点击更换样式)", @"带背景图片，中间是文字", @"两行文字"];
     }
     return _dataArray;
+}
+
+- (BAGridView_Config *)ba_GridViewConfig {
+    if (!_ba_GridViewConfig) {
+        _ba_GridViewConfig = [[BAGridView_Config alloc] init];
+    }
+    return _ba_GridViewConfig;
 }
 
 - (BAGridView *)gridView
 {
     if (!_gridView)
     {
-        _gridView = [BAGridView ba_creatGridViewWithGridViewType:BAGridViewTypeImageTitle dataArray:self.gridDataArray configurationBlock:^(BAGridView *tempView) {
-            
-            // 是否显示分割线
-            //            tempView.showLineView = NO;
-            // item：分割线颜色，默认：BAKit_Color_Gray_11【BAKit_Color_RGB(248, 248, 248)】
-            //            tempView.ba_gridView_lineColor = BAKit_Color_Red;
-            // item：每行 item 的个数，默认为4个
-            tempView.ba_gridView_rowCount = kGridView_rowCount;
-            // item：高度
-            tempView.ba_gridView_itemHeight = kGridView_itemHeight;
-            // item：图片与文字间距（或者两行文字类型的间距），默认：0
-            //            tempView.ba_gridView_itemImageInset = 10;
-            //  item：title 颜色，默认：BAKit_Color_Black【[UIColor blackColor]】
-            //            tempView.ba_gridView_titleColor = BAKit_Color_Black;
-            // item：title Font，默认：图文样式下 16，两行文字下（上25，下12）
-            tempView.ba_gridView_titleFont = [UIFont boldSystemFontOfSize:15];
-            // item：背景颜色，默认：BAKit_Color_White
-            tempView.ba_gridView_backgroundColor = BAKit_Color_White;
-            // item：背景选中颜色，默认：无色
-            tempView.ba_gridView_selectedBackgroundColor = BAKit_Color_Red;
-            
-            self.gridView = tempView;
-            
-        } block:^(BAGridItemModel *model, NSIndexPath *indexPath) {
+        self.ba_GridViewConfig.scrollEnabled = YES;
+        // 是否显示分割线
+        self.ba_GridViewConfig.showLineView = YES;
+        // item：分割线颜色，默认：BAKit_Color_Gray_11【BAKit_Color_RGB(248, 248, 248)】
+        self.ba_GridViewConfig.ba_gridView_lineColor = BAKit_Color_Red_pod;
+        // item：每行 item 的个数，默认为4个
+        self.ba_GridViewConfig.ba_gridView_rowCount = kGridView_rowCount;
+        // item：高度/宽度
+        self.ba_GridViewConfig.ba_gridView_itemHeight = kGridView_itemHeight;
+        //        self.ba_GridViewConfig.ba_gridView_itemWidth = kGridView_itemWidth;
+        
+        // item：图片与文字间距（或者两行文字类型的间距），默认：0
+        self.ba_GridViewConfig.ba_gridView_itemImageInset = 5;
+        //  item：title 颜色，默认：BAKit_Color_Black【[UIColor blackColor]】
+        //            self.ba_GridViewConfig.ba_gridView_titleColor = BAKit_Color_Black;
+        // item：title Font，默认：图文样式下 16，两行文字下（上25，下12）
+        self.ba_GridViewConfig.ba_gridView_titleFont = [UIFont boldSystemFontOfSize:15];
+        // item：背景颜色，默认：BAKit_Color_White
+        self.ba_GridViewConfig.ba_gridView_backgroundColor = [UIColor yellowColor];
+        // item：背景选中颜色，默认：无色
+        self.ba_GridViewConfig.ba_gridView_selectedBackgroundColor = BAKit_Color_Red_pod;
+        self.ba_GridViewConfig.dataArray = self.gridDataArray;
+        //        self.ba_GridViewConfig.ba_gridView_itemEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        //        self.ba_GridViewConfig.minimumLineSpacing = 10;
+        //        self.ba_GridViewConfig.minimumInteritemSpacing = 10;
+        
+        
+        _gridView = [BAGridView ba_creatGridViewWithGridViewConfig:self.ba_GridViewConfig block:^(BAGridItemModel *model, NSIndexPath *indexPath) {
             
             BAKit_ShowAlertWithMsg_ios8(model.titleString);
         }];
@@ -234,34 +283,35 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
 {
     if (!_gridView2)
     {
-        _gridView2 = [BAGridView ba_creatGridViewWithGridViewType:BAGridViewTypeTitleDesc dataArray:self.gridDataArray2 configurationBlock:^(BAGridView *tempView) {
+        self.ba_GridViewConfig.showLineView = YES;
+        
+        // item：分割线颜色，默认：BAKit_Color_Gray_11【BAKit_Color_RGB(248, 248, 248)】
+        self.ba_GridViewConfig.ba_gridView_lineColor = BAKit_Color_Red_pod;
+        // item：每行 item 的个数，默认为4个
+        self.ba_GridViewConfig.ba_gridView_rowCount = kGridView_rowCount2;
+        // item：高度
+        self.ba_GridViewConfig.ba_gridView_itemHeight = kGridView_itemHeight2;
+        self.ba_GridViewConfig.ba_gridView_itemWidth = 0;
+        
+        // item：图片与文字间距（或者两行文字类型的间距），默认：0
+        //            self.ba_GridViewConfig.ba_gridView_itemImageInset = 10;
+        //  item：title 颜色，默认：BAKit_Color_Black【[UIColor blackColor]】
+        self.ba_GridViewConfig.ba_gridView_titleColor = BAKit_Color_Black_pod;
+        //  item：Desc 颜色，默认：BAKit_Color_Gray_9【BAKit_Color_RGB(216, 220, 228)】
+        self.ba_GridViewConfig.ba_gridView_titleDescColor = BAKit_Color_Gray_7_pod;
+        // item：title Font，默认：图文样式下 16，两行文字下（上25，下12）
+        self.ba_GridViewConfig.ba_gridView_titleFont = [UIFont boldSystemFontOfSize:25];
+        // item：Desc Font，默认：两行文字下 12
+        self.ba_GridViewConfig.ba_gridView_titleDescFont = [UIFont boldSystemFontOfSize:15];
+        // item：背景颜色，默认：BAKit_Color_White
+        self.ba_GridViewConfig.ba_gridView_backgroundColor = [UIColor yellowColor];
+        // item：背景选中颜色，默认：无色
+        self.ba_GridViewConfig.ba_gridView_selectedBackgroundColor = [UIColor greenColor];
+        self.ba_GridViewConfig.dataArray = self.gridDataArray2;
+        
+        _gridView2 = [BAGridView ba_creatGridViewWithGridViewConfig:self.ba_GridViewConfig block:^(BAGridItemModel *model, NSIndexPath *indexPath) {
             
-            // item：分割线颜色，默认：BAKit_Color_Gray_11【BAKit_Color_RGB(248, 248, 248)】
-            tempView.ba_gridView_lineColor = BAKit_Color_Red;
-            // item：每行 item 的个数，默认为4个
-            tempView.ba_gridView_rowCount = kGridView_rowCount2;
-            // item：高度
-            tempView.ba_gridView_itemHeight = kGridView_itemHeight2;
-            // item：图片与文字间距（或者两行文字类型的间距），默认：0
-            //            tempView.ba_gridView_itemImageInset = 10;
-            //  item：title 颜色，默认：BAKit_Color_Black【[UIColor blackColor]】
-            tempView.ba_gridView_titleColor = BAKit_Color_Black;
-            //  item：Desc 颜色，默认：BAKit_Color_Gray_9【BAKit_Color_RGB(216, 220, 228)】
-            tempView.ba_gridView_titleDescColor = BAKit_Color_Gray_7;
-            // item：title Font，默认：图文样式下 16，两行文字下（上25，下12）
-            tempView.ba_gridView_titleFont = [UIFont boldSystemFontOfSize:25];
-            // item：Desc Font，默认：两行文字下 12
-            tempView.ba_gridView_titleDescFont = [UIFont boldSystemFontOfSize:15];
-            // item：背景颜色，默认：BAKit_Color_White
-            //            tempView.ba_gridView_backgroundColor = [UIColor yellowColor];
-            //            // item：背景选中颜色，默认：无色
-            //            tempView.ba_gridView_selectedBackgroundColor = [UIColor greenColor];
-            
-            self.gridView2 = tempView;
-            
-        } block:^(BAGridItemModel *model, NSIndexPath *indexPath) {
-            
-            //            BAKit_ShowAlertWithMsg_ios8(model.titleString);
+            BAKit_ShowAlertWithMsg_ios8(model.titleString);
         }];
     }
     return _gridView2;
@@ -273,13 +323,55 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     {
         _gridDataArray = @[].mutableCopy;
         
-        NSArray *imageNameArray = @[@"tabbar_mainframeHL", @"tabbar_mainframeHL", @"tabbar_mainframeHL", @"tabbar_mainframeHL", @"tabbar_mainframeHL"];
-        NSArray *titleArray = @[@"扫一扫", @"付钱", @"卡包", @"收银", @"卡包"];
+        // 可以为本地图片
+        //        NSArray *imageNameArray = @[@"tabbar_mainframeHL", @"tabbar_mainframeHL", @"tabbar_mainframeHL", @"tabbar_mainframeHL", @"tabbar_mainframeHL"];
+        // 也可以是网络图片
+        
+        NSArray *imageNameArray;
+        NSArray *bgImageNameArray;
+        
+        if (self.ba_GridViewConfig.gridViewType == BAGridViewTypeBgImageTitle)
+        {
+            bgImageNameArray = @[@"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
+                                 @"http://d.hiphotos.baidu.com/image/pic/item/b21c8701a18b87d67cda2ef50d0828381e30fd44.jpg",
+                                 @"http://fc.topitme.com/c/08/e1/11235427029dbe108cm.jpg",
+                                 @"http://120.24.177.96:1525/images/20170706/91c9e2ba-9493-4009-8f3d-e613350b7c17.png",
+                                 @"http://120.24.177.96:1525/images/20170706/d36ab2cb-36e3-4492-89c8-5712848dadb8.png"];
+        }
+        else
+        {
+            imageNameArray = @[@"http://120.24.177.96:1525/images/20170706/b2acbae9-020c-4eaa-87b4-f7286ae69ba1.png",
+                               @"http://120.24.177.96:1525/images/20170706/ae3a4188-f01a-442e-aaf0-94739e30b698.png",
+                               @"http://120.24.177.96:1525/images/20170706/d4c88154-eaed-441a-8c8a-89d9a6d4755e.png",
+                               @"http://120.24.177.96:1525/images/20170706/91c9e2ba-9493-4009-8f3d-e613350b7c17.png",
+                               @"http://120.24.177.96:1525/images/20170706/d36ab2cb-36e3-4492-89c8-5712848dadb8.png"];
+        }
+        
+        if (self.ba_GridViewConfig.gridViewType == BAGridViewTypeImageTitle || self.ba_GridViewConfig.gridViewType == BAGridViewTypeTitleImage)
+        {
+            bgImageNameArray = @[
+                                 @"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
+                                 @"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
+                                 @"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
+                                 @"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
+                                 @"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
+                                 ];
+        }
+        
+        NSArray *titleArray = @[@"小区tabbar_main", @"商圈", @"社交57128423", @"出行", @"武术"];
         
         for (NSInteger i = 0; i < titleArray.count; i++)
         {
             BAGridItemModel *model = [BAGridItemModel new];
-            model.imageName = imageNameArray[i];
+            if (imageNameArray.count > 0)
+            {
+                model.imageName = imageNameArray[i];
+            }
+            if (bgImageNameArray.count > 0)
+            {
+                model.bgImageName = bgImageNameArray[i];
+            }
+            model.placdholderImageName = @"tabbar_mainframeHL";
             model.titleString = titleArray[i];
             
             [self.gridDataArray addObject:model];
@@ -308,6 +400,5 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     }
     return _gridDataArray2;
 }
-
 
 @end

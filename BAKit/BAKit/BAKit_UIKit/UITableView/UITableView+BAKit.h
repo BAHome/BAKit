@@ -25,7 +25,7 @@
 
 /**
  UITableView：分割线：color、separatorInset
-
+ 
  @param tableView tableView description
  @param color color description
  @param separatorInset separatorInset description
@@ -39,7 +39,7 @@ BAKit_UITableViewSetSeparator(UITableView *tableView, UIColor *color, UIEdgeInse
 
 /**
  UITableView：背景图片
-
+ 
  @param tableView tableView description
  @param image 背景图片
  */
@@ -51,7 +51,7 @@ BAKit_UITableViewSetBackgroundImage(UITableView *tableView, UIImage *image)
 
 /**
  UITableView：默认纯文字自适应高度
-
+ 
  @param tableView tableView description
  @param estimatedRowHeight 估计行高
  */
@@ -76,6 +76,28 @@ BAKit_UITableViewAdaptatIOS11(UITableView *tableView)
         tableView.estimatedRowHeight = 0.f;
         tableView.estimatedSectionHeaderHeight = 0.f;
         tableView.estimatedSectionFooterHeight = 0.f;
+        tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+    }
+}
+
+/**
+ UITableView：注册 cell
+ 
+ @param tableView tableView description
+ @param isNib isNib description
+ @param cellClass cellClass description
+ @param reuseIdentifier reuseIdentifier description
+ */
+CG_INLINE void
+BAKit_UITableViewRegisterCell(UITableView *tableView, BOOL isNib, Class cellClass, NSString *reuseIdentifier)
+{
+    if (isNib)
+    {
+        [tableView registerNib:[UINib nibWithNibName:NSStringFromClass(cellClass) bundle:nil] forCellReuseIdentifier:reuseIdentifier];
+    }
+    else
+    {
+        [tableView registerClass:cellClass forCellReuseIdentifier:reuseIdentifier];
     }
 }
 

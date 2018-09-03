@@ -49,6 +49,8 @@
 
     
     self.tableView.backgroundColor = BAKit_Color_Clear;
+    self.tableView.sectionImage = BAKit_ImageName(@"table_section");
+    
     self.dataArray = [self.mutableDataArray mutableCopy];
     
     BAKit_WeakSelf
@@ -71,11 +73,13 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     };
+    
 }
 
 - (void)ba_creatData
 {
     
+    [self ba_addCellWithTitle:@"UIWindow" className:@"BAKitVC_UIWindow"];
     [self ba_addCellWithTitle:@"UIImageView" className:@"BAKitVC_UIImageView"];
     [self ba_addCellWithTitle:@"TestVC1" className:@"TestVC1"];
     [self ba_addCellWithTitle:@"BABadgeValueView" className:@"BAKitVC_BadgeValueView"];

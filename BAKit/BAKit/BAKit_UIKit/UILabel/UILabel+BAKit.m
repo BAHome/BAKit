@@ -13,7 +13,7 @@
 
 /**
  UILabel：设置 文字的 间距
-
+ 
  @param columnSpace 间距
  */
 - (void)ba_labelSetColumnSpace:(CGFloat)columnSpace
@@ -42,7 +42,30 @@
     self.attributedText = attributedString;
 }
 
-
+/**
+ UILabel：快速创建一个 label，frame、text、font、textColor
+ 
+ @param frame frame description
+ @param text text description
+ @param textFont textFont description
+ @param textColor textColor description
+ @param textAlignment textAlignment description
+ @return label
+ */
++ (UILabel *)ba_labelWithFrame:(CGRect)frame
+                          text:(NSString *)text
+                      textFont:(UIFont *)textFont
+                     textColor:(UIColor *)textColor
+                 textAlignment:(NSTextAlignment)textAlignment
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.text = text;
+    label.font = textFont;
+    label.textColor = textColor;
+    label.textAlignment = textAlignment;
+    
+    return label;
+}
 
 
 @end

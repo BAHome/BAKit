@@ -61,7 +61,11 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+typedef void (^BAKit_textFieldDidEndEditingBlock)(UITextField *textField);
+
 @interface UITextField (BAKit)<UITextViewDelegate>
+
+@property(nonatomic, copy) BAKit_textFieldDidEndEditingBlock textFieldDidEndEditingBlock;
 
 /**
  UITextField：placeholder：文字颜色，默认：黑色

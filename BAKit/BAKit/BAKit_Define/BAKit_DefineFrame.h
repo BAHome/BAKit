@@ -67,6 +67,9 @@
 #define BAKit_ScaleXAndWidth    BAKit_SCREEN_WIDTH/BAKit_BaseScreenWidth
 #define BAKit_ScaleYAndHeight   BAKit_SCREEN_HEIGHT/BAKit_BaseScreenHeight
 
+#define BAKit_FrameScaleXAndWidth(x)    BAKit_ScaleXAndWidth * x
+#define BAKit_FrameScaleYAndHeight(y)   BAKit_ScaleYAndHeight * y
+
 /**
  *  Status bar height.
  */

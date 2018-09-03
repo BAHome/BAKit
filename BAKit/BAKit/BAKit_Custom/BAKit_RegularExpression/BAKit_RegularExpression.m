@@ -156,7 +156,7 @@
     return [regextestcm evaluateWithObject:phoneNum];
 }
 
- #pragma mark - ***** 判断具体是哪个运营商的手机号
+#pragma mark - ***** 判断具体是哪个运营商的手机号
 + (NSString *)ba_getPhoneNumType:(NSString *)phoneNum
 {
     return [BAKit_RegularExpression ba_regularIsChinaMobile:phoneNum]? @"中国移动": ([BAKit_RegularExpression ba_regularIsChinaUnicom:phoneNum]? @"中国联通":([BAKit_RegularExpression ba_regularIsChinaTelecom:phoneNum]? @"中国电信": @"未知号码"));
@@ -174,68 +174,146 @@
 #pragma mark - ***** 检测用户输入密码是否以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
 + (BOOL)ba_regularIsPasswordQualified:(NSString *)passwordStr
 {
-//    NSString *pattern = @"^[a-zA-Z]\\w.{5,17}$";
-//    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
-//    NSArray *results = [regex matchesInString:passwordStr options:0 range:NSMakeRange(0, passwordStr.length)];
-//    return results.count > 0;
+    //    NSString *pattern = @"^[a-zA-Z]\\w.{5,17}$";
+    //    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
+    //    NSArray *results = [regex matchesInString:passwordStr options:0 range:NSMakeRange(0, passwordStr.length)];
+    //    return results.count > 0;
     
     NSString *passWordRegex = @"^[a-zA-Z]\\w.{5,17}$";
     NSPredicate *passWordPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",passWordRegex];
     return [passWordPredicate evaluateWithObject:passwordStr];
     
-//    BOOL result = false;
-//    if ([passwordStr length] >= 6 && ([passwordStr length] <= 16))
-//    {
-//        /*! 判断长度大于6位后，再接着判断是否同时包含数字和字符 */
-//        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
-//        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-//        result = [pred evaluateWithObject:passwordStr];
-//    }
-//    return result;
+    //    BOOL result = false;
+    //    if ([passwordStr length] >= 6 && ([passwordStr length] <= 16))
+    //    {
+    //        /*! 判断长度大于6位后，再接着判断是否同时包含数字和字符 */
+    //        NSString * regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
+    //        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    //        result = [pred evaluateWithObject:passwordStr];
+    //    }
+    //    return result;
 }
 
 #pragma mark - ***** 验证身份证号（15位或18位数字）【最全的身份证校验，带校验位】
 + (BOOL)ba_regularIsIdCardNumberQualified:(NSString *)idCardNumberStr
 {
     idCardNumberStr = [idCardNumberStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if ([idCardNumberStr length] != 18) {
+    NSInteger length = 0;
+    if (!idCardNumberStr)
+    {
         return NO;
     }
-    NSString *mmdd = @"(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8])))";
-    NSString *leapMmdd = @"0229";
-    NSString *year = @"(19|20)[0-9]{2}";
-    NSString *leapYear = @"(19|20)(0[48]|[2468][048]|[13579][26])";
-    NSString *yearMmdd = [NSString stringWithFormat:@"%@%@", year, mmdd];
-    NSString *leapyearMmdd = [NSString stringWithFormat:@"%@%@", leapYear, leapMmdd];
-    NSString *yyyyMmdd = [NSString stringWithFormat:@"((%@)|(%@)|(%@))", yearMmdd, leapyearMmdd, @"20000229"];
-    NSString *area = @"(1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|82|[7-9]1)[0-9]{4}";
-    NSString *regex = [NSString stringWithFormat:@"%@%@%@", area, yyyyMmdd  , @"[0-9]{3}[0-9Xx]"];
+    else
+    {
+        length = idCardNumberStr.length;
+        if (length != 15 && length !=18)
+        {
+            return NO;
+        }
+    }
+    /*! 省份代码 */
+    NSArray *areasArray =@[@"11", @"12", @"13", @"14", @"15", @"21", @"22", @"23", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"41", @"42", @"43", @"44", @"45", @"46", @"50", @"51", @"52", @"53", @"54", @"61", @"62", @"63", @"64", @"65", @"71", @"81", @"82", @"91"];
     
-    NSPredicate *regexTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    if (![regexTest evaluateWithObject:idCardNumberStr]) {
+    NSString *valueStart2 = [idCardNumberStr substringToIndex:2];
+    BOOL areaFlag = NO;
+    for (NSString *areaCode in areasArray)
+    {
+        if ([areaCode isEqualToString:valueStart2])
+        {
+            areaFlag =YES;
+            break;
+        }
+    }
+    if (!areaFlag)
+    {
         return NO;
     }
-    int summary = ([idCardNumberStr substringWithRange:NSMakeRange(0,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(10,1)].intValue) *7
-    + ([idCardNumberStr substringWithRange:NSMakeRange(1,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(11,1)].intValue) *9
-    + ([idCardNumberStr substringWithRange:NSMakeRange(2,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(12,1)].intValue) *10
-    + ([idCardNumberStr substringWithRange:NSMakeRange(3,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(13,1)].intValue) *5
-    + ([idCardNumberStr substringWithRange:NSMakeRange(4,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(14,1)].intValue) *8
-    + ([idCardNumberStr substringWithRange:NSMakeRange(5,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(15,1)].intValue) *4
-    + ([idCardNumberStr substringWithRange:NSMakeRange(6,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(16,1)].intValue) *2
-    + [idCardNumberStr substringWithRange:NSMakeRange(7,1)].intValue *1 + [idCardNumberStr substringWithRange:NSMakeRange(8,1)].intValue *6
-    + [idCardNumberStr substringWithRange:NSMakeRange(9,1)].intValue *3;
-    NSInteger remainder = summary % 11;
-    NSString *checkBit = @"";
-    NSString *checkString = @"10X98765432";
-    checkBit = [checkString substringWithRange:NSMakeRange(remainder,1)];// 判断校验位
-    return [checkBit isEqualToString:[[idCardNumberStr substringWithRange:NSMakeRange(17,1)] uppercaseString]];
     
-//    if (idCardNumberStr.length <= 0) {
-//        return NO;
-//    }
-//    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[xX])$";
-//    NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
-//    return [identityCardPredicate evaluateWithObject:idCardNumberStr];
+    NSRegularExpression *regularExpression;
+    NSUInteger numberofMatch;
+    
+    NSInteger year = 0;
+    switch (length)
+    {
+        case 15:
+            year = [idCardNumberStr substringWithRange:NSMakeRange(6,2)].intValue +1900;
+            
+            if (year % 4 ==0 || (year % 100 ==0 && year % 4 ==0))
+            {
+                /*! 测试出生日期的合法性 */
+                regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}$"
+                                                                         options:NSRegularExpressionCaseInsensitive
+                                                                           error:nil];
+            }
+            else
+            {
+                /*! 测试出生日期的合法性 */
+                regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}$"
+                                                                         options:NSRegularExpressionCaseInsensitive
+                                                                           error:nil];
+            }
+            numberofMatch = [regularExpression numberOfMatchesInString:idCardNumberStr
+                                                               options:NSMatchingReportProgress
+                                                                 range:NSMakeRange(0, idCardNumberStr.length)];
+            
+            if(numberofMatch > 0)
+            {
+                return YES;
+            }
+            else
+            {
+                return NO;
+            }
+            break;
+        case 18:
+            
+            year = [idCardNumberStr substringWithRange:NSMakeRange(6,4)].intValue;
+            if (year % 4 ==0 || (year % 100 ==0 && year % 4 ==0))
+            {
+                /*! 测试出生日期的合法性 */
+                regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}[0-9Xx]$"
+                                                                         options:NSRegularExpressionCaseInsensitive
+                                                                           error:nil];
+            }
+            else
+            {
+                /*! 测试出生日期的合法性 */
+                regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}[0-9Xx]$"
+                                                                         options:NSRegularExpressionCaseInsensitive
+                                                                           error:nil];
+            }
+            numberofMatch = [regularExpression numberOfMatchesInString:idCardNumberStr
+                                                               options:NSMatchingReportProgress
+                                                                 range:NSMakeRange(0, idCardNumberStr.length)];
+            
+            if(numberofMatch > 0)
+            {
+                NSInteger S = ([idCardNumberStr substringWithRange:NSMakeRange(0,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(10,1)].intValue) *7 + ([idCardNumberStr substringWithRange:NSMakeRange(1,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(11,1)].intValue) *9 + ([idCardNumberStr substringWithRange:NSMakeRange(2,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(12,1)].intValue) *10 + ([idCardNumberStr substringWithRange:NSMakeRange(3,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(13,1)].intValue) *5 + ([idCardNumberStr substringWithRange:NSMakeRange(4,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(14,1)].intValue) *8 + ([idCardNumberStr substringWithRange:NSMakeRange(5,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(15,1)].intValue) *4 + ([idCardNumberStr substringWithRange:NSMakeRange(6,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(16,1)].intValue) *2 + [idCardNumberStr substringWithRange:NSMakeRange(7,1)].intValue *1 + [idCardNumberStr substringWithRange:NSMakeRange(8,1)].intValue *6 + [idCardNumberStr substringWithRange:NSMakeRange(9,1)].intValue *3;
+                NSInteger Y = S % 11;
+                NSString *M = @"F";
+                NSString *JYM = @"10X98765432";
+                /*! 判断校验位 */
+                M = [JYM substringWithRange:NSMakeRange(Y,1)];
+                if ([M isEqualToString:[idCardNumberStr substringWithRange:NSMakeRange(17,1)]])
+                {
+                    /*! 检测ID的校验位 */
+                    return YES;
+                }
+                else
+                {
+                    return NO;
+                }
+                
+            }
+            else
+            {
+                return NO;
+            }
+            break;
+        default:
+            return NO;
+            break;
+    }
 }
 
 #pragma mark - ***** 验证IP地址（15位或18位数字）
@@ -256,6 +334,22 @@
     return results.count > 0;
 }
 
+#pragma mark - 验证输入的是否全为 int 类型数字
++ (BOOL)ba_regularIsPureInt:(NSString*)string
+{
+    NSScanner *scan = [NSScanner scannerWithString:string];
+    int val;
+    return[scan scanInt:&val] && [scan isAtEnd];
+}
+
+#pragma mark - 验证输入的是否全为 float 类型数字
++ (BOOL)ba_regularIsPureFloat:(NSString*)string
+{
+    NSScanner *scan = [NSScanner scannerWithString:string];
+    float val;
+    return[scan scanFloat:&val] && [scan isAtEnd];
+}
+
 #pragma mark - ***** 验证由26个英文字母组成的字符串
 + (BOOL)ba_regularIsEnglishAlphabet:(NSString *)englishAlphabetStr
 {
@@ -268,9 +362,9 @@
 #pragma mark - ***** 验证输入的是否是URL地址
 + (BOOL)ba_regularIsUrl:(NSString *)urlStr
 {
-//    NSString* verifyRules=@"^http://([\\w-]+\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
-//    NSPredicate *verifyRulesPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",verifyRules];
-//    return [verifyRulesPre evaluateWithObject:urlStr];
+    //    NSString* verifyRules=@"^http://([\\w-]+\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
+    //    NSPredicate *verifyRulesPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",verifyRules];
+    //    return [verifyRulesPre evaluateWithObject:urlStr];
     
     NSString *pattern = @"\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s]|/)))";
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
@@ -338,7 +432,7 @@
 {
     NSString *postalRegex = @"^[0-8]\\d{5}(?!\\d)$";
     NSPredicate *postalcodePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",postalRegex];
-
+    
     return [postalcodePredicate evaluateWithObject:postalcode];
 }
 

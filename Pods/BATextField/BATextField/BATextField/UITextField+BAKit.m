@@ -108,6 +108,14 @@
 }
 
 #pragma mark - UITextField delegate
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (self.textFieldDidEndEditingBlock)
+    {
+        self.textFieldDidEndEditingBlock(textField);
+    }
+}
+
 // textField.text 输入之前的值 string 输入的字符
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -269,6 +277,14 @@
     return [BAKit_Objc_getObj boolValue];
 }
 
+- (void)setTextFieldDidEndEditingBlock:(BAKit_textFieldDidEndEditingBlock)textFieldDidEndEditingBlock
+{
+    BAKit_Objc_setObjCOPY(@selector(textFieldDidEndEditingBlock), textFieldDidEndEditingBlock);
+}
 
+- (BAKit_textFieldDidEndEditingBlock)textFieldDidEndEditingBlock
+{
+    return BAKit_Objc_getObj;
+}
 
 @end

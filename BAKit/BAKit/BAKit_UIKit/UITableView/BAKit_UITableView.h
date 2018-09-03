@@ -13,5 +13,7 @@
 #import "UITableViewCell+BAAccessoryType.h"
 #import "UITableView+BAKit.h"
 #import "UITableViewCell+BAKit.h"
+#import "UITableView+BASectionView.h"
+
 
 #endif /* BAKit_UITableView_h */

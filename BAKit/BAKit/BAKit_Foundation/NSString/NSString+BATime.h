@@ -129,6 +129,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)ba_time_getCurrentDateTransformTimeStampYMDHMS;
 
+/**
+ 指定字符串日期，转换成指定 formatString 的时间戳
+ 
+ @param dateString dateString description
+ @param formatString formatString description
+ @return return value description
+ */
++ (NSString *)ba_time_dateTransformTimeStampWithDate:(NSString *)dateString
+                                        formatString:(NSString *)formatString;
+
 #pragma mark 根据日期提取当前 星期几【返回 周一...周日】
 /*!
  *  根据日期提取当前 星期几【返回 周一...周日】

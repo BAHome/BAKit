@@ -19,6 +19,8 @@ target 'BAKit' do
     pod 'pop'
     pod 'Shimmer'
     pod 'OOMDetector'
+    pod 'ReactiveObjC'
+    pod 'MJRefresh'
 
     pod 'BAButton'
     pod 'BAAlert'

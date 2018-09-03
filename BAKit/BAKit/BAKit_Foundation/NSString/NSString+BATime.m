@@ -29,7 +29,7 @@
 
 /**
  获取系统当前日期和时间 【自定义 formatString】
-
+ 
  @param formatString formatString
  @return 系统当前日期和时间
  */
@@ -87,7 +87,7 @@
 
 /**
  时间戳转换时间【自定义 formatString】
-
+ 
  @param timeStamp 时间戳
  @param formatString formatString
  @return 时间
@@ -122,6 +122,26 @@
     return timeSp;
 }
 
+/**
+ 指定字符串日期，转换成指定 formatString 的时间戳
+ 
+ @param dateString dateString description
+ @param formatString formatString description
+ @return return value description
+ */
++ (NSString *)ba_time_dateTransformTimeStampWithDate:(NSString *)dateString
+                                        formatString:(NSString *)formatString
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = formatString;
+    
+    NSDate *date = [formatter dateFromString:dateString];
+    // 时间转时间戳的方法:
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[date timeIntervalSince1970]];
+    
+    return timeSp;
+}
+
 #pragma mark 根据日期提取当前 星期几【返回 周一...周日】
 /*!
  *  根据日期提取当前 星期几【返回 周一...周日】
@@ -146,7 +166,7 @@
 #pragma mark 计算 指定日期 与 当前时间 的时间差
 /**
  计算 指定日期 与 当前时间 的时间差
-
+ 
  @param date 指定日期
  @return 时间差
  */
@@ -219,52 +239,8 @@
  */
 + (NSString *)ba_time_formatWithTimeStamp:(NSString *)timeStamp
 {
-    NSDateFormatter *dateFormatter = [NSDateFormatter ba_setupDateFormatterWithYMD];
     NSString *theDay = [NSString ba_time_getDateWithTimeStampYMDHMS:timeStamp];
-    NSDate *theDate = [NSDate dateWithTimeIntervalSince1970:[timeStamp integerValue]];
-    // 当前年月日
-    NSString *currentDay = [dateFormatter stringFromDate:[NSDate date]];
-    
-    NSInteger timeInterval = -[theDate timeIntervalSinceNow];
-    
-    if (timeInterval < 0)
-    {
-        // 超过当前时间
-        NSDateFormatter *dateFormatter = [NSDateFormatter ba_setupDateFormatterWithYMDHMS];
-        return [dateFormatter stringFromDate:theDate];
-    }
-    else if (timeInterval < 60)
-    {
-        return @"刚刚";
-    }
-    else if (timeInterval < 3600)
-    {
-        // 1小时内
-        return [NSString stringWithFormat:@"%zd分钟前", timeInterval / 60];
-    }
-    else if (timeInterval < 21600)
-    {
-        // 6小时内
-        return [NSString stringWithFormat:@"%zd小时内", timeInterval / 3600];
-    }
-    else if ([theDay isEqualToString:currentDay])
-    {
-        // 当天
-        [dateFormatter setDateFormat:BAKit_FormatString_HMS];
-        return [NSString stringWithFormat:@"今天 %@", [dateFormatter stringFromDate:theDate]];
-    }
-    else if ([[dateFormatter dateFromString:currentDay] timeIntervalSinceDate:[dateFormatter dateFromString:theDay]] == 86400)
-    {
-        // 昨天
-        [dateFormatter setDateFormat:BAKit_FormatString_HM];
-        return [NSString stringWithFormat:@"昨天 %@", [dateFormatter stringFromDate:theDate]];
-    }
-    else
-    {
-        //以前
-        NSDateFormatter *dateFormatter = [NSDateFormatter ba_setupDateFormatterWithYMDHMS];
-        return [dateFormatter stringFromDate:theDate];
-    }
+    return [NSString ba_time_formatWithDateString:theDay];
 }
 
 /**
@@ -359,10 +335,10 @@
         return nil;
     }
     NSDateFormatter *fmt = [NSDateFormatter ba_dateFormatterWithFormatString:formatString timezoneName:timezoneName];
-
+    
     NSDate *date= [fmt dateFromString:self];
     return date;
-
+    
 }
 
 - (NSDate *)ba_time_dateWithFormat:(NSString *)formatString

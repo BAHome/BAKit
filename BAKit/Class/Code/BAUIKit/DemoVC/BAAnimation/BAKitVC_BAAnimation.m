@@ -30,6 +30,8 @@
 {
     self.title = @"BAAnimation";
     self.view.backgroundColor = BAKit_Color_White;
+    self.tableView.sectionImage = BAKit_ImageName(@"tabHengxian");
+
     self.dataArray = [self.mutableDataArray mutableCopy];
     
     BAKit_WeakSelf

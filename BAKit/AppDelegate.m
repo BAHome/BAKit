@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "AppDelegate+BALaunch.h"
+//#import "AppDelegate+BAVisualEffectView.h"
 
 #import "BAUIKitViewController.h"
 #import "BAFoundationViewController.h"
@@ -34,6 +35,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+
     [self ba_setupTabBarVC];
     [self ba_setupLaunch];
 #ifdef DEBUG
@@ -41,13 +44,29 @@
 #else
 #endif
     
+//    [self ba_setupVisualEffectView];
+//    self.isShowVisualEffectViewWhenInBGWindow = YES;
+    
+    [self test];
     return YES;
+}
+
+- (void)test
+{
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSLog(@"\n\nUIWindowLevelNormal = %f  \n\nUIWindowLevelAlert = %f  \n\nUIWindowLevelStatusBar = %f  \n\nappDelegate.window.windowLevel = %f",UIWindowLevelNormal,UIWindowLevelAlert,UIWindowLevelStatusBar,appDelegate.window.windowLevel);
+    
+    /*
+     UIWindowLevelNormal = 0.000000
+     
+     UIWindowLevelAlert = 2000.000000
+     
+     UIWindowLevelStatusBar = 1000.000000
+     */
 }
 
 - (void)ba_setupTabBarVC
 {
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
     // 自定义配置：tabbar 的背景颜色 和 item 颜色
     [BAKit_Helper ba_helperSetTabbarSelectedTintColor:BAKit_Color_Red
                                       normalTintColor:BAKit_Color_White
@@ -141,22 +160,57 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    
+//    self.window.backgroundColor = BAKit_Color_Yellow_Goldenrod;
+    
+    [self test222_addView];
+}
+
+- (void)test222_addView
+{
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    self.visualEffectView.alpha = 1;
+    self.visualEffectView.frame = self.window.frame;
+    self.visualEffectView.tag = 1111111;
+    
+    for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
+        if (window.windowLevel == UIWindowLevelNormal) {
+            [window addSubview:self.visualEffectView];
+        }
+    }
+}
+
+- (void)test222_removeView
+{
+    for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
+        if (window.windowLevel == UIWindowLevelNormal) {
+            UIView *view = [window viewWithTag:1111111];
+            [view removeFromSuperview];
+        }
+    }
 }
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+
+    [self test222_addView];
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    [self test222_removeView];
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [self test222_removeView];
 }
 
 

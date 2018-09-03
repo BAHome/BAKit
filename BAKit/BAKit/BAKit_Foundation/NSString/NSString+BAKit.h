@@ -82,6 +82,14 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return A new string create from the file in UTF-8 character encoding.
  */
+
+/**
+  * 从 main bundle 中的文件创建一个字符串（类似于[UIImage imageNamed：]）。
+  *
+  * @param name 文件名（在 main bundle）。
+  *
+  * @return 以UTF-8字符编码从文件创建的新字符串。
+  */
 + (NSString *)ba_stringNamed:(nullable NSString *)name;
 
 /**

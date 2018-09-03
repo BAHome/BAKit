@@ -64,11 +64,11 @@
 
 #import "BAKit_DefineFormat.h"
 
-#define k_MINUTE	60
-#define k_HOUR		3600
-#define k_DAY		86400
-#define k_WEEK		604800
-#define k_YEAR		31556926
+#define k_MINUTE    60
+#define k_HOUR        3600
+#define k_DAY        86400
+#define k_WEEK        604800
+#define k_YEAR        31556926
 
 #define BAKi_DATE_COMPONENTS (NSCalendarUnitYear| NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekOfMonth |  NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekdayOrdinal)
 
@@ -316,47 +316,54 @@
     // 获得发布的具体时间
     NSDate *createDate = [formatter dateFromString:date];
     
-    // 判断是否为今年
     if (createDate)
     {
+        // 判断是否为今年
         if (createDate.isThisYear)
         {
-            // 今天
-            NSDateComponents *cmps = [createDate ba_dateDeltaWithNow];
-            if (cmps.hour >= 1)
+            if (createDate.isToday)
             {
-                // 至少是1小时前发的
-                return [NSString stringWithFormat:@"%ld小时前", cmps.hour];
+                // 今天
+                NSDateComponents *cmps = [createDate ba_dateDeltaWithNow];
+                if (cmps.hour >= 1)
+                {
+                    // 至少是1小时前发的
+                    return [NSString stringWithFormat:@"%ld小时前", cmps.hour];
+                }
+                else if (cmps.minute >= 1)
+                {
+                    // 1~59分钟之前发的
+                    return [NSString stringWithFormat:@"%ld分钟前", cmps.minute];
+                }
+                else
+                {
+                    // 1分钟内发的
+                    return @"刚刚";
+                }
             }
-            else if (cmps.minute >= 1)
+            else if (createDate.isYesterday)
             {
-                // 1~59分钟之前发的
-                return [NSString stringWithFormat:@"%ld分钟前", cmps.minute];
+                // 昨天
+                formatter.dateFormat = @"昨天 HH:mm";
+                return [formatter stringFromDate:createDate];
             }
             else
             {
-                // 1分钟内发的
-                return @"刚刚";
+                // 至少是前天
+                formatter.dateFormat = @"MM-dd HH:mm";
+                return [formatter stringFromDate:createDate];
             }
-        }
-        else if (createDate.isYesterday)
-        {
-            // 昨天
-            formatter.dateFormat = @"昨天 HH:mm";
-            return [formatter stringFromDate:createDate];
         }
         else
         {
-            // 至少是前天
-            formatter.dateFormat = @"MM-dd HH:mm";
+            // 非今年
+            formatter.dateFormat = BAKit_FormatString_YMD;
             return [formatter stringFromDate:createDate];
         }
     }
     else
     {
-        // 非今年
-        formatter.dateFormat = BAKit_FormatString_YMD;
-        return [formatter stringFromDate:createDate];
+        return nil;
     }
 }
 
@@ -393,6 +400,37 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     int unit = NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute;
     return [calendar components:unit fromDate:self toDate:BAKit_Current_Date() options:0];
+}
+
+/**
+ 字符串转日期格式
+ 
+ @param dateString 字符串日期
+ @param formatString formatString description
+ @return NSDate
+ */
++ (NSDate *)ba_dateStringToDateString:(NSString *)dateString
+                         formatString:(NSString *)formatString
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:formatString];
+    
+    NSDate *date = [dateFormatter dateFromString:dateString];
+    return [self ba_dateWorldTimeToChinaTime:date];
+}
+
+/**
+ 将世界时间转化为中国区时间
+ 
+ @param date 需要转换的日期
+ @return NSDate
+ */
++ (NSDate *)ba_dateWorldTimeToChinaTime:(NSDate *)date
+{
+    NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [timeZone secondsFromGMTForDate:date];
+    NSDate *localeDate = [date  dateByAddingTimeInterval:interval];
+    return localeDate;
 }
 
 /**
@@ -820,9 +858,9 @@
     NSString *dateString = [NSString stringWithFormat:@"%ld-12-31",(long)year];
     NSDateFormatter *format = [NSDateFormatter ba_dateFormatterWithFormatString:BAKit_FormatString_YMD timezoneName:@"Asia/Shanghai"];
     NSDate *lastDay = [format dateFromString:dateString];//本年最后一天
-
+    
     NSString *lastDayWeek = [NSDate ba_dateGetWeekInyearOrMouth:YES WithDate:lastDay];//本年最后一天是第几周
-
+    
     NSInteger maxNum;
     if ([lastDayWeek rangeOfString:@"1"].location != NSNotFound) {//如果是下一年第一周 看上一周是多少周
         NSString *beforeWeek = [NSDate ba_dateGetWeekInyearOrMouth:YES WithDate:[lastDay ba_dateGetAfterYear:0 OrMonth:0 OrDay:-7]];
@@ -835,6 +873,22 @@
         maxNum = [sub floatValue];
     }
     return maxNum;
+}
+
++ (NSInteger)ba_dateGetDifferenceBySmallDate:(NSDate *)smallDate bigDate:(NSDate *)bigDate
+{
+    //获得当前时间
+    //    NSDate *now = [NSDate date];
+    //实例化一个NSDateFormatter对象
+    //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //    //设定时间格式
+    //    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //    NSDate *oldDate = [dateFormatter dateFromString:date];
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    unsigned int unitFlags = NSDayCalendarUnit;
+    NSDateComponents *comps = [gregorian components:unitFlags fromDate:smallDate  toDate:bigDate options:0];
+    return [comps day];
 }
 
 @end

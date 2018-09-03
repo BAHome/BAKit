@@ -164,6 +164,13 @@
  */
 + (BOOL)ba_regularIsAllNumber:(NSString *)allNumberStr;
 
+#pragma mark - 验证输入的是否全为 int 类型数字
++ (BOOL)ba_regularIsPureInt:(NSString*)string;
+
+
+#pragma mark - 验证输入的是否全为 float 类型数字
++ (BOOL)ba_regularIsPureFloat:(NSString*)string;
+
 /*!
  *  验证由26个英文字母组成的字符串
  *  @param englishAlphabetStr 传入需要检测的字符串
@@ -276,20 +283,20 @@
  *       重复零次或更多次
  +       重复一次或更多次
  ?       重复零次或一次
- {n} 	重复n次
- {n,} 	重复n次或更多次
- {n,m} 	重复n到m次
+ {n}     重复n次
+ {n,}     重复n次或更多次
+ {n,m}     重复n到m次
  \W      匹配任意不是字母，数字，下划线，汉字的字符
  \S      匹配任意不是空白符的字符
  \D      匹配任意非数字的字符
  \B      匹配不是单词开头或结束的位置
- [^x] 	匹配除了x以外的任意字符
+ [^x]     匹配除了x以外的任意字符
  [^aeiou]匹配除了aeiou这几个字母以外的任意字符
  *?      重复任意次，但尽可能少重复
  +?      重复1次或更多次，但尽可能少重复
  ??      重复0次或1次，但尽可能少重复
- {n,m}? 	重复n到m次，但尽可能少重复
- {n,}? 	重复n次以上，但尽可能少重复
+ {n,m}?     重复n到m次，但尽可能少重复
+ {n,}?     重复n次以上，但尽可能少重复
  \a      报警字符(打印它的效果是电脑嘀一声)
  \b      通常是单词分界位置，但如果在字符类里使用代表退格
  \t      制表符，Tab
@@ -298,23 +305,23 @@
  \f      换页符
  \n      换行符
  \e      Escape
- \0nn 	ASCII代码中八进制代码为nn的字符
- \xnn 	ASCII代码中十六进制代码为nn的字符
- \unnnn 	Unicode代码中十六进制代码为nnnn的字符
- \cN 	ASCII控制字符。比如\cC代表Ctrl+C
+ \0nn     ASCII代码中八进制代码为nn的字符
+ \xnn     ASCII代码中十六进制代码为nn的字符
+ \unnnn     Unicode代码中十六进制代码为nnnn的字符
+ \cN     ASCII控制字符。比如\cC代表Ctrl+C
  \A      字符串开头(类似^，但不受处理多行选项的影响)
  \Z      字符串结尾或行尾(不受处理多行选项的影响)
  \z      字符串结尾(类似$，但不受处理多行选项的影响)
  \G      当前搜索的开头
- \p{name} 	Unicode中命名为name的字符类，例如\p{IsGreek}
- (?>exp) 	贪婪子表达式
- (?<x>-<y>exp) 	平衡组
- (?im-nsx:exp) 	在子表达式exp中改变处理选项
+ \p{name}     Unicode中命名为name的字符类，例如\p{IsGreek}
+ (?>exp)     贪婪子表达式
+ (?<x>-<y>exp)     平衡组
+ (?im-nsx:exp)     在子表达式exp中改变处理选项
  (?im-nsx)       为表达式后面的部分改变处理选项
- (?(exp)yes|no) 	把exp当作零宽正向先行断言，如果在这个位置能匹配，使用yes作为此组的表达式；否则使用no
- (?(exp)yes) 	同上，只是使用空表达式作为no
+ (?(exp)yes|no)     把exp当作零宽正向先行断言，如果在这个位置能匹配，使用yes作为此组的表达式；否则使用no
+ (?(exp)yes)     同上，只是使用空表达式作为no
  (?(name)yes|no) 如果命名为name的组捕获到了内容，使用yes作为表达式；否则使用no
- (?(name)yes) 	同上，只是使用空表达式作为no
+ (?(name)yes)     同上，只是使用空表达式作为no
  
  捕获
  (exp)               匹配exp,并捕获文本到自动命名的组里

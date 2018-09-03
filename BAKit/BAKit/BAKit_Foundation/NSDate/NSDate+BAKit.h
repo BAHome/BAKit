@@ -145,36 +145,54 @@
 - (NSDateComponents *)ba_dateDeltaWithNow;
 
 /**
- 距离当前的时间间隔描述
+ 字符串转日期格式
+ 
+ @param dateString 字符串日期
+ @param formatString formatString description
+ @return NSDate
+ */
++ (NSDate *)ba_dateStringToDateString:(NSString *)dateString
+                         formatString:(NSString *)formatString;
 
+/**
+ 将世界时间转化为中国区时间
+ 
+ @param date 需要转换的日期
+ @return NSDate
+ */
++ (NSDate *)ba_dateWorldTimeToChinaTime:(NSDate *)date;
+
+/**
+ 距离当前的时间间隔描述
+ 
  @return 时间间隔描述
  */
 - (NSString *)ba_dateTimeIntervalDescription;
 
 /**
  精确到分钟的日期描述
-
+ 
  @return 日期描述
  */
 - (NSString *)ba_dateMinuteDescription;
 
 /**
  标准时间日期描述
-
+ 
  @return 标准时间日期描述
  */
 - (NSString *)ba_dateFormattedTime;
 
 /**
  当前日期 距离 1970 时间间隔毫秒
-
+ 
  @return 当前日期 距离 1970 时间间隔毫秒
  */
 - (double)ba_dateTimeIntervalSince1970InMilliSecond;
 
 /**
  距离 时间间隔毫秒 后的日期
-
+ 
  @param timeIntervalInMilliSecond 时间间隔毫秒
  @return 距离 时间间隔毫秒 后的日期
  */
@@ -182,7 +200,7 @@
 
 /**
  时间间隔格式化
-
+ 
  @param time 时间间隔
  @return 时间格式化
  */
@@ -239,6 +257,9 @@
 + (NSString *)ba_dateGetWeekInyearOrMouth:(BOOL)inYear WithDate:(NSDate *)date;
 // 2015、2009、004、1998 这四年是 53 周（目前已知），其余均是52周
 + (NSInteger)ba_dateGetWeekNumbersOfYear:(NSInteger)year;
+
+
++ (NSInteger)ba_dateGetDifferenceBySmallDate:(NSDate *)smallDate bigDate:(NSDate *)bigDate;
 
 @end
 

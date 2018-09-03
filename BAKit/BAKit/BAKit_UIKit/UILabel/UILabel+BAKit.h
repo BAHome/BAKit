@@ -24,6 +24,20 @@
  */
 - (void)ba_labelSetRowSpace:(CGFloat)rowSpace;
 
-
+/**
+ UILabel：快速创建一个 label，frame、text、font、textColor
+ 
+ @param frame frame description
+ @param text text description
+ @param textFont textFont description
+ @param textColor textColor description
+ @param textAlignment textAlignment description
+ @return label
+ */
++ (UILabel *)ba_labelWithFrame:(CGRect)frame
+                          text:(NSString *)text
+                      textFont:(UIFont *)textFont
+                     textColor:(UIColor *)textColor
+                 textAlignment:(NSTextAlignment)textAlignment;
 
 @end
