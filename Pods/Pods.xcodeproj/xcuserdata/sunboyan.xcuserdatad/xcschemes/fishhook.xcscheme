@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1BBEF5259E2E58122F98FD96E67FFCC8"
+               BlueprintIdentifier = "085A935814BBB24C262EB89BCFFFC046"
                BlueprintName = "fishhook"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libfishhook.a">

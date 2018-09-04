@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2379FC5830DF9E6F59BA7611CD9CBD1D"
+               BlueprintIdentifier = "413861EC1D64B895A5C504E5AB5DEA15"
                BlueprintName = "BATextField"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libBATextField.a">

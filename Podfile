@@ -21,6 +21,8 @@ target 'BAKit' do
     pod 'OOMDetector'
     pod 'ReactiveObjC'
     pod 'MJRefresh'
+    pod 'MJExtension'
+    pod 'MGJRouter'
 
     pod 'BAButton'
     pod 'BAAlert'
@@ -29,5 +31,9 @@ target 'BAKit' do
 
     pod 'BATextField'
     pod 'BATextView'
+    
+    pod 'Reveal-SDK', '~> 14', :configurations => ['Debug']
+    pod 'FLEX', '~> 2.0', :configurations => ['Debug']
+
 
 end

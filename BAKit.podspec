@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "BAKit"
-    s.version      = "0.0.2"
+    s.version      = "0.0.4"
     s.summary      = 'BAKit by boai.'
     s.homepage     = "https://gitee.com/dsteam/BAKit.git"
 

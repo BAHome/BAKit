@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C405556478AFC48C308FCB68970A3427"
+               BlueprintIdentifier = "44339B9E7905C96DF22A6DAA2DA7820E"
                BlueprintName = "OOMDetector"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libOOMDetector.a">

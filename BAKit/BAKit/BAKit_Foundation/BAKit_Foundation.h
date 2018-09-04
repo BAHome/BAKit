@@ -69,8 +69,14 @@
 #pragma mark - NSNumber 类封装
 #import "NSNumber+BARandom.h"
 
+#pragma mark - NSDictionary 类封装
 #import "NSDictionary+BAKit.h"
 
+#pragma mark - NSURL 类封装
+#import "NSURL+QueryDictionary.h"
+
+#pragma mark - NSBundle 类封装
+#import "NSBundle+BALanguage.h"
 
 #pragma mark - runtime 类封装
 #import "NSObject+BARunTime.h"

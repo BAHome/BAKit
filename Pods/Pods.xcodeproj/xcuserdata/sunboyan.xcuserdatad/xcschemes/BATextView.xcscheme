@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E897D91396EE86EE67E7D78C6B28744E"
+               BlueprintIdentifier = "8A9FF7BE5AEC3B84F3CA6720FA255305"
                BlueprintName = "BATextView"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libBATextView.a">

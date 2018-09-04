@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		353B8C9854E692073B2DD83C /* libPods-BAKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82228A48BB6B8C1A4A9115E6 /* libPods-BAKit.a */; };
+		9C06DDBC213CE2B200A4DD66 /* BAKit_MGJRouter_Url.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C06DDBB213CE2B200A4DD66 /* BAKit_MGJRouter_Url.m */; };
+		9C06DDC0213CE40400A4DD66 /* NSURL+QueryDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C06DDBF213CE40400A4DD66 /* NSURL+QueryDictionary.m */; };
+		9C06DDC4213D0DC400A4DD66 /* BAKit_MGJRouter_Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C06DDC3213D0DC400A4DD66 /* BAKit_MGJRouter_Manager.m */; };
+		9C06DDC9213D18BB00A4DD66 /* BAKit_MGJRouter_ModuleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C06DDC8213D18BB00A4DD66 /* BAKit_MGJRouter_ModuleManager.m */; };
+		9C06DDD2213E703C00A4DD66 /* BAKit_LanguageSwitchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C06DDD1213E703C00A4DD66 /* BAKit_LanguageSwitchManager.m */; };
+		9C06DDD5213E744300A4DD66 /* NSBundle+BALanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C06DDD4213E744300A4DD66 /* NSBundle+BALanguage.m */; };
+		9C06DDDA213E778C00A4DD66 /* UIWindow+YZTTFLEXSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C06DDD8213E778B00A4DD66 /* UIWindow+YZTTFLEXSetting.m */; };
+		9C06DDDD213E77AA00A4DD66 /* UIWindow+BAFlex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C06DDDC213E77AA00A4DD66 /* UIWindow+BAFlex.m */; };
 		9C699F302116EBCD00F9AAF5 /* BAKitVC_UIWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C699F2F2116EBCD00F9AAF5 /* BAKitVC_UIWindow.m */; };
 		9CA8AFD42105C3830047AB50 /* AppDelegate+BAVisualEffectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA8AFD32105C3830047AB50 /* AppDelegate+BAVisualEffectView.m */; };
 		9CB2465820FF0FE900B42EB0 /* NSString+BATransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB2463920FF0FE800B42EB0 /* NSString+BATransform.m */; };
@@ -263,6 +271,25 @@
 /* Begin PBXFileReference section */
 		5701BE2E6D25D427E1AFC624 /* Pods-BAKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BAKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-BAKit/Pods-BAKit.release.xcconfig"; sourceTree = "<group>"; };
 		82228A48BB6B8C1A4A9115E6 /* libPods-BAKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BAKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C06DDB9213CE1CA00A4DD66 /* BAKit_MGJRouterHerder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BAKit_MGJRouterHerder.h; sourceTree = "<group>"; };
+		9C06DDBA213CE2B200A4DD66 /* BAKit_MGJRouter_Url.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BAKit_MGJRouter_Url.h; sourceTree = "<group>"; };
+		9C06DDBB213CE2B200A4DD66 /* BAKit_MGJRouter_Url.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BAKit_MGJRouter_Url.m; sourceTree = "<group>"; };
+		9C06DDBE213CE40400A4DD66 /* NSURL+QueryDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+QueryDictionary.h"; sourceTree = "<group>"; };
+		9C06DDBF213CE40400A4DD66 /* NSURL+QueryDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+QueryDictionary.m"; sourceTree = "<group>"; };
+		9C06DDC2213D0DC400A4DD66 /* BAKit_MGJRouter_Manager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BAKit_MGJRouter_Manager.h; sourceTree = "<group>"; };
+		9C06DDC3213D0DC400A4DD66 /* BAKit_MGJRouter_Manager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BAKit_MGJRouter_Manager.m; sourceTree = "<group>"; };
+		9C06DDC6213D153600A4DD66 /* BAKit_MGJRouter_Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BAKit_MGJRouter_Protocol.h; sourceTree = "<group>"; };
+		9C06DDC7213D18BB00A4DD66 /* BAKit_MGJRouter_ModuleManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BAKit_MGJRouter_ModuleManager.h; sourceTree = "<group>"; };
+		9C06DDC8213D18BB00A4DD66 /* BAKit_MGJRouter_ModuleManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BAKit_MGJRouter_ModuleManager.m; sourceTree = "<group>"; };
+		9C06DDD0213E703C00A4DD66 /* BAKit_LanguageSwitchManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BAKit_LanguageSwitchManager.h; sourceTree = "<group>"; };
+		9C06DDD1213E703C00A4DD66 /* BAKit_LanguageSwitchManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BAKit_LanguageSwitchManager.m; sourceTree = "<group>"; };
+		9C06DDD3213E744300A4DD66 /* NSBundle+BALanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BALanguage.h"; sourceTree = "<group>"; };
+		9C06DDD4213E744300A4DD66 /* NSBundle+BALanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BALanguage.m"; sourceTree = "<group>"; };
+		9C06DDD7213E756500A4DD66 /* BAKit_Version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BAKit_Version.h; sourceTree = "<group>"; };
+		9C06DDD8213E778B00A4DD66 /* UIWindow+YZTTFLEXSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+YZTTFLEXSetting.m"; sourceTree = "<group>"; };
+		9C06DDD9213E778C00A4DD66 /* UIWindow+YZTTFLEXSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+YZTTFLEXSetting.h"; sourceTree = "<group>"; };
+		9C06DDDB213E77AA00A4DD66 /* UIWindow+BAFlex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIWindow+BAFlex.h"; sourceTree = "<group>"; };
+		9C06DDDC213E77AA00A4DD66 /* UIWindow+BAFlex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+BAFlex.m"; sourceTree = "<group>"; };
 		9C699F2E2116EBCD00F9AAF5 /* BAKitVC_UIWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BAKitVC_UIWindow.h; sourceTree = "<group>"; };
 		9C699F2F2116EBCD00F9AAF5 /* BAKitVC_UIWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BAKitVC_UIWindow.m; sourceTree = "<group>"; };
 		9CA8AFD22105C3830047AB50 /* AppDelegate+BAVisualEffectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+BAVisualEffectView.h"; sourceTree = "<group>"; };
@@ -741,6 +768,57 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9C06DDB8213CE16800A4DD66 /* BAKit_MGJ */ = {
+			isa = PBXGroup;
+			children = (
+				9C06DDB9213CE1CA00A4DD66 /* BAKit_MGJRouterHerder.h */,
+				9C06DDBA213CE2B200A4DD66 /* BAKit_MGJRouter_Url.h */,
+				9C06DDBB213CE2B200A4DD66 /* BAKit_MGJRouter_Url.m */,
+				9C06DDC2213D0DC400A4DD66 /* BAKit_MGJRouter_Manager.h */,
+				9C06DDC3213D0DC400A4DD66 /* BAKit_MGJRouter_Manager.m */,
+				9C06DDC7213D18BB00A4DD66 /* BAKit_MGJRouter_ModuleManager.h */,
+				9C06DDC8213D18BB00A4DD66 /* BAKit_MGJRouter_ModuleManager.m */,
+				9C06DDC6213D153600A4DD66 /* BAKit_MGJRouter_Protocol.h */,
+			);
+			path = BAKit_MGJ;
+			sourceTree = "<group>";
+		};
+		9C06DDBD213CE3F400A4DD66 /* NSDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				C4256F35207CB31C00B5B60A /* NSDictionary+BAKit.h */,
+				C4256F0D207CB31C00B5B60A /* NSDictionary+BAKit.m */,
+			);
+			path = NSDictionary;
+			sourceTree = "<group>";
+		};
+		9C06DDC1213CE46500A4DD66 /* NSURL */ = {
+			isa = PBXGroup;
+			children = (
+				9C06DDBE213CE40400A4DD66 /* NSURL+QueryDictionary.h */,
+				9C06DDBF213CE40400A4DD66 /* NSURL+QueryDictionary.m */,
+			);
+			path = NSURL;
+			sourceTree = "<group>";
+		};
+		9C06DDCF213E6FE000A4DD66 /* BAKit_LanguageSwitchManager */ = {
+			isa = PBXGroup;
+			children = (
+				9C06DDD0213E703C00A4DD66 /* BAKit_LanguageSwitchManager.h */,
+				9C06DDD1213E703C00A4DD66 /* BAKit_LanguageSwitchManager.m */,
+			);
+			path = BAKit_LanguageSwitchManager;
+			sourceTree = "<group>";
+		};
+		9C06DDD6213E745000A4DD66 /* NSBundle */ = {
+			isa = PBXGroup;
+			children = (
+				9C06DDD3213E744300A4DD66 /* NSBundle+BALanguage.h */,
+				9C06DDD4213E744300A4DD66 /* NSBundle+BALanguage.m */,
+			);
+			path = NSBundle;
+			sourceTree = "<group>";
+		};
 		9C699F2D2116EB9700F9AAF5 /* UIWindow */ = {
 			isa = PBXGroup;
 			children = (
@@ -813,6 +891,7 @@
 				C4256DFF207CB31C00B5B60A /* BAKit_Custom */,
 				C4256E5B207CB31C00B5B60A /* BAKit_Define */,
 				C4256E68207CB31C00B5B60A /* BAKit.h */,
+				9C06DDD7213E756500A4DD66 /* BAKit_Version.h */,
 				C4256E69207CB31C00B5B60A /* BAKit_UIKit */,
 				C4256F0C207CB31C00B5B60A /* BAKit_Foundation */,
 			);
@@ -855,6 +934,8 @@
 		C4256DFF207CB31C00B5B60A /* BAKit_Custom */ = {
 			isa = PBXGroup;
 			children = (
+				9C06DDCF213E6FE000A4DD66 /* BAKit_LanguageSwitchManager */,
+				9C06DDB8213CE16800A4DD66 /* BAKit_MGJ */,
 				9CB2466A20FF2B7200B42EB0 /* BARefresh */,
 				C4256E0A207CB31C00B5B60A /* BAKit_PickView */,
 				C4256E13207CB31C00B5B60A /* BAKit_Common */,
@@ -1337,8 +1418,9 @@
 				C4256F12207CB31C00B5B60A /* NSMutableArray+BAKit.m */,
 				C4256F13207CB31C00B5B60A /* NSArray+BAKit.h */,
 				C4256F44207CB31C00B5B60A /* NSArray+BAKit.m */,
-				C4256F35207CB31C00B5B60A /* NSDictionary+BAKit.h */,
-				C4256F0D207CB31C00B5B60A /* NSDictionary+BAKit.m */,
+				9C06DDD6213E745000A4DD66 /* NSBundle */,
+				9C06DDC1213CE46500A4DD66 /* NSURL */,
+				9C06DDBD213CE3F400A4DD66 /* NSDictionary */,
 				9CB2463820FF0FE800B42EB0 /* NSString */,
 				C4256F37207CB31C00B5B60A /* NSUserDefaults */,
 				C4256F3F207CB31C00B5B60A /* NSObject */,
@@ -1816,6 +1898,10 @@
 			children = (
 				C4854A1B208979AE0046D6D7 /* BAOOMDataManager.h */,
 				C4854A1A208979AD0046D6D7 /* BAOOMDataManager.m */,
+				9C06DDDB213E77AA00A4DD66 /* UIWindow+BAFlex.h */,
+				9C06DDDC213E77AA00A4DD66 /* UIWindow+BAFlex.m */,
+				9C06DDD9213E778C00A4DD66 /* UIWindow+YZTTFLEXSetting.h */,
+				9C06DDD8213E778B00A4DD66 /* UIWindow+YZTTFLEXSetting.m */,
 				C4880F2F1F5000DA00530088 /* AppDelegate */,
 			);
 			path = Tools;
@@ -1948,6 +2034,7 @@
 				C4ED204B1EE78F0D0053FC83 /* Frameworks */,
 				C4ED204C1EE78F0D0053FC83 /* Resources */,
 				BCA41577510992179099AAC1 /* [CP] Copy Pods Resources */,
+				339C8AC211A236D173611046 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2089,6 +2176,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		339C8AC211A236D173611046 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BAKit/Pods-BAKit-frameworks.sh",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-14/iOS/RevealServer.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BAKit/Pods-BAKit-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		6A71A29EA4D027CADD91CEAA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2113,7 +2222,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-BAKit/Pods-BAKit-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-BAKit/Pods-BAKit-resources.sh",
 				"${PODS_ROOT}/BAAlert/BAAlert/BAAlert/BAAlert.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/OOMDetector/assets/oomgif.gif",
@@ -2126,7 +2235,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BAKit/Pods-BAKit-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BAKit/Pods-BAKit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2153,6 +2262,7 @@
 				9CB2466320FF0FE900B42EB0 /* NSString+BATime.m in Sources */,
 				C4256F9B207CB31D00B5B60A /* UIViewController+BAKit.m in Sources */,
 				C4256FA7207CB31D00B5B60A /* CABasicAnimation+BAKit.m in Sources */,
+				9C06DDC0213CE40400A4DD66 /* NSURL+QueryDictionary.m in Sources */,
 				C4880F0C1F4EB4CE00530088 /* BAContactsIndexView.m in Sources */,
 				C4256F4F207CB31D00B5B60A /* BANavigationController.m in Sources */,
 				C4256F8B207CB31D00B5B60A /* UIView+BAAnimation.m in Sources */,
@@ -2197,10 +2307,13 @@
 				C4880F1C1F4EB4CE00530088 /* BAKitVC_InterestingLabel.m in Sources */,
 				C4880F001F4EB4CE00530088 /* BAKitVC_CABasicAnimation.m in Sources */,
 				C4256F71207CB31D00B5B60A /* UIImage+BAKit.m in Sources */,
+				9C06DDDA213E778C00A4DD66 /* UIWindow+YZTTFLEXSetting.m in Sources */,
 				C4880F1E1F4EB4CE00530088 /* BAKitVC_ShimmerLabel.m in Sources */,
 				9CB2465E20FF0FE900B42EB0 /* NSString+BARange.m in Sources */,
 				C4BBF8F41F89FB3E008C6622 /* BAKitVC_WKWebView3.m in Sources */,
+				9C06DDC4213D0DC400A4DD66 /* BAKit_MGJRouter_Manager.m in Sources */,
 				C4256FCA207CB31D00B5B60A /* NSArray+BAKit.m in Sources */,
+				9C06DDD5213E744300A4DD66 /* NSBundle+BALanguage.m in Sources */,
 				C4256FB2207CB31D00B5B60A /* NSNumber+BARandom.m in Sources */,
 				C4256F94207CB31D00B5B60A /* WKWebView+BAJavaScriptAlert.m in Sources */,
 				C4256FA0207CB31D00B5B60A /* UITableViewCell+BAKit.m in Sources */,
@@ -2257,12 +2370,14 @@
 				9CB2465820FF0FE900B42EB0 /* NSString+BATransform.m in Sources */,
 				C4880F1A1F4EB4CE00530088 /* BAKitVC_UIImageView.m in Sources */,
 				C4256F6E207CB31D00B5B60A /* BABadgeValueView.m in Sources */,
+				9C06DDD2213E703C00A4DD66 /* BAKit_LanguageSwitchManager.m in Sources */,
 				C4256FAB207CB31D00B5B60A /* UITabBarItem+BAKit.m in Sources */,
 				C4256F98207CB31D00B5B60A /* UIBarButtonItem+BABadge.m in Sources */,
 				C4256F58207CB31D00B5B60A /* GCDQueue.m in Sources */,
 				C4256F5E207CB31D00B5B60A /* BAGradualProgressView.m in Sources */,
 				C4256FB4207CB31D00B5B60A /* NSData+BAKit.m in Sources */,
 				9CB2466920FF13E500B42EB0 /* UITableView+BASectionView.m in Sources */,
+				9C06DDBC213CE2B200A4DD66 /* BAKit_MGJRouter_Url.m in Sources */,
 				C4880F321F5000FF00530088 /* AppDelegate+BALaunch.m in Sources */,
 				C4880F021F4EB4CE00530088 /* BAKitVC_CATransition.m in Sources */,
 				C4256F96207CB31D00B5B60A /* UIDevice+BAKit.m in Sources */,
@@ -2271,6 +2386,7 @@
 				C4880F111F4EB4CE00530088 /* TestVC1.m in Sources */,
 				C4256F93207CB31D00B5B60A /* WKWebView+Post.m in Sources */,
 				9CB2465D20FF0FE900B42EB0 /* NSString+BANSNumber.m in Sources */,
+				9C06DDDD213E77AA00A4DD66 /* UIWindow+BAFlex.m in Sources */,
 				C4880EF81F4EB4CE00530088 /* BAKitVC_NSMutableAttributedString.m in Sources */,
 				C4256F56207CB31D00B5B60A /* BAKit_PickerView.m in Sources */,
 				C4256FA4207CB31D00B5B60A /* UIGestureRecognizer+BAOpertation.m in Sources */,
@@ -2296,6 +2412,7 @@
 				C4256FAA207CB31D00B5B60A /* UITabBarController+BAKit.m in Sources */,
 				C4256F89207CB31D00B5B60A /* UIView+BAShake.m in Sources */,
 				C4256F92207CB31D00B5B60A /* WeakScriptMessageDelegate.m in Sources */,
+				9C06DDC9213D18BB00A4DD66 /* BAKit_MGJRouter_ModuleManager.m in Sources */,
 				9CB2466620FF0FE900B42EB0 /* NSString+BAColor.m in Sources */,
 				C4256FA6207CB31D00B5B60A /* CAShapeLayer+BACornerRadius.m in Sources */,
 				C4256FC6207CB31D00B5B60A /* NSFileManager+BAKit.m in Sources */,
