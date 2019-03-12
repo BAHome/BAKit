@@ -1,0 +1,33 @@
+platform :ios, '9.0'
+
+# 去掉由pod引入的第三方库的警告，需要更新命令才生效
+inhibit_all_warnings!
+
+# pod 快速更新方法
+# pod update --verbose --no-repo-update
+
+use_frameworks!
+
+target 'BAKit_Example' do
+  pod 'BAKit', :path => '../'
+
+#  pod 'SDWebImage'
+  pod 'pop'
+  pod 'Shimmer'
+  pod 'MJRefresh'
+  pod 'YYImage'
+  
+  pod 'lottie-ios'
+  
+  pod 'AvoidCrash'
+  pod 'Bugly'
+  
+  pod 'Reveal-SDK', '~> 14', :configurations => ['Debug']
+  pod 'FLEX', '~> 2.0', :configurations => ['Debug']
+  
+  pod 'DoraemonKit/Core', '~> 1.1.4', :configurations => ['Debug']
+  pod 'DoraemonKit/WithLogger', '~> 1.1.4', :configurations => ['Debug']
+#  pod 'DoraemonKit/WithGPS', '~> 1.1.4', :configurations => ['Debug']
+
+
+end

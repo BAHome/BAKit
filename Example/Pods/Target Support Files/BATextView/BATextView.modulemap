@@ -1,0 +1,6 @@
+framework module BATextView {
+  umbrella header "BATextView-umbrella.h"
+
+  export *
+  module * { export * }
+}

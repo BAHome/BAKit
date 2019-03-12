@@ -1,0 +1,73 @@
+{
+  "name": "BAKit",
+  "version": "0.0.5",
+  "summary": "A short description of BAKit.",
+  "description": "this is BAKit",
+  "homepage": "https://github.com/BAHome/BAKit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "boai": "sunboyan@outlook.com"
+  },
+  "source": {
+    "git": "https://gitee.com/dsteam/BAKit.git",
+    "tag": "0.0.5"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "requires_arc": true,
+  "dependencies": {
+    "BAButton": [
+
+    ],
+    "BAAlert": [
+
+    ],
+    "BAGridView": [
+
+    ],
+    "BAAlertController": [
+
+    ],
+    "BATextField": [
+
+    ],
+    "BATextView": [
+
+    ],
+    "ReactiveObjC": [
+
+    ],
+    "OOMDetector": [
+
+    ],
+    "MGJRouter": [
+
+    ],
+    "MJExtension": [
+
+    ],
+    "SVProgressHUD": [
+
+    ]
+  },
+  "frameworks": [
+    "UIKit",
+    "Foundation"
+  ],
+  "prefix_header_contents": [
+    "#import <UIKit/UIKit.h>",
+    "#import <Foundation/Foundation.h>",
+    "#import <BAButton/BAButton.h>",
+    "#import <BAAlert/BAAlert_OC.h>",
+    "#import <BATextView/BATextView.h>",
+    "#import \"BATextField.h\"",
+    "#import \"BAKit_BAGridView.h\"",
+    "#import \"BAKit.h\""
+  ],
+  "source_files": "BAKit/Classes/**/*.{h,m}",
+  "public_header_files": "Pod/Classes/**/*.h"
+}

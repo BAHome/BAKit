@@ -1,0 +1,6 @@
+framework module BAKit {
+  umbrella header "BAKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

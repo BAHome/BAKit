@@ -1,0 +1,6 @@
+framework module BATextField {
+  umbrella header "BATextField-umbrella.h"
+
+  export *
+  module * { export * }
+}
