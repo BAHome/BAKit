@@ -11,8 +11,7 @@
 
 @implementation AppDelegate (BALaunch)
 
-- (void)ba_setupLaunch
-{
+- (void)ba_setupLaunch {
     UIViewController *viewController = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchScreen"];
     
     UIView *launchView = viewController.view;

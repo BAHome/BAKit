@@ -31,8 +31,7 @@
  @param separatorInset separatorInset description
  */
 CG_INLINE void
-BAKit_UITableViewSetSeparator(UITableView *tableView, UIColor *color, UIEdgeInsets separatorInset)
-{
+BAKit_UITableViewSetSeparator(UITableView *tableView, UIColor *color, UIEdgeInsets separatorInset) {
     [tableView setSeparatorColor:color];
     [tableView setSeparatorInset:separatorInset];
 }
@@ -44,8 +43,7 @@ BAKit_UITableViewSetSeparator(UITableView *tableView, UIColor *color, UIEdgeInse
  @param image 背景图片
  */
 CG_INLINE void
-BAKit_UITableViewSetBackgroundImage(UITableView *tableView, UIImage *image)
-{
+BAKit_UITableViewSetBackgroundImage(UITableView *tableView, UIImage *image) {
     tableView.ba_tableViewBackgroundImage = image;
 }
 
@@ -56,8 +54,7 @@ BAKit_UITableViewSetBackgroundImage(UITableView *tableView, UIImage *image)
  @param estimatedRowHeight 估计行高
  */
 CG_INLINE void
-BAKit_UITableViewSetEstimatedRowHeight(UITableView *tableView, CGFloat estimatedRowHeight)
-{
+BAKit_UITableViewSetEstimatedRowHeight(UITableView *tableView, CGFloat estimatedRowHeight) {
     tableView.estimatedRowHeight = estimatedRowHeight;
     
     tableView.rowHeight = UITableViewAutomaticDimension;
@@ -69,10 +66,8 @@ BAKit_UITableViewSetEstimatedRowHeight(UITableView *tableView, CGFloat estimated
  @param tableView tableView description
  */
 CG_INLINE void
-BAKit_UITableViewAdaptatIOS11(UITableView *tableView)
-{
-    if (@available(iOS 11.0, *))
-    {
+BAKit_UITableViewAdaptatIOS11(UITableView *tableView) {
+    if (@available(iOS 11.0, *)) {
         tableView.estimatedRowHeight = 0.f;
         tableView.estimatedSectionHeaderHeight = 0.f;
         tableView.estimatedSectionFooterHeight = 0.f;
@@ -89,14 +84,10 @@ BAKit_UITableViewAdaptatIOS11(UITableView *tableView)
  @param reuseIdentifier reuseIdentifier description
  */
 CG_INLINE void
-BAKit_UITableViewRegisterCell(UITableView *tableView, BOOL isNib, Class cellClass, NSString *reuseIdentifier)
-{
-    if (isNib)
-    {
+BAKit_UITableViewRegisterCell(UITableView *tableView, BOOL isNib, Class cellClass, NSString *reuseIdentifier) {
+    if (isNib) {
         [tableView registerNib:[UINib nibWithNibName:NSStringFromClass(cellClass) bundle:nil] forCellReuseIdentifier:reuseIdentifier];
-    }
-    else
-    {
+    } else {
         [tableView registerClass:cellClass forCellReuseIdentifier:reuseIdentifier];
     }
 }

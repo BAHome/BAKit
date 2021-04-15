@@ -15,8 +15,7 @@
 
  @param imageArray 图片名数组
  */
-- (void)ba_imageViewAnimationWithImageArray:(NSArray <NSString *>*)imageArray
-{
+- (void)ba_imageViewAnimationWithImageArray:(NSArray <NSString *>*)imageArray {
     // 如果正在执行动画，就补执行了
     if (self.isAnimating) return;
     // 创建可变数组

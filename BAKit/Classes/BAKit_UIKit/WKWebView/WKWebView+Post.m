@@ -11,8 +11,7 @@
 
 @implementation WKWebView (Post)
 
-+ (void)load
-{
++ (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class class = [self class];
@@ -29,8 +28,7 @@
     });
 }
 
-- (WKNavigation *)post_loadRequest:(NSURLRequest *)request
-{
+- (WKNavigation *)post_loadRequest:(NSURLRequest *)request {
     if ([[request.HTTPMethod uppercaseString] isEqualToString:@"POST"]){
         NSString *url = request.URL.absoluteString;
         NSString *params = [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding];

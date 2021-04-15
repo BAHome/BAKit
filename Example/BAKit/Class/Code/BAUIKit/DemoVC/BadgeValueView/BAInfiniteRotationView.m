@@ -51,21 +51,18 @@
     }
 }
 
-- (void)reset
-{
+- (void)reset {
     [self.layer removeAllAnimations];
     _didStartAnimation = NO;
 }
 
-- (void)rotateViewAnimationWithView:(UIView *)view
-{
+- (void)rotateViewAnimationWithView:(UIView *)view {
     NSTimeInterval tmpSpeed = (_speed <= 0) ? 1 : _speed;
     CABasicAnimation *rotationAnimation = [CABasicAnimation ba_basicAnimation_rotationZWithDuration:(tmpSpeed * 100000) beginTime:0 toValueAngle:(_clockWise ? (M_PI * 100000) : (-M_PI * 100000) + _startAngle) repeatCount:0 autoreverses:NO];
     [view.layer addAnimation:rotationAnimation forKey:nil];
 }
 
-- (void)eventDidBecomeActive:(id)obj
-{
+- (void)eventDidBecomeActive:(id)obj {
     NSNotification *fication = obj;
     if ([fication.name isEqualToString:UIApplicationDidBecomeActiveNotification]) {
         

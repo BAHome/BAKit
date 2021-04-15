@@ -26,10 +26,8 @@
                      duration:(CFTimeInterval)duration
                timingFunction:(BAKit_ViewTransitionTimingFunctionType)timingFunction
           removedOnCompletion:(BOOL)removedOnCompletion
-                      forView:(UIView *)forView
-{
-    if (!duration)
-    {
+                      forView:(UIView *)forView {
+    if (!duration) {
         duration = 0.8f;
     }
     /*! 定义个转场动画 */
@@ -74,18 +72,14 @@
 - (void)ba_transitionViewWithDuration:(CFTimeInterval)duration
                        animationCurve:(UIViewAnimationCurve)animationCurve
                            transition:(UIViewAnimationTransition)transition
-                              forView:(UIView *)forView
-{
-    if (!duration)
-    {
+                              forView:(UIView *)forView {
+    if (!duration) {
         duration = 0.8f;
     }
-    if (!animationCurve)
-    {
+    if (!animationCurve) {
         animationCurve = UIViewAnimationCurveEaseInOut;
     }
-    if (!transition)
-    {
+    if (!transition) {
         transition = UIViewAnimationTransitionNone;
     }
     [UIView animateWithDuration:duration animations:^{
@@ -97,10 +91,8 @@
 - (void)ba_selectTransitionType:(BAKit_ViewTransitionType)type
                         subType:(BAKit_ViewTransitionSubtype)subType
                  timingFunction:(BAKit_ViewTransitionTimingFunctionType)timingFunction
-                     transition:(CATransition *)transition
-{
-    if (!type)
-    {
+                     transition:(CATransition *)transition {
+    if (!type) {
         type = BAKit_ViewTransitionTypeFade;
     }
     switch (type) {
@@ -156,8 +148,7 @@
             break;
     }
     
-    if (!subType)
-    {
+    if (!subType) {
         subType = BAKit_ViewTransitionSubtypeFromRight;
     }
     switch (subType) {
@@ -178,8 +169,7 @@
             break;
     }
     
-    if (!timingFunction)
-    {
+    if (!timingFunction) {
         timingFunction = BAKit_ViewTransitionTimingFunctionTypeDefault;
     }
     switch (timingFunction) {

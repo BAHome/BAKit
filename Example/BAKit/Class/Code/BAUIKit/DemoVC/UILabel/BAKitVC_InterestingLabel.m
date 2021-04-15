@@ -26,8 +26,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.view.backgroundColor = BAKit_Color_Blue_SkyBlue;
     
     self.label1.hidden = NO;
@@ -44,10 +43,8 @@
 
 #pragma mark - setter getter
 
-- (UILabel *)label1
-{
-    if (!_label1)
-    {
+- (UILabel *)label1 {
+    if (!_label1) {
         _label1 = [UILabel new];
         _label1.numberOfLines = 0;
         _label1.text = @"我是一个有趣的 label！";

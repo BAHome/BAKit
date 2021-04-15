@@ -11,8 +11,7 @@
 
 @implementation BAKit_ClearCacheManager
 
-+ (instancetype)ba_sharedCache
-{
++ (instancetype)ba_sharedCache {
     static BAKit_ClearCacheManager *manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -23,18 +22,15 @@
 }
 
 #pragma mark - 计算单个文件大小 结果返回：1 M
-- (CGFloat)ba_fileManagerGetSizeWithFilePath:(NSString *)path
-{
+- (CGFloat)ba_fileManagerGetSizeWithFilePath:(NSString *)path {
     return [NSFileManager ba_fileManagerGetSizeWithFilePath:path]/1024.0/1024.0;
 }
 
-- (CGFloat)ba_loadCacheSize
-{
+- (CGFloat)ba_loadCacheSize {
     self.cacheSize = 0;
     NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
-    for (NSString *f in files)
-    {
+    for (NSString *f in files) {
         NSString *path = [cachPath stringByAppendingPathComponent:f];
         self.cacheSize += [self ba_fileManagerGetSizeWithFilePath:path];
     }
@@ -45,15 +41,12 @@
 }
 
 #pragma mark - 计算目录大小
-- (CGFloat)ba_folderSizeAtPath:(NSString *)path
-{
+- (CGFloat)ba_folderSizeAtPath:(NSString *)path {
     NSFileManager *fileManager=[NSFileManager defaultManager];
     float folderSize = 0.0;
-    if ([fileManager fileExistsAtPath:path])
-    {
+    if ([fileManager fileExistsAtPath:path]) {
         NSArray *childerFiles=[fileManager subpathsAtPath:path];
-        for (NSString *fileName in childerFiles)
-        {
+        for (NSString *fileName in childerFiles) {
             NSString *absolutePath=[path stringByAppendingPathComponent:fileName];
             folderSize += [self ba_fileManagerGetSizeWithFilePath:absolutePath];
         }
@@ -103,8 +96,7 @@
                        [self performSelectorOnMainThread:@selector(ba_clearCacheSuccess) withObject:nil waitUntilDone:YES];});
 }
 
-- (void)ba_clearCacheSuccess
-{
+- (void)ba_clearCacheSuccess {
     NSLog(@"清理成功");
 }
 

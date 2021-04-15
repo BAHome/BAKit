@@ -1,0 +1,225 @@
+{
+    "error_code" : 0,
+    "data" : [ {
+            "status" : 1,
+            "remark" : "",
+            "id" : "163490381743390720",
+            "referList" : [
+                {
+                    "status" : 1,
+                    "remark" : "",
+                    "id" : "182788752672817152",
+                    "parentId" : "163490381743390720",
+                    "referList" : [ {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182788816292020224",
+                            "parentId" : "182788752672817152",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "IOS一场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836308161331200",
+                            "parentId" : "182788752672817152",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "IOS二场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836514051325952",
+                            "parentId" : "182788752672817152",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "IOS三场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836555658821632",
+                            "parentId" : "182788752672817152",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "IOS四场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836710009208832",
+                            "parentId" : "182788752672817152",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "IOS五场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836863285854208",
+                            "parentId" : "182788752672817152",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "IOS六场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836902745866240",
+                            "parentId" : "182788752672817152",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "IOS七场",
+                            "managed" : true
+                        }
+                    ],
+                    "type" : 1001,
+                    "name" : "IOS场",
+                    "managed" : true
+                },
+                {
+                    "status" : 1,
+                    "remark" : "",
+                    "id" : "182788778442620928",
+                    "parentId" : "163490381743390720",
+                    "referList" : [ {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182788949167570944",
+                            "parentId" : "182788778442620928",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "Android一场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836821409923072",
+                            "parentId" : "182788778442620928",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "Android二场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836945427103744",
+                            "parentId" : "182788778442620928",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "Android三场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182836985423986688",
+                            "parentId" : "182788778442620928",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "Android四场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182837021662773248",
+                            "parentId" : "182788778442620928",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "Android五场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182837062464962560",
+                            "parentId" : "182788778442620928",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "Android六场",
+                            "managed" : true
+                        }, {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "182837113736134656",
+                            "parentId" : "182788778442620928",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "Android七场",
+                            "managed" : true
+                        }
+                    ],
+                    "type" : 1001,
+                    "name" : "Android场",
+                    "managed" : true
+                },
+                {
+                    "status" : 1,
+                    "remark" : "",
+                    "id" : "182995903508905984",
+                    "parentId" : "163490381743390720",
+                    "referList" : [
+                        
+                    ],
+                    "type" : 1011,
+                    "name" : "APP开发生产商",
+                    "managed" : true
+                },
+                {
+                    "status" : 1,
+                    "remark" : "",
+                    "id" : "189665885714579456",
+                    "parentId" : "163490381743390720",
+                    "referList" : [ {
+                            "status" : 1,
+                            "remark" : "",
+                            "id" : "189666036306870272",
+                            "parentId" : "189665885714579456",
+                            "referList" : [
+                                
+                            ],
+                            "type" : 1101,
+                            "name" : "组织测试一场",
+                            "managed" : true
+                        }
+                    ],
+                    "type" : 3001,
+                    "name" : "组织测试",
+                    "managed" : true
+                }
+            ],
+            "type" : 1001,
+            "name" : "APPtest",
+            "managed" : true
+        }
+    ],
+    "error_msg" : "SUCCESS"
+}

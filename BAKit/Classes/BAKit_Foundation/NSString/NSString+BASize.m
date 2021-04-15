@@ -19,8 +19,7 @@
  @return 文字 size
  */
 - (CGSize)ba_stringGetSizeWithMaxSize:(CGSize)maxSize
-                             fontSize:(CGFloat)fontSize
-{
+                             fontSize:(CGFloat)fontSize {
     return [self boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:fontSize]} context:nil].size;
 }
 
@@ -32,14 +31,12 @@
  @return 文字 size
  */
 - (CGSize)ba_stringGetSizeWithMaxSize:(CGSize)maxSize
-                                 font:(UIFont *)font
-{
+                                 font:(UIFont *)font {
     return [self boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil].size;
 }
 
 - (CGFloat)ba_stringGetHeightWithFont:(UIFont* )font
-                                width:(CGFloat)width
-{
+                                width:(CGFloat)width {
     
     CGRect bounds = CGRectZero;
     bounds = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil];
@@ -47,8 +44,7 @@
 }
 
 - (CGFloat)ba_stringGetWidthWithFont:(UIFont *)font
-                              height:(CGFloat)height
-{
+                              height:(CGFloat)height {
     CGRect bounds = CGRectZero;
     
     bounds = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, height) options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil];
@@ -62,14 +58,12 @@
  @param font font description
  @return width
  */
-- (CGFloat)ba_stringGetWidthWithFont:(UIFont *)font
-{
+- (CGFloat)ba_stringGetWidthWithFont:(UIFont *)font {
     NSParameterAssert(font);
     
     CGFloat width = 0;
     
-    if (self.length)
-    {
+    if (self.length) {
         CGRect rect = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, 0)
                                          options:NSStringDrawingTruncatesLastVisibleLine |NSStringDrawingUsesLineFragmentOrigin |
                        NSStringDrawingUsesFontLeading
@@ -87,8 +81,7 @@
  @param font font description
  @return height
  */
-- (CGFloat)ba_stringGetOneLineOfTextHeightWithFont:(UIFont *)font
-{
+- (CGFloat)ba_stringGetOneLineOfTextHeightWithFont:(UIFont *)font {
     NSParameterAssert(font);
     
     CGFloat height = 0;
@@ -111,13 +104,11 @@
  @return attributeString 的 height
  */
 - (CGFloat)ba_stringGetHeightWithStringAttributeDictionary:(NSDictionary <NSString *, id> *)attributeDictionary
-                                                     width:(CGFloat)width
-{
+                                                     width:(CGFloat)width {
     NSParameterAssert(attributeDictionary);
     CGFloat height = 0;
     
-    if (self.length)
-    {
+    if (self.length) {
         CGRect rect = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributeDictionary context:nil];
         height = rect.size.height;
     }
@@ -131,13 +122,11 @@
  @param attributeDictionary attributeDictionary 例如：attributeDictionary = @{NSFontAttributeName: [UIFont systemFontOfSize:18.f]}
  @return attributeString 的 width
  */
-- (CGFloat)ba_stringGetWidthWithStringAttributeDictionary:(NSDictionary <NSString *, id> *)attributeDictionary
-{
+- (CGFloat)ba_stringGetWidthWithStringAttributeDictionary:(NSDictionary <NSString *, id> *)attributeDictionary {
     NSParameterAssert(attributeDictionary);
     CGFloat width = 0;
     
-    if (self.length)
-    {
+    if (self.length) {
         CGRect rect = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributeDictionary context:nil];
         
         width = rect.size.width;
@@ -152,8 +141,7 @@
  @param attributeDictionary attributeDictionary 例如：attributeDictionary = @{NSFontAttributeName: [UIFont systemFontOfSize:18.f]}
  @return height
  */
-- (CGFloat)ba_stringGetOneLineOfTextHeightWithStringAttributeDictionary:(NSDictionary <NSString *, id> *)attributeDictionary
-{
+- (CGFloat)ba_stringGetOneLineOfTextHeightWithStringAttributeDictionary:(NSDictionary <NSString *, id> *)attributeDictionary {
     NSParameterAssert(attributeDictionary);
     CGFloat height = 0;
     

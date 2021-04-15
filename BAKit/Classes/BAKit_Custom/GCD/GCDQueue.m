@@ -149,8 +149,7 @@ static GCDQueue *backgroundPriorityGlobalQueue;
 
     self = [super init];
     
-    if (self)
-    {
+    if (self) {
         self.dispatchQueue = dispatch_queue_create([label UTF8String], DISPATCH_QUEUE_SERIAL);
     }
     

@@ -20,8 +20,7 @@
  */
 + (void)ba_stringToBeUnderlineWithButton:(UIButton *)button
                                    range:(NSRange)range
-                               lineColor:(UIColor *)lineColor
-{
+                               lineColor:(UIColor *)lineColor {
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:button.titleLabel.text];
     [str addAttribute:NSUnderlineColorAttributeName value:lineColor range:range];
     [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:range];
@@ -39,8 +38,7 @@
 + (void)ba_stringToBeUnderlineWithButton:(UIButton *)button
                                    range:(NSRange)range
                                lineColor:(UIColor *)lineColor
-                            controlstate:(UIControlState)controlstate
-{
+                            controlstate:(UIControlState)controlstate {
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:button.titleLabel.text];
     [str addAttribute:NSUnderlineColorAttributeName value:lineColor range:range];
     [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:range];

@@ -71,7 +71,7 @@
 @end
 
 @implementation BAKit_DeviceInfoManager
-BAKit_SingletonM(DeviceInfoManager)
+BAKit_SingletonM()
 
 #pragma mark - 设备相关
 /**
@@ -79,8 +79,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 型号，例如：iPhone SE
  */
-- (NSString *)ba_deviceGetDeviceModel
-{
+- (NSString *)ba_deviceGetDeviceModel {
     // 需要#import "sys/utsname.h"
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -107,6 +106,24 @@ BAKit_SingletonM(DeviceInfoManager)
     if ([deviceString isEqualToString:@"iPhone9,2"])    return @"港行、国行iPhone 7 Plus";
     if ([deviceString isEqualToString:@"iPhone9,3"])    return @"美版、台版iPhone 7";
     if ([deviceString isEqualToString:@"iPhone9,4"])    return @"美版、台版iPhone 7 Plus";
+    
+    //2017年9月发布，更新三种机型：iPhone 8、iPhone 8 Plus、iPhone X
+    if ([deviceString isEqualToString:@"iPhone10,1"])  return @"iPhone 8";
+    if ([deviceString isEqualToString:@"iPhone10,4"])  return @"iPhone 8";
+    if ([deviceString isEqualToString:@"iPhone10,2"])  return @"iPhone 8 Plus";
+    if ([deviceString isEqualToString:@"iPhone10,5"])  return @"iPhone 8 Plus";
+    if ([deviceString isEqualToString:@"iPhone10,3"])  return @"iPhone X";
+    if ([deviceString isEqualToString:@"iPhone10,6"])  return @"iPhone X";
+    //2018年10月发布，更新三种机型：iPhone XR、iPhone XS、iPhone XS Max
+    if ([deviceString isEqualToString:@"iPhone11,8"])  return  @"iPhone XR";
+    if ([deviceString isEqualToString:@"iPhone11,2"])  return @"iPhone XS";
+    if ([deviceString isEqualToString:@"iPhone11,4"])  return @"iPhone XS Max";
+    if ([deviceString isEqualToString:@"iPhone11,6"])  return @"iPhone XS Max";
+    //2019年9月发布，更新三种机型：iPhone 11、iPhone 11 Pro、iPhone 11 Pro Max
+    if ([deviceString isEqualToString:@"iPhone12,1"])  return  @"iPhone 11";
+    if ([deviceString isEqualToString:@"iPhone12,3"])  return  @"iPhone 11 Pro";
+    if ([deviceString isEqualToString:@"iPhone12,5"])  return  @"iPhone 11 Pro Max";
+    
     
     if ([deviceString isEqualToString:@"iPod1,1"])      return @"iPod Touch 1G";
     if ([deviceString isEqualToString:@"iPod2,1"])      return @"iPod Touch 2G";
@@ -146,6 +163,27 @@ BAKit_SingletonM(DeviceInfoManager)
     if ([deviceString isEqualToString:@"iPad6,4"])      return @"iPad Pro 9.7-inch (Cellular)";
     if ([deviceString isEqualToString:@"iPad6,7"])      return @"iPad Pro 12.9-inch (WiFi)";
     if ([deviceString isEqualToString:@"iPad6,8"])      return @"iPad Pro 12.9-inch (Cellular)";
+    if ([deviceString isEqualToString:@"iPad6,11"])  return @"iPad 5 (WiFi)";
+    if ([deviceString isEqualToString:@"iPad6,12"])  return @"iPad 5 (Cellular)";
+    if ([deviceString isEqualToString:@"iPad7,1"])   return @"iPad Pro 12.9 inch 2nd gen (WiFi)";
+    if ([deviceString isEqualToString:@"iPad7,2"])   return @"iPad Pro 12.9 inch 2nd gen (Cellular)";
+    if ([deviceString isEqualToString:@"iPad7,3"])   return @"iPad Pro 10.5 inch (WiFi)";
+    if ([deviceString isEqualToString:@"iPad7,4"])   return @"iPad Pro 10.5 inch (Cellular)";
+    if ([deviceString isEqualToString:@"iPad7,5"])   return @"iPad (6th generation)";
+    if ([deviceString isEqualToString:@"iPad7,6"])   return @"iPad (6th generation)";
+    if ([deviceString isEqualToString:@"iPad8,1"])   return @"iPad Pro (11-inch)";
+    if ([deviceString isEqualToString:@"iPad8,2"])   return @"iPad Pro (11-inch)";
+    if ([deviceString isEqualToString:@"iPad8,3"])   return @"iPad Pro (11-inch)";
+    if ([deviceString isEqualToString:@"iPad8,4"])   return @"iPad Pro (11-inch)";
+    if ([deviceString isEqualToString:@"iPad8,5"])   return @"iPad Pro (12.9-inch) (3rd generation)";
+    if ([deviceString isEqualToString:@"iPad8,6"])   return @"iPad Pro (12.9-inch) (3rd generation)";
+    if ([deviceString isEqualToString:@"iPad8,7"])   return @"iPad Pro (12.9-inch) (3rd generation)";
+    if ([deviceString isEqualToString:@"iPad8,8"])   return @"iPad Pro (12.9-inch) (3rd generation)";
+    //2019年3月发布:
+    if ([deviceString isEqualToString:@"iPad11,1"])   return @"iPad mini (5th generation)";
+    if ([deviceString isEqualToString:@"iPad11,2"])   return @"iPad mini (5th generation)";
+    if ([deviceString isEqualToString:@"iPad11,3"])   return @"iPad Air (3rd generation)";
+    if ([deviceString isEqualToString:@"iPad11,4"])   return @"iPad Air (3rd generation)";
     
     if ([deviceString isEqualToString:@"AppleTV2,1"])      return @"Apple TV 2";
     if ([deviceString isEqualToString:@"AppleTV3,1"])      return @"Apple TV 3";
@@ -164,8 +202,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备的 用户自定义的别名，例如：博爱的 iPhone 9
  */
-- (NSString *)ba_deviceGetCurrentDeviceName
-{
+- (NSString *)ba_deviceGetCurrentDeviceName {
     return [UIDevice currentDevice].name;
 }
 
@@ -174,8 +211,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 获取当前设备的 地方型号 国际化区域名称，例如：iPhone
  */
-- (NSString *)ba_deviceGetCurrentLocalizedModel
-{
+- (NSString *)ba_deviceGetCurrentLocalizedModel {
     return [UIDevice currentDevice].localizedModel;
 }
 
@@ -184,8 +220,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备的 系统名称，例如：iOS
  */
-- (NSString *)ba_deviceGetCurrentSystemName
-{
+- (NSString *)ba_deviceGetCurrentSystemName {
     return [UIDevice currentDevice].systemName;
 }
 
@@ -194,8 +229,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备的 系统版本号，例如：11.0
  */
-- (NSString *)ba_deviceGetCurrentSystemVersion
-{
+- (NSString *)ba_deviceGetCurrentSystemVersion {
     return [UIDevice currentDevice].systemVersion;
 }
 
@@ -204,8 +238,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 UUID，例如：6073****-53E1****-***A45
  */
-- (NSString *)ba_deviceGetUUID
-{
+- (NSString *)ba_deviceGetUUID {
     return [[NSUUID UUID] UUIDString];
 }
 
@@ -214,10 +247,8 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备广告标识符
  */
-- (NSString *)ba_deviceGetIDFA
-{
-    if ([[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled])
-    {
+- (NSString *)ba_deviceGetIDFA {
+    if ([[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled]) {
         return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
     }
     return @"请在设置->隐私->广告->限制广告跟踪打开开关才能使用！";
@@ -228,8 +259,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 设备上次重启的时间
  */
-- (NSDate *)ba_deviceGetLastSystemUptime
-{
+- (NSDate *)ba_deviceGetLastSystemUptime {
     NSTimeInterval time = [[NSProcessInfo processInfo] systemUptime];
     return [[NSDate alloc] initWithTimeIntervalSinceNow:(0 - time)];
 }
@@ -241,8 +271,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备的 App Name，例如：博爱微信
  */
-- (NSString *)ba_deviceGetCurrentAppDisplayName
-{
+- (NSString *)ba_deviceGetCurrentAppDisplayName {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
 }
 
@@ -251,8 +280,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前 app 的 版本号，例如：1.0.0
  */
-- (NSString *)ba_deviceGetCurrentAppShortVersionString
-{
+- (NSString *)ba_deviceGetCurrentAppShortVersionString {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
@@ -261,8 +289,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 获取当前 app 的 build 版本号，例如：99（int类型 ）
  */
-- (NSString *)ba_deviceGetCurrentAppVersion
-{
+- (NSString *)ba_deviceGetCurrentAppVersion {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
@@ -272,8 +299,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 CPU 频率
  */
-- (NSUInteger)ba_deviceGetCPUFrequency
-{
+- (NSUInteger)ba_deviceGetCPUFrequency {
     return [self ba_deviceInfoGetSystemInfo:HW_CPU_FREQ];
 }
 
@@ -282,8 +308,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备总线程频率
  */
-- (NSUInteger)ba_deviceGetBusFrequency
-{
+- (NSUInteger)ba_deviceGetBusFrequency {
     return [self ba_deviceInfoGetSystemInfo:HW_BUS_FREQ];
 }
 
@@ -292,8 +317,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 CPU 数量
  */
-- (NSUInteger)ba_deviceGetCPUCount
-{
+- (NSUInteger)ba_deviceGetCPUCount {
     // 两种方式获取
     return [self ba_deviceInfoGetSystemInfo:HW_NCPU];
     //    return [NSProcessInfo processInfo].activeProcessorCount;
@@ -304,8 +328,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 可用 CPU 数量
  */
-- (NSUInteger)ba_deviceGetCanUseCPUCount
-{
+- (NSUInteger)ba_deviceGetCanUseCPUCount {
     return [self ba_deviceInfoGetSystemInfo:HW_AVAILCPU];
 }
 
@@ -314,8 +337,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 CPU 总的使用百分比
  */
-- (float)ba_deviceGetCPUUsage
-{
+- (float)ba_deviceGetCPUUsage {
     float cpu = 0;
     NSArray *cpus = [self ba_deviceInfoGetPerCPUUsage];
     if (cpus.count == 0) return -1;
@@ -330,8 +352,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 单个 CPU 使用百分比
  */
-- (NSArray *)ba_deviceGetPerCPUUsage
-{
+- (NSArray *)ba_deviceGetPerCPUUsage {
     return [self ba_deviceInfoGetPerCPUUsage];
 }
 
@@ -342,12 +363,10 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 ROM 硬盘存储空间 大小，例如：128 G，返回 128
  */
-- (int64_t)ba_deviceGetTotalDiskSpace
-{
+- (int64_t)ba_deviceGetTotalDiskSpace {
     struct statfs buf;
     unsigned long long freeSpace = -1;
-    if (statfs("/var", &buf) >= 0)
-    {
+    if (statfs("/var", &buf) >= 0) {
         freeSpace = (unsigned long long)(buf.f_bsize * buf.f_blocks);
     }
     return freeSpace;
@@ -365,8 +384,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备未使用的磁盘空间
  */
-- (int64_t)ba_deviceGetFreeDiskSpace
-{
+- (int64_t)ba_deviceGetFreeDiskSpace {
     NSError *error = nil;
     NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:&error];
     if (error) return -1;
@@ -380,8 +398,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备已使用的磁盘空间
  */
-- (int64_t)ba_deviceGetUsedDiskSpace
-{
+- (int64_t)ba_deviceGetUsedDiskSpace {
     int64_t totalDisk = [self ba_deviceGetTotalDiskSpace];
     int64_t freeDisk = [self ba_deviceGetFreeDiskSpace];
     if (totalDisk < 0 || freeDisk < 0) return -1;
@@ -395,8 +412,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 本 App 所占磁盘空间
  */
-- (NSString *)ba_deviceGetApplicationSize
-{
+- (NSString *)ba_deviceGetApplicationSize {
     unsigned long long documentSize   =  [self ba_deviceInfoGetSizeOfFolder:[self ba_deviceInfoGetDocumentPath]];
     unsigned long long librarySize   =  [self ba_deviceInfoGetSizeOfFolder:[self ba_deviceInfoGetLibraryPath]];
     unsigned long long cacheSize =  [self ba_deviceInfoGetSizeOfFolder:[self ba_deviceInfoGetCachePath]];
@@ -413,8 +429,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备总内存空间 RAM，例如：iPhone 7 内存 为 2G，返回 2
  */
-- (int64_t)ba_deviceGetTotalMemory
-{
+- (int64_t)ba_deviceGetTotalMemory {
     int64_t totalMemory = [[NSProcessInfo processInfo] physicalMemory];
     if (totalMemory < -1) totalMemory = -1;
     return totalMemory;
@@ -425,8 +440,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备活跃的内存空间
  */
-- (int64_t)ba_deviceGetActiveMemory
-{
+- (int64_t)ba_deviceGetActiveMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -445,8 +459,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备不活跃的内存空间
  */
-- (int64_t)ba_deviceGetInActiveMemory
-{
+- (int64_t)ba_deviceGetInActiveMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -465,8 +478,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备空闲的内存空间
  */
-- (int64_t)ba_deviceGetFreeMemory
-{
+- (int64_t)ba_deviceGetFreeMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -485,8 +497,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备正在使用的内存空间
  */
-- (int64_t)ba_deviceGetUsedMemory
-{
+- (int64_t)ba_deviceGetUsedMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -505,8 +516,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备存放内核的内存空间
  */
-- (int64_t)ba_deviceGetWritedMemory
-{
+- (int64_t)ba_deviceGetWritedMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -525,8 +535,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备可释放的内存空间
  */
-- (int64_t)ba_deviceGetPurgableMemory
-{
+- (int64_t)ba_deviceGetPurgableMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -545,14 +554,12 @@ BAKit_SingletonM(DeviceInfoManager)
 
  @return 当前任务所占用的内存
  */
-- (double)ba_deviceGetCurrentTaskUsedMemory
-{
+- (double)ba_deviceGetCurrentTaskUsedMemory {
     task_basic_info_data_t taskInfo;
     mach_msg_type_number_t infoCount = TASK_BASIC_INFO_COUNT;
     kern_return_t kernReturn = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&taskInfo, &infoCount);
     
-    if (kernReturn != KERN_SUCCESS)
-    {
+    if (kernReturn != KERN_SUCCESS) {
         return NSNotFound;
     }
     
@@ -565,8 +572,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 IP 地址
  */
-- (NSString *)ba_deviceGetDeviceIPAddresses
-{
+- (NSString *)ba_deviceGetDeviceIPAddresses {
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     
     NSMutableArray *ips = [NSMutableArray array];
@@ -625,8 +631,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 WiFi 无线局域网 iP 地址
  */
-- (NSString *)ba_deviceGetIpAddressWIFI
-{
+- (NSString *)ba_deviceGetIpAddressWIFI {
     return [self ba_deviceInfoGetIpAddressWithIfaName:@"en0"];
 }
 
@@ -635,8 +640,7 @@ BAKit_SingletonM(DeviceInfoManager)
  
  @return 当前设备 蜂窝网 iP 地址
  */
-- (NSString *)ba_deviceGetIpAddressCellular
-{
+- (NSString *)ba_deviceGetIpAddressCellular {
     return [self ba_deviceInfoGetIpAddressWithIfaName:@"pdp_ip0"];
 }
 
@@ -646,12 +650,10 @@ BAKit_SingletonM(DeviceInfoManager)
  @param domain 域名
  @return 该域名所在的 IP
  */
-- (NSString *)ba_deviceInfoQueryIpWithDomain:(NSString *)domain
-{
+- (NSString *)ba_deviceInfoQueryIpWithDomain:(NSString *)domain {
     struct hostent *hs;
     struct sockaddr_in server;
-    if ((hs = gethostbyname([domain UTF8String])) != NULL)
-    {
+    if ((hs = gethostbyname([domain UTF8String])) != NULL) {
         server.sin_addr = *((struct in_addr*)hs->h_addr_list[0]);
         return [NSString stringWithUTF8String:inet_ntoa(server.sin_addr)];
     }
@@ -692,10 +694,12 @@ BAKit_SingletonM(DeviceInfoManager)
 
  @return 手机当前连接的 WiFi 名字
  */
-- (NSString *)ba_deviceInfoGetCuttrntConnectWifiName
-{
+- (NSString *)ba_deviceInfoGetCuttrntConnectWifiName {
     NSDictionary *dict = [self ba_deviceInfoGetSSIDInfo];
     
+    if (BAKit_ObjectIsEmpty(dict[@"SSID"])) {
+        return @"当前没有连接 WiFi";
+    }
     return dict[@"SSID"];
 }
 
@@ -704,10 +708,8 @@ BAKit_SingletonM(DeviceInfoManager)
 /**
  DeviceInfo：开始监测电池电量
  */
-- (void)ba_deviceInfoBatteryStartMonitoring
-{
-    if (!self.batteryMonitoringEnabled)
-    {
+- (void)ba_deviceInfoBatteryStartMonitoring {
+    if (!self.batteryMonitoringEnabled) {
         self.batteryMonitoringEnabled = YES;
         UIDevice *device = [UIDevice currentDevice];
         
@@ -723,8 +725,7 @@ BAKit_SingletonM(DeviceInfoManager)
         [device setBatteryMonitoringEnabled:YES];
         
         // If by any chance battery value is available - update it immediately
-        if ([device batteryState] != UIDeviceBatteryStateUnknown)
-        {
+        if ([device batteryState] != UIDeviceBatteryStateUnknown) {
             [self ba_deviceInfoBatteryUpdateBatteryState];
         }
     }
@@ -733,64 +734,52 @@ BAKit_SingletonM(DeviceInfoManager)
 /**
  DeviceInfo：停止监测电池电量
  */
-- (void)ba_deviceInfoBatteryStopMonitoring
-{
-    if (self.batteryMonitoringEnabled)
-    {
+- (void)ba_deviceInfoBatteryStopMonitoring {
+    if (self.batteryMonitoringEnabled) {
         self.batteryMonitoringEnabled = NO;
         [[UIDevice currentDevice] setBatteryMonitoringEnabled:NO];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 }
 
-- (void)batteryLevelUpdatedCB:(NSNotification *)notification
-{
+- (void)batteryLevelUpdatedCB:(NSNotification *)notification {
     [self ba_deviceInfoBatteryUpdateBatteryState];
 }
 
-- (void)batteryStatusUpdatedCB:(NSNotification *)notification
-{
+- (void)batteryStatusUpdatedCB:(NSNotification *)notification {
     [self ba_deviceInfoBatteryUpdateBatteryState];
 }
 
-- (void)ba_deviceInfoBatteryUpdateBatteryState
-{
+- (void)ba_deviceInfoBatteryUpdateBatteryState {
 //    float batteryMultiplier = [[UIDevice currentDevice] batteryLevel];
     float batteryMultiplier = [self ba_deviceInfoGetCurrentBatteryLevel];
     self.ba_batteryLevelPercent = batteryMultiplier;
 //    self.ba_batteryLevelMAH =  self.ba_batteryCapacity * batteryMultiplier;
     
     switch ([[UIDevice currentDevice] batteryState]) {
-        case UIDeviceBatteryStateCharging:
-        {
+        case UIDeviceBatteryStateCharging: {
             // UIDeviceBatteryStateFull seems to be overwritten by UIDeviceBatteryStateCharging
             // when charging therefore it's more reliable if we check the battery level here
             // explicitly.
-            if (self.ba_batteryLevelPercent == 100)
-            {
+            if (self.ba_batteryLevelPercent == 100) {
                 self.ba_batteryState = BAKit_BatteryInfoStateFull;
-            }
-            else
-            {
+            } else {
                 self.ba_batteryState = BAKit_BatteryInfoStateCharging;
             }
             
             break;
         }
-        case UIDeviceBatteryStateFull:
-        {
+        case UIDeviceBatteryStateFull: {
             self.ba_batteryState = BAKit_BatteryInfoStateFull;
             
             break;
         }
-        case UIDeviceBatteryStateUnplugged:
-        {
+        case UIDeviceBatteryStateUnplugged: {
             self.ba_batteryState = BAKit_BatteryInfoStateUnplugged;
             
             break;
         }
-        case UIDeviceBatteryStateUnknown:
-        {
+        case UIDeviceBatteryStateUnknown: {
             self.ba_batteryState = BAKit_BatteryInfoStateUnknown;
             
             break;
@@ -800,15 +789,13 @@ BAKit_SingletonM(DeviceInfoManager)
             break;
     }
     
-    if (self.ba_batteryInfoBlock)
-    {
+    if (self.ba_batteryInfoBlock) {
         self.ba_batteryInfoBlock(self.ba_batteryState, self.ba_batteryLevelPercent);
     }
 }
 
 #pragma mark - Private Method
-- (NSUInteger)ba_deviceInfoGetSystemInfo:(uint)typeSpecifier
-{
+- (NSUInteger)ba_deviceInfoGetSystemInfo:(uint)typeSpecifier {
     size_t size = sizeof(int);
     int result;
     int mib[2] = {CTL_HW, typeSpecifier};
@@ -816,8 +803,7 @@ BAKit_SingletonM(DeviceInfoManager)
     return (NSUInteger)result;
 }
 
-- (NSArray *)ba_deviceInfoGetPerCPUUsage
-{
+- (NSArray *)ba_deviceInfoGetPerCPUUsage {
     processor_info_array_t _cpuInfo, _prevCPUInfo = nil;
     mach_msg_type_number_t _numCPUInfo, _numPrevCPUInfo = 0;
     unsigned _numCPUs;
@@ -864,29 +850,25 @@ BAKit_SingletonM(DeviceInfoManager)
     }
 }
 
-- (NSString *)ba_deviceInfoGetDocumentPath
-{
+- (NSString *)ba_deviceInfoGetDocumentPath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = [paths firstObject];
     return basePath;
 }
 
-- (NSString *)ba_deviceInfoGetLibraryPath
-{
+- (NSString *)ba_deviceInfoGetLibraryPath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     NSString *basePath = [paths firstObject];
     return basePath;
 }
 
-- (NSString *)ba_deviceInfoGetCachePath
-{
+- (NSString *)ba_deviceInfoGetCachePath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *basePath = [paths firstObject];
     return basePath;
 }
 
-- (unsigned long long)ba_deviceInfoGetSizeOfFolder:(NSString *)folderPath
-{
+- (unsigned long long)ba_deviceInfoGetSizeOfFolder:(NSString *)folderPath {
     NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
     NSEnumerator *contentsEnumurator = [contents objectEnumerator];
     
@@ -900,8 +882,7 @@ BAKit_SingletonM(DeviceInfoManager)
     return folderSize;
 }
 
-- (NSString *)ba_deviceInfoGetIpAddressWithIfaName:(NSString *)name
-{
+- (NSString *)ba_deviceInfoGetIpAddressWithIfaName:(NSString *)name {
     if (name.length == 0) return nil;
     NSString *address = nil;
     struct ifaddrs *addrs = NULL;
@@ -938,17 +919,14 @@ BAKit_SingletonM(DeviceInfoManager)
     return address ? address : @"该设备不存在该ip地址";
 }
 
-- (NSDictionary *)ba_deviceInfoGetSSIDInfo
-{
+- (NSDictionary *)ba_deviceInfoGetSSIDInfo {
     NSArray *ifs = (__bridge_transfer NSArray *)CNCopySupportedInterfaces();
     NSDictionary *SSIDInfoDict = nil;
     
-    for (NSString *ifnam in ifs)
-    {
+    for (NSString *ifnam in ifs) {
         SSIDInfoDict = (__bridge_transfer NSDictionary *)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
         
-        if (SSIDInfoDict && [SSIDInfoDict count])
-        {
+        if (SSIDInfoDict && [SSIDInfoDict count]) {
             break;
         }
     }
@@ -956,8 +934,7 @@ BAKit_SingletonM(DeviceInfoManager)
     return SSIDInfoDict;
 }
 
-- (int)ba_deviceInfoGetCurrentBatteryLevel
-{
+- (int)ba_deviceInfoGetCurrentBatteryLevel {
     UIApplication *app = [UIApplication sharedApplication];
     if (app.applicationState == UIApplicationStateActive||app.applicationState==UIApplicationStateInactive) {
         Ivar ivar=  class_getInstanceVariable([app class],"_statusBar");
@@ -965,8 +942,7 @@ BAKit_SingletonM(DeviceInfoManager)
         for (id aview in [status subviews]) {
             int batteryLevel = 0;
             for (id bview in [aview subviews]) {
-                if ([NSStringFromClass([bview class]) caseInsensitiveCompare:@"UIStatusBarBatteryItemView"] == NSOrderedSame&&[[[UIDevice currentDevice] systemVersion] floatValue] >=6.0)
-                {
+                if ([NSStringFromClass([bview class]) caseInsensitiveCompare:@"UIStatusBarBatteryItemView"] == NSOrderedSame&&[[[UIDevice currentDevice] systemVersion] floatValue] >=6.0) {
                     
                     Ivar ivar=  class_getInstanceVariable([bview class],"_capacity");
                     if(ivar)

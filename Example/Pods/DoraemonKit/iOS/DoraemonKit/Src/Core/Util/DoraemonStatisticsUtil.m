@@ -6,36 +6,55 @@
 //
 
 #import "DoraemonStatisticsUtil.h"
-#import <AFNetworking/AFNetworking.h>
 
 @implementation DoraemonStatisticsUtil
 
-+ (void)upLoadUserInfo{
-    NSString *url = @"http://doraemon.xiaojukeji.com/uploadAppData";
++ (nonnull DoraemonStatisticsUtil *)shareInstance{
+    static dispatch_once_t once;
+    static DoraemonStatisticsUtil *instance;
+    dispatch_once(&once, ^{
+        instance = [[DoraemonStatisticsUtil alloc] init];
+    });
+    return instance;
+}
+
+- (void)upLoadUserInfo{
+    if (_noUpLoad) {
+        return;
+    }
+    NSURL *url = [NSURL URLWithString:@"https://doraemon.xiaojukeji.com/uploadAppData"];
     
     NSString *appId = [[NSBundle mainBundle] bundleIdentifier];;
     NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *doKitVersion = @"1.1.8";
     NSString *type = @"iOS";
     NSString *from = @"1";
     
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     [param setValue:appId forKey:@"appId"];
     [param setValue:appName forKey:@"appName"];
-    [param setValue:appVersion forKey:@"appVersion"];
+    [param setValue:doKitVersion forKey:@"version"];
     [param setValue:type forKey:@"type"];
     [param setValue:from forKey:@"from"];
+    NSError *error;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:param options:0 error:&error];
     
-    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
-    session.responseSerializer = [AFJSONResponseSerializer serializer];
-    session.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
-    session.requestSerializer=[AFJSONRequestSerializer serializer];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:postData];
     
-    [session POST:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        if (error) {
+//            NSLog(@"%@",error);
+//        }else{
+//            NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//            NSLog(@"%@",str);
+//        }
     }];
-
-    
+    [task resume];
 }
 
 @end

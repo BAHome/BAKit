@@ -338,8 +338,7 @@ UIColor *BAKit_Color_Hex(NSString *hexString) {
 
 @implementation NSObject(BAKit_Const_Color)
 
-+ (void)load
-{
++ (void)load {
     BAKit_Color_ThemYellow = BAKit_Color_RGB(229, 205, 139);
     BAKit_Color_ThemBlue = BAKit_Color_RGB(92, 140, 193);
     

@@ -22,10 +22,8 @@
   */
 - (NSArray <NSValue *> *)ba_rangesOfString:(NSString *)searchString
                                    options:(NSStringCompareOptions)options
-                               serachRange:(NSRange)serachRange
-{
-    if (serachRange.location == NSNotFound)
-    {
+                               serachRange:(NSRange)serachRange {
+    if (serachRange.location == NSNotFound) {
         serachRange = NSMakeRange(0, self.length);
     }
     NSMutableArray *array = [NSMutableArray array];
@@ -37,13 +35,11 @@
 - (void)ba_rangeOfString:(NSString *)searchString
                    range:(NSRange)searchRange
                    array:(NSMutableArray *)array
-                 options:(NSStringCompareOptions)mask
-{
+                 options:(NSStringCompareOptions)mask {
     
     NSRange range = [self rangeOfString:searchString options:mask range:searchRange];
     
-    if (range.location != NSNotFound)
-    {
+    if (range.location != NSNotFound) {
         
         [array addObject:[NSValue valueWithRange:range]];
         [self ba_rangeOfString:searchString

@@ -40,49 +40,42 @@
 
 @implementation UIView (BAShake)
 
-- (void)ba_shake
-{
+- (void)ba_shake {
     [self ba_shake:10 withDelta:5 completion:nil];
 }
 
 - (void)ba_shake:(int)times
-       withDelta:(CGFloat)delta
-{
+       withDelta:(CGFloat)delta {
     [self ba_shake:times withDelta:delta completion:nil];
 }
 
 - (void)ba_shake:(int)times
        withDelta:(CGFloat)delta
-      completion:(nullable void (^)(void))handler
-{
+      completion:(nullable void (^)(void))handler {
     [self _shake:times direction:1 currentTimes:0 withDelta:delta speed:0.03 shakeDirection:BAKit_ShakeDirectionHorizontal completion:handler];
 }
 
 - (void)ba_shake:(int)times
        withDelta:(CGFloat)delta
-           speed:(NSTimeInterval)interval
-{
+           speed:(NSTimeInterval)interval {
     [self ba_shake:times withDelta:delta speed:interval completion:nil];
 }
 
 - (void)ba_shake:(int)times
        withDelta:(CGFloat)delta
            speed:(NSTimeInterval)interval
-      completion:(nullable void (^)(void))handler
-{
+      completion:(nullable void (^)(void))handler {
     [self _shake:times direction:1 currentTimes:0 withDelta:delta speed:interval shakeDirection:BAKit_ShakeDirectionHorizontal completion:handler];
 }
 
 - (void)ba_shake:(int)times
        withDelta:(CGFloat)delta
            speed:(NSTimeInterval)interval
-  shakeDirection:(BAKit_ShakeDirection)shakeDirection
-{
+  shakeDirection:(BAKit_ShakeDirection)shakeDirection {
     [self ba_shake:times withDelta:delta speed:interval shakeDirection:shakeDirection completion:nil];
 }
 
-- (void)ba_shake:(int)times withDelta:(CGFloat)delta speed:(NSTimeInterval)interval shakeDirection:(BAKit_ShakeDirection)shakeDirection completion:(nullable void (^)(void))handler
-{
+- (void)ba_shake:(int)times withDelta:(CGFloat)delta speed:(NSTimeInterval)interval shakeDirection:(BAKit_ShakeDirection)shakeDirection completion:(nullable void (^)(void))handler {
     [self _shake:times direction:1 currentTimes:0 withDelta:delta speed:interval shakeDirection:shakeDirection completion:handler];
 }
 
@@ -92,8 +85,7 @@
      withDelta:(CGFloat)delta
          speed:(NSTimeInterval)interval
 shakeDirection:(BAKit_ShakeDirection)shakeDirection
-    completion:(nullable void (^)())handler
-{
+    completion:(nullable void (^)())handler {
     [UIView animateWithDuration:interval animations:^{
         self.transform = (shakeDirection == BAKit_ShakeDirectionHorizontal) ? CGAffineTransformMakeTranslation(delta * direction, 0) : CGAffineTransformMakeTranslation(0, delta * direction);
     } completion:^(BOOL finished) {

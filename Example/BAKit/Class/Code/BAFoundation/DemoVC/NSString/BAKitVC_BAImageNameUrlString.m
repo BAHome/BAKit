@@ -27,8 +27,7 @@
     
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     
     self.tableView.backgroundColor = BAKit_Color_Clear;
     self.dataArray = [self.mutableDataArray mutableCopy];
@@ -40,8 +39,7 @@
     
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
     self.ba_tableViewImageViewSize = kImageViewSize;
@@ -51,19 +49,15 @@
 }
 
 #pragma mark - setter / getter
-- (NSArray *)titlesArray
-{
-    if (!_titlesArray)
-    {
+- (NSArray *)titlesArray {
+    if (!_titlesArray) {
         _titlesArray = @[@"boai", @"博爱", @"tom", @"子丰"];
     }
     return _titlesArray;
 }
 
-- (NSMutableArray *)userImageNamesArray
-{
-    if (!_userImageNamesArray)
-    {
+- (NSMutableArray *)userImageNamesArray {
+    if (!_userImageNamesArray) {
         _userImageNamesArray = @[].mutableCopy;
         
         [self.titlesArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -74,18 +68,15 @@
     return _userImageNamesArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

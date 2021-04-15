@@ -29,8 +29,7 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
 
 @implementation BABaseListViewController
 
-- (void)ba_base_viewWillAppear
-{
+- (void)ba_base_viewWillAppear {
     
 }
 
@@ -40,45 +39,37 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
 
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.view.backgroundColor = BAKit_Color_White;
     
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if (self.dataArray)
-    {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.dataArray) {
         return self.dataArray.count;
     }
     return 0;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     BABaseListViewSectionModel *sectionModel = self.dataArray[section];
-    if (sectionModel)
-    {
+    if (sectionModel) {
         return sectionModel.sectionDataArray.count;
     }
     return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (!self.tableView.ba_tableViewCellStyle)
-    {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!self.tableView.ba_tableViewCellStyle) {
         self.tableView.ba_tableViewCellStyle = UITableViewCellStyleValue1;
     }
     UITableViewCell *cell = [UITableViewCell ba_cellDequeueFromIdentify:kCellID cellStyle:self.tableView.ba_tableViewCellStyle tableView:tableView];
     
     cell.backgroundColor = BAKit_Color_Clear;
 
-    if (self.ba_tabelViewCellConfig_block)
-    {
+    if (self.ba_tabelViewCellConfig_block) {
         self.ba_tabelViewCellConfig_block(tableView, indexPath, cell);
     }
     BABaseListViewSectionModel *sectionModel = self.dataArray[indexPath.section];
@@ -86,34 +77,25 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
     NSString *msg = [@(indexPath.row + 1).stringValue stringByAppendingString:@"、"];
     
     cell.textLabel.text = [msg stringByAppendingString:model.title];
-    if (!model.detailString)
-    {
+    if (!model.detailString) {
         cell.textLabel.numberOfLines = 0;
     }
-    if (self.ba_tableViewImageViewSize == 0)
-    {
+    if (self.ba_tableViewImageViewSize == 0) {
         self.ba_tableViewImageViewSize = 40;
     }
-    if (model.imageName)
-    {
-        if ([BAKit_RegularExpression ba_regularIsUrl:model.imageName])
-        {
+    if (model.imageName) {
+        if ([BAKit_RegularExpression ba_regularIsUrl:model.imageName]) {
             [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.imageName] placeholderImage:BAKit_ImageName(@"publicNumber")];
-        }
-        else
-        {
+        } else {
             cell.imageView.image = BAKit_ImageName(model.imageName);
         }
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             CGSize imageSize = CGSizeMake(self.ba_tableViewImageViewSize, self.ba_tableViewImageViewSize);
             
-            if (self.ba_tableViewImageViewIsRound)
-            {
+            if (self.ba_tableViewImageViewIsRound) {
                 [UIImage ba_imageToChangeCellRoundImageViewSizeWithCell:cell image:cell.imageView.image imageSize:imageSize];
-            }
-            else
-            {
+            } else {
                 [UIImage ba_imageToChangeCellNormalImageViewSizeWithCell:cell image:cell.imageView.image imageSize:imageSize];
             }
         });
@@ -121,18 +103,12 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
     
     CGSize labelSize = BAKit_LabelSizeWithTextAndWidthAndFont(cell.textLabel.text, BAKit_SCREEN_WIDTH - cell.imageView.size.width, cell.textLabel.font);
 
-    if (labelSize.height > BAKit_Margin_44)
-    {
+    if (labelSize.height > BAKit_Margin_44) {
         cell.detailTextLabel.text = nil;
-    }
-    else
-    {
-        if ([model.detailString isKindOfClass:[NSString class]])
-        {
+    } else {
+        if ([model.detailString isKindOfClass:[NSString class]]) {
             cell.detailTextLabel.text = model.detailString;
-        }
-        else if (!BAKit_ObjectIsNull(model.detailString))
-        {
+        } else if (!BAKit_ObjectIsEmpty(model.detailString)) {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", model.detailString];
         }
     }
@@ -143,28 +119,23 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     BABaseListViewSectionModel *model = self.dataArray[indexPath.section];
 
-    if (self.ba_tabelViewDidSelectBlock)
-    {
+    if (self.ba_tabelViewDidSelectBlock) {
         self.ba_tabelViewDidSelectBlock(tableView, indexPath, model);
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    if (self.ba_tabelViewWillDisplayCell_block)
-    {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if (self.ba_tabelViewWillDisplayCell_block) {
         self.ba_tableViewIsNeedDefaultAnimation = NO;
         self.ba_tabelViewWillDisplayCell_block(tableView, indexPath, cell);
     }
     
-    if (self.ba_tableViewIsNeedDefaultAnimation)
-    {
+    if (self.ba_tableViewIsNeedDefaultAnimation) {
         // 博爱专属动画 1
         cell.contentView.transform =  CGAffineTransformScale(cell.contentView.transform, 0.3f, 0.3f);
         [cell ba_animation_springWithDuration:0.8f delay:0.f damping:0.8f initialSpringVelocity:2 startOptions:UIViewAnimationOptionCurveEaseInOut finishOptions:UIViewAnimationOptionCurveEaseInOut startBlock:^{
@@ -191,11 +162,9 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
     
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     BABaseListViewSectionModel *model = self.dataArray[section];
-    if (!BAKit_stringIsBlank(model.sectionTitle))
-    {
+    if (!BAKit_stringIsBlank(model.sectionTitle)) {
         return BAKit_Margin_44;
     }
     return 0;
@@ -205,16 +174,13 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
 //    return UITableViewAutomaticDimension;
 //}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     BABaseListViewSectionModel *model = self.dataArray[section];
-    if (!BAKit_stringIsBlank(model.sectionTitle))
-    {
+    if (!BAKit_stringIsBlank(model.sectionTitle)) {
         UIView *headerView = [UIView new];
         [headerView ba_animation_createGradientWithColorArray:@[BAKit_Color_White, BAKit_Color_Green_LightGreen, BAKit_Color_Green, BAKit_Color_Green_LightGreen, BAKit_Color_White] frame:CGRectMake(0, 0, BAKit_SCREEN_WIDTH, BAKit_Margin_44) direction:UIViewLinearGradientDirectionHorizontal];
         
@@ -229,18 +195,15 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
     return [UIView new];
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     self.tableView.frame = self.view.bounds;
 }
 
 #pragma mark - setter / getter
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [[UITableView alloc] init];
         self.tableView.backgroundColor = BAKit_Color_Clear;
         self.tableView.delegate = self;
@@ -257,8 +220,7 @@ static NSString * const kCellID = @"BABaseListViewControllerCell";
     return _tableView;
 }
 
-- (void)setBa_tableViewIsNeedDefaultAnimation:(BOOL)ba_tableViewIsNeedDefaultAnimation
-{
+- (void)setBa_tableViewIsNeedDefaultAnimation:(BOOL)ba_tableViewIsNeedDefaultAnimation {
     _ba_tableViewIsNeedDefaultAnimation = ba_tableViewIsNeedDefaultAnimation;
 }
 

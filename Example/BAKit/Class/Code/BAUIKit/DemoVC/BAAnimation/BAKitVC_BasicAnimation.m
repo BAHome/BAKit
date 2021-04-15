@@ -33,8 +33,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"UIView 基本动画";
     self.imageView.hidden = NO;
     self.animationButton.hidden = NO;
@@ -44,43 +43,35 @@
 
 #pragma mark - custom metohd
 
-- (void)handleButtonAction:(UIButton *)sender
-{
+- (void)handleButtonAction:(UIButton *)sender {
     sender.selected = !sender.selected;
     
     switch (self.animationType) {
-        case 0:
-        {
+        case 0: {
             [self ba_changFrame];
         }
             break;
-        case 1:
-        {
+        case 1: {
             [self ba_changeBounds];
         }
             break;
-        case 2:
-        {
+        case 2: {
             [self ba_changeCenter];
         }
             break;
-        case 3:
-        {
+        case 3: {
             [self ba_changeAlpha];
         }
             break;
-        case 4:
-        {
+        case 4: {
             [self ba_changeSpring];
         }
             break;
-        case 5:
-        {
+        case 5: {
             [self ba_changeBackgroundColor];
         }
             break;
-        case 6:
-        {
+        case 6: {
             [self ba_changeScale:sender.selected];
         }
             break;
@@ -90,8 +81,7 @@
     }
 }
 
-- (void)ba_changFrame
-{
+- (void)ba_changFrame {
     CGRect originalFrame = self.imageView.frame;
     CGRect newFrame = CGRectMake(frame_x - 20, frame_y - 100, 100, 100);
     
@@ -100,8 +90,7 @@
     }];
 }
 
-- (void)ba_changeBounds
-{
+- (void)ba_changeBounds {
     CGRect originalBounds = self.imageView.bounds;
     /*! 尽管这个 newFrame 的 x，y 跟原始的不同，动画也只是改变了宽高 */
     CGRect newBounds = CGRectMake(0, 0, 300, 100);
@@ -111,8 +100,7 @@
     }];
 }
 
-- (void)ba_changeCenter
-{
+- (void)ba_changeCenter {
     CGPoint originalCenter = self.imageView.center;
     CGPoint newCenter = CGPointMake(100, 100);
     
@@ -121,13 +109,11 @@
     }];
 }
 
-- (void)ba_changeAlpha
-{
+- (void)ba_changeAlpha {
     [self.imageView ba_animation_alphaWithDuration:1.5f startAlpha:0.2f finishAlpha:1.0f];
 }
 
-- (void)ba_changeSpring
-{
+- (void)ba_changeSpring {
 //    CGRect originalFrame = self.imageView.frame;
 //    CGRect newFrame = CGRectMake(frame_x - 50, frame_y, originalFrame.size.width * 0.3, originalFrame.size.height * 0.3);
 //    
@@ -147,8 +133,7 @@
 
 }
 
-- (void)ba_changeBackgroundColor
-{
+- (void)ba_changeBackgroundColor {
     [UIView animateKeyframesWithDuration:10.0f delay:0.f options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
         
         [UIView addKeyframeWithRelativeStartTime:0.f relativeDuration:1.0 / 4 animations:^{
@@ -172,16 +157,12 @@
     }];
 }
 
-- (void)ba_changeScale:(BOOL)isAnimation
-{
-    if (isAnimation)
-    {
+- (void)ba_changeScale:(BOOL)isAnimation {
+    if (isAnimation) {
         [self.imageView ba_animation_scaleShowWithDuration:1.f ratio:1.f finishBlock:^{
             
         }];
-    }
-    else
-    {
+    } else {
         [self.imageView ba_animation_scaleDismissWithDuration:1.f ratio:1.f finishBlock:^{
             
         }];
@@ -189,16 +170,13 @@
 }
 
 #pragma mark - setter getter
-- (UIImageView *)imageView
-{
-    if (!_imageView)
-    {
+- (UIImageView *)imageView {
+    if (!_imageView) {
         _imageView = [UIImageView new];
         _imageView.backgroundColor = BAKit_Color_Yellow;
         
         _imageView.image = BAKit_ImageName(@"test5");
-        if (self.animationType == 5)
-        {
+        if (self.animationType == 5) {
             self.imageView.image = BAKit_ImageName(@"tom6");
         }
         
@@ -211,10 +189,8 @@
     return _imageView;
 }
 
-- (UIButton *)animationButton
-{
-    if (!_animationButton)
-    {
+- (UIButton *)animationButton {
+    if (!_animationButton) {
         _animationButton = [UIButton ba_buttonWithFrame:CGRectZero title:@"点我试试" titleColor:BAKit_Color_Red titleFont:BAKit_Font_systemFontOfSize_15 backgroundColor:BAKit_Color_Gray_11];
         [_animationButton ba_buttonAddTarget:self tag:0 action:@selector(handleButtonAction:)];
         self.animationButton.frame = CGRectMake(0, self.imageView.bottom + 20, 100, 50);

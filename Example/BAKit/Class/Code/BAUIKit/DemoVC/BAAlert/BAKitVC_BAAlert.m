@@ -45,8 +45,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
 @implementation BAKitVC_BAAlert
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.tableView.estimatedRowHeight = 44.f;
@@ -56,23 +55,19 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
 }
 
 #pragma mark - UITableViewDataSource / UITableViewDelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataArray.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.dataArray[section] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
-    if ( !cell )
-    {
+    if ( !cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.textLabel.numberOfLines = 0;
         
@@ -84,13 +79,10 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ( 0 == indexPath.section )
-    {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ( 0 == indexPath.section ) {
         [self showAlertAction:indexPath.row + 1];
-    }else if ( 1 == indexPath.section )
-    {
+    }else if ( 1 == indexPath.section ) {
         switch ( indexPath.row ) {
             case 0:
             {
@@ -114,8 +106,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
     
     UILabel *headerTitle = [UILabel new];
@@ -126,35 +117,27 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     
     headerTitle.frame = CGRectMake(20, 0, BAKit_SCREEN_WIDTH - 40, 40);
 
-    if (0 == section)
-    {
+    if (0 == section) {
         headerTitle.text = @"BAAlert 的几种日常用法，高斯模糊、炫酷动画，应有尽有！";
-    }
-    else if (1 == section)
-    {
+    } else if (1 == section) {
         headerTitle.text = @"BAActionSheet";
-    }
-    else if (2 == section)
-    {
+    } else if (2 == section) {
         headerTitle.text = @"BAAlert特点";
     }
     
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
 #pragma mark - 点击事件
-- (void)showAlertAction:(NSInteger)index
-{
+- (void)showAlertAction:(NSInteger)index {
     switch (index) {
         case 1:
             [self performSelector:@selector(alert1)];
@@ -177,15 +160,13 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     }
 }
 
-- (void)actionSheet1
-{
+- (void)actionSheet1 {
     NSMutableArray *dataArray = [NSMutableArray array];
     NSArray *contentArray = @[@"微信支付", @"支付宝", @"预付款账户"];
     NSArray *subContentArray = @[@"", @"18588888888", @"余额：￥480.00"];
     NSArray *imageArray = @[@"123.png", @"背景.jpg", @"美女.jpg"];
     
-    for (NSInteger i = 0; i < contentArray.count; i++)
-    {
+    for (NSInteger i = 0; i < contentArray.count; i++) {
         BAActionSheetModel *model = [BAActionSheetModel new];
         model.imageUrl = imageArray[i];
         model.content = contentArray[i];
@@ -208,13 +189,11 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     }];
 }
 
-- (void)actionSheet2
-{
+- (void)actionSheet2 {
     NSMutableArray *dataArray = [NSMutableArray array];
     NSArray *contentArray = @[@"微信支付", @"支付宝", @"预付款账户"];
 
-    for (NSInteger i = 0; i < contentArray.count; i++)
-    {
+    for (NSInteger i = 0; i < contentArray.count; i++) {
         BAActionSheetModel *model = [BAActionSheetModel new];
 //        model.imageUrl = imageArray[i];
         model.content = contentArray[i];
@@ -237,8 +216,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     }];
 }
 
-- (void)actionSheet3
-{
+- (void)actionSheet3 {
     NSArray *contentArray = @[@"微信支付", @"支付宝", @"预付款账户", @"中行"];
     NSArray <NSArray *>*subContentArray = @[
                                             @[@"微信支付1", @"微信支付2", @"微信支付3"],
@@ -248,14 +226,12 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
                                             ];
     
     NSMutableArray *dataArray = @[].mutableCopy;
-    for (NSInteger i = 0; i < contentArray.count; i++)
-    {
+    for (NSInteger i = 0; i < contentArray.count; i++) {
         BAActionSheetModel *model = [BAActionSheetModel new];
         model.content = contentArray[i];
         
         NSMutableArray *mutArray = @[].mutableCopy;
-        for (NSInteger j = 0; j < subContentArray[i].count; j ++)
-        {
+        for (NSInteger j = 0; j < subContentArray[i].count; j ++) {
             BAActionSheetSubContentModel *subContentModel = [BAActionSheetSubContentModel new];
             subContentModel.subContent = subContentArray[i][j];
             [mutArray addObject:subContentModel];
@@ -276,20 +252,17 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
         
         self.actionSheet = tempView;
     } actionBlock:^(NSIndexPath *indexPath, BAActionSheetModel *model) {
-        if (model.subContentArray.count > 0)
-        {
+        if (model.subContentArray.count > 0) {
             BAKit_ShowAlertWithMsg_ios8(model.subContentArray[indexPath.row].subContent);
         }
-        else
-        {
+        else {
             BAKit_ShowAlertWithMsg_ios8(model.content);
         }
     }];
 }
 
 
-- (void)alert1
-{
+- (void)alert1 {
     BAKit_WeakSelf
     /*! 第一种封装使用示例 */
     [BAAlert ba_alertShowWithTitle:title0 message:titleMsg0 image:nil buttonTitleArray:@[@"取消",@"确定",@"确定2",@"确定3"] buttonTitleColorArray:@[[UIColor redColor], [UIColor greenColor], [UIColor grayColor], [UIColor purpleColor]] configuration:^(BAAlert *tempView) {
@@ -307,8 +280,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     } actionBlock:^(BAAlert *tempView, NSInteger index) {
         BAKit_StrongSelf
         [self.alertView1 ba_alertHidden];
-        if (index == 1)
-        {
+        if (index == 1) {
             NSLog(@"点击了确定按钮！");
             BAKitVC_BAAlert2 *vc2 = [BAKitVC_BAAlert2 new];
             vc2.title = @"alert1";
@@ -317,8 +289,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     }];
 }
 
-- (void)alert2
-{
+- (void)alert2 {
 //    /*! 2、自定义按钮颜色 */
     BAKit_WeakSelf
     [BAAlert ba_alertShowWithTitle:@"温馨提示：" message:titleMsg2 image:nil buttonTitleArray:@[@"取消", @"跳转VC2"] buttonTitleColorArray:@[[UIColor redColor], [UIColor greenColor]] configuration:^(BAAlert *tempView) {
@@ -337,12 +308,10 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     } actionBlock:^(BAAlert *tempView, NSInteger index) {
         BAKit_StrongSelf
         [self.alertView2 ba_alertHidden];
-        if (index == 0)
-        {
+        if (index == 0) {
             NSLog(@"点击了取消按钮！");
         }
-        else if (index == 1)
-        {
+        else if (index == 1) {
             NSLog(@"点击了确定按钮！");
             BAKitVC_BAAlert2 *vc2 = [BAKitVC_BAAlert2 new];
             vc2.title = @"alert2";
@@ -351,8 +320,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     }];
 }
 
-- (void)alert3
-{
+- (void)alert3 {
     /*! 3、自定义背景图片 */
     BAKit_WeakSelf
     [BAAlert ba_alertShowWithTitle:@"温馨提示：" message:titleMsg1 image:nil buttonTitleArray:@[@"取消", @"确定"] buttonTitleColorArray:@[[UIColor redColor], [UIColor greenColor]] configuration:^(BAAlert *tempView) {
@@ -371,12 +339,10 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     } actionBlock:^(BAAlert *tempView, NSInteger index) {
         BAKit_StrongSelf
         [self.alertView3 ba_alertHidden];
-        if (index == 0)
-        {
+        if (index == 0) {
             NSLog(@"点击了取消按钮！");
         }
-        else if (index == 1)
-        {
+        else if (index == 1) {
             NSLog(@"点击了确定按钮！");
             BAKitVC_BAAlert2 *vc2 = [BAKitVC_BAAlert2 new];
             vc2.title = @"alert3";
@@ -385,8 +351,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     }];
 }
 
-- (void)alert4
-{
+- (void)alert4 {
     /*! 4、内置图片和文字，可滑动查看 */
     BAKit_WeakSelf
     [BAAlert ba_alertShowWithTitle:@"温馨提示：" message:titleMsg1 image:[UIImage imageNamed:@"美女.jpg"] buttonTitleArray:@[@"取消", @"跳转VC2"] buttonTitleColorArray:@[[UIColor redColor], [UIColor greenColor]] configuration:^(BAAlert *tempView) {
@@ -401,12 +366,10 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     } actionBlock:^(BAAlert *tempView, NSInteger index) {
         BAKit_StrongSelf
         [self.alertView4 ba_alertHidden];
-        if (index == 0)
-        {
+        if (index == 0) {
             NSLog(@"点击了取消按钮！");
         }
-        else if (index == 1)
-        {
+        else if (index == 1) {
             NSLog(@"点击了确定按钮！");
             BAKitVC_BAAlert2 *vc2 = [BAKitVC_BAAlert2 new];
             vc2.title = @"alert4";
@@ -415,8 +378,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     }];
 }
 
-- (void)alert5
-{
+- (void)alert5 {
     /*! 5、完全自定义alert */
     _customView = [CustomView new];
     self.customView.frame = CGRectMake(50, BAKit_SCREEN_HEIGHT - 300, BAKit_SCREEN_WIDTH - 50 * 2, 162);
@@ -431,8 +393,7 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     
     self.customView.block = ^(NSInteger index) {
         BAKit_StrongSelf
-        if (index == 1)
-        {
+        if (index == 1) {
             [self.alertView5 ba_alertHidden];
         }
     };
@@ -451,10 +412,8 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
 
 #pragma mark - setter / getter
 
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
@@ -464,10 +423,8 @@ static NSString * const titleMsg2 = @"对于 MacBook，我们给自己设定了�
     return _tableView;
 }
 
-- (NSArray *)dataArray
-{
-    if ( !_dataArray )
-    {
+- (NSArray *)dataArray {
+    if ( !_dataArray ) {
         _dataArray = [NSArray arrayWithObjects:@[@"1、类似系统alert【加边缘手势消失】",
                                                  @"2、自定义按钮颜色",
                                                  @"3、自定义背景图片",

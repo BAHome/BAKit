@@ -18,23 +18,19 @@
 
 @implementation BAUIKitViewController
 
-- (void)ba_base_viewWillAppear
-{
+- (void)ba_base_viewWillAppear {
     NSLog(@"BAUIKitViewController：%s", __func__);
 }
 
-- (void)ba_base_viewDidDAppear
-{
+- (void)ba_base_viewDidDAppear {
     NSLog(@"BAUIKitViewController：%s", __func__);
 }
 
-- (void)ba_base_viewWillDisappear
-{
+- (void)ba_base_viewWillDisappear {
     NSLog(@"BAUIKitViewController：%s", __func__);
 }
 
-- (void)ba_base_viewDidDisappear
-{
+- (void)ba_base_viewDidDisappear {
     NSLog(@"BAUIKitViewController：%s", __func__);
 }
 
@@ -43,8 +39,7 @@
     
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     [self ba_creatData];
 
     
@@ -63,24 +58,24 @@
     self.ba_tabelViewDidSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath, BABaseListViewSectionModel *model) {
         BAKit_StrongSelf
         
-        [self hud_showInfoWithStatus:@"加载中..."];
         NSString *className = self.classNamesArray[indexPath.row];
         Class class = NSClassFromString(className);
-        if (class)
-        {
+        if (class) {
             UIViewController *vc = class.new;
             vc.title = self.titlesArray[indexPath.row];
     
             [self.navigationController pushViewController:vc animated:YES];
-            [self hud_dismissWithDelay:2];
         }
     };
     
 }
 
-- (void)ba_creatData
-{
+- (void)ba_creatData {
     
+    [self ba_addCellWithTitle:@"BACollectionViewCustomFlowLayout" className:@"BACollectionViewCustomFlowLayoutVC"];
+    [self ba_addCellWithTitle:@"BACircleView" className:@"BACircleViewVC"];
+    [self ba_addCellWithTitle:@"Keyboard" className:@"BAKitVC_Keyboard"];
+    [self ba_addCellWithTitle:@"OrgTree" className:@"BAKitVC_OrgTree"];
     [self ba_addCellWithTitle:@"HUD" className:@"BAKitVC_HUD"];
     [self ba_addCellWithTitle:@"LOTAnimationView" className:@"BAKitVC_LOTAnimationView"];
     [self ba_addCellWithTitle:@"UIWindow" className:@"BAKitVC_UIWindow"];
@@ -106,14 +101,12 @@
     
 }
 
-- (void)ba_addCellWithTitle:(NSString *)title className:(NSString *)className
-{
+- (void)ba_addCellWithTitle:(NSString *)title className:(NSString *)className {
     [self.titlesArray addObject:title];
     [self.classNamesArray addObject:className];
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
         
     BAKit_UITableViewSetSeparator(self.tableView, BAKit_Color_Cyan, UIEdgeInsetsMake(0, 0, 0, 0));
@@ -121,28 +114,22 @@
 }
 
 #pragma mark - setter / getter
-- (NSMutableArray *)titlesArray
-{
-    if (!_titlesArray)
-    {
+- (NSMutableArray *)titlesArray {
+    if (!_titlesArray) {
         _titlesArray = @[].mutableCopy;
     }
     return _titlesArray;
 }
 
-- (NSMutableArray *)classNamesArray
-{
-    if (!_classNamesArray)
-    {
+- (NSMutableArray *)classNamesArray {
+    if (!_classNamesArray) {
         _classNamesArray = @[].mutableCopy;
     }
     return _classNamesArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
@@ -150,8 +137,7 @@
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

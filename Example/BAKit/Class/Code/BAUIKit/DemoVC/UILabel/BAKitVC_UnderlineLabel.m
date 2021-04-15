@@ -30,8 +30,7 @@ static NSString *const kString3 = @"详情点击查看";
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"可点击的下划线文字";
     self.label1.hidden = NO;
     self.label2.hidden = NO;
@@ -70,10 +69,8 @@ static NSString *const kString3 = @"详情点击查看";
 
 #pragma mark - setter / getter
 
-- (UILabel *)label1
-{
-    if (!_label1)
-    {
+- (UILabel *)label1 {
+    if (!_label1) {
         _label1 = [UILabel new];
         _label1.backgroundColor = BAKit_Color_Gray_11;
         _label1.font = BAKit_Font_systemFontOfSize_15;
@@ -113,10 +110,8 @@ static NSString *const kString3 = @"详情点击查看";
     return _label1;
 }
 
-- (UILabel *)label2
-{
-    if (!_label2)
-    {
+- (UILabel *)label2 {
+    if (!_label2) {
         _label2 = [UILabel new];
         _label2.backgroundColor = BAKit_Color_Gray_11;
         _label2.font = BAKit_Font_systemFontOfSize_15;
@@ -129,10 +124,8 @@ static NSString *const kString3 = @"详情点击查看";
     return _label2;
 }
 
-- (UIButton *)button
-{
-    if (!_button)
-    {
+- (UIButton *)button {
+    if (!_button) {
         _button = [UIButton ba_buttonWithFrame:CGRectZero title:kString3 titleColor:BAKit_Color_Blue_LightBLue titleFont:BAKit_Font_systemFontOfSize_15 backgroundColor:BAKit_Color_Gray_11];
         
         NSRange titleRange = NSMakeRange(0, kString3.length);

@@ -12,8 +12,7 @@
 
 @implementation AppDelegate (BADoraemonKit)
 
-- (void)initDoraemonKit
-{
+- (void)initDoraemonKit {
 #ifdef DEBUG
     [[DoraemonManager shareInstance] install];
 //    [[DoraemonManager shareInstance] removePluginWithPluginName:@"DoraemonGPSPlugin" atModule:DoraemonLocalizedString(@"常用工具")];

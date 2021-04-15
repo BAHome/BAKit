@@ -33,24 +33,23 @@
 
 @implementation BAKitVC_DeviceInfoManager
 
-- (void)ba_base_viewWillAppear
-{
+- (void)ba_base_viewWillAppear {
     [self ba_battery];
 }
 
-- (void)ba_base_viewDidDisappear
-{
+- (void)ba_base_viewDidDisappear {
     // 停止监测电池电量
-    [BAKit_DeviceInfoManagerShared ba_deviceInfoBatteryStopMonitoring];
+    [BAKit_DeviceInfoManager.shared ba_deviceInfoBatteryStopMonitoring];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSString *msg = [BAKit_DeviceInfoManager.shared ba_deviceInfoGetCuttrntConnectWifiName];
+    [self hud_showToastStatus:msg];
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.tableView.backgroundColor = BAKit_Color_Clear;
     self.dataArray = [self.mutableDataArray mutableCopy];
     self.tableView.ba_tableViewCellStyle = UITableViewCellStyleSubtitle;
@@ -60,23 +59,22 @@
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:15.0f];
         cell.detailTextLabel.textColor = BAKit_Color_Red;
         cell.backgroundColor = BAKit_Color_Clear;
+        cell.textLabel.numberOfLines = 0;
     };
     
     self.ba_tabelViewDidSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath, BABaseListViewSectionModel *model) {
         BAKit_StrongSelf
-        if (indexPath.section == self.dataArray.count-1)
-        {
+        if (indexPath.section == self.dataArray.count-1) {
             [self test];
         }
     };
 }
 
-- (void)ba_battery
-{
+- (void)ba_battery {
     // 开始监测电池电量
-    [BAKit_DeviceInfoManagerShared ba_deviceInfoBatteryStartMonitoring];
+    [BAKit_DeviceInfoManager.shared ba_deviceInfoBatteryStartMonitoring];
     
-    BAKit_DeviceInfoManagerShared.ba_batteryInfoBlock = ^(BAKit_BatteryInfoState batteryInfoState, NSUInteger batteryLevelPercent) {
+    BAKit_DeviceInfoManager.shared.ba_batteryInfoBlock = ^(BAKit_BatteryInfoState batteryInfoState, NSUInteger batteryLevelPercent) {
         
         self.currentBatteryLevelPercent = batteryLevelPercent;
         switch (batteryInfoState) {
@@ -110,14 +108,12 @@
     };
 }
 
-- (void)test
-{
+- (void)test {
     NSString *msg = [NSString stringWithFormat:@"当前电量：%lu%%\n当前电池状态：%@", (unsigned long)self.currentBatteryLevelPercent, self.currentBatteryInfoState];
     BAKit_ShowAlertWithMsg_ios8(msg);
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
         
     BAKit_UITableViewSetSeparator(self.tableView, BAKit_Color_Cyan, UIEdgeInsetsMake(0, 0, 0, 0));
@@ -126,10 +122,8 @@
 
 #pragma mark - setter / getter
 
-- (NSArray<NSArray *> *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray<NSArray *> *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[
                        @[
                            @"获取当前设备 型号，例如：iPhone SE",
@@ -187,10 +181,8 @@
     return _titleArray;
 }
 
-- (NSArray *)sectionTitleArray
-{
-    if (!_sectionTitleArray)
-    {
+- (NSArray *)sectionTitleArray {
+    if (!_sectionTitleArray) {
         _sectionTitleArray = @[
                                @"设备相关",
                                @"APP",
@@ -204,12 +196,10 @@
     return _sectionTitleArray;
 }
 
-- (NSArray<NSArray *> *)descTitleArray
-{
-    if (!_descTitleArray)
-    {
+- (NSArray<NSArray *> *)descTitleArray {
+    if (!_descTitleArray) {
         // 单个 CPU 运行比率
-        NSArray *CPUArray = [BAKit_DeviceInfoManagerShared ba_deviceGetPerCPUUsage];
+        NSArray *CPUArray = [BAKit_DeviceInfoManager.shared ba_deviceGetPerCPUUsage];
         NSMutableString *perCPUUsage = [NSMutableString string];
         
         [CPUArray enumerateObjectsUsingBlock:^(NSNumber *per, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -217,79 +207,79 @@
         }];
         
         // 磁盘总空间
-        int64_t totalDisk = [BAKit_DeviceInfoManagerShared ba_deviceGetTotalDiskSpace];
+        int64_t totalDisk = [BAKit_DeviceInfoManager.shared ba_deviceGetTotalDiskSpace];
         NSString *totalDiskNumber = [NSString stringWithFormat:@"%.2f M = %.2f G", totalDisk/1024/1024.0, totalDisk/1024/1024/1024.0];
         
         // 磁盘可用空间
-        int64_t freeDisk = [BAKit_DeviceInfoManagerShared ba_deviceGetFreeDiskSpace];
+        int64_t freeDisk = [BAKit_DeviceInfoManager.shared ba_deviceGetFreeDiskSpace];
         NSString *freeDiskNumber = [NSString stringWithFormat:@"%.2f M = %.2f G", freeDisk/1024/1024.0, freeDisk/1024/1024/1024.0];
         
         // 磁盘已用空间
-        int64_t usedDisk = [BAKit_DeviceInfoManagerShared ba_deviceGetUsedDiskSpace];
+        int64_t usedDisk = [BAKit_DeviceInfoManager.shared ba_deviceGetUsedDiskSpace];
         NSString *usedDiskNumber = [NSString stringWithFormat:@"%.2f M = %.2f G", usedDisk/1024/1024.0, usedDisk/1024/1024/1024.0];
         
 //        @"当前设备总内存空间",
-        int64_t totalMemory = [BAKit_DeviceInfoManagerShared ba_deviceGetTotalMemory];
+        int64_t totalMemory = [BAKit_DeviceInfoManager.shared ba_deviceGetTotalMemory];
         NSLog(@"totalMemory-->%lld", totalMemory);
         NSString *totalMemoryNumber = [NSString stringWithFormat:@" %.2f M = %.2f G", totalMemory/1024/1024.0, totalMemory/1024/1024/1024.0];
 //        @"当前设备活跃的内存空间",
-        int64_t activeMemory = [BAKit_DeviceInfoManagerShared ba_deviceGetActiveMemory];
+        int64_t activeMemory = [BAKit_DeviceInfoManager.shared ba_deviceGetActiveMemory];
         NSLog(@"totalMemory-->%lld", totalMemory);
         NSString *activeMemoryNumber = [NSString stringWithFormat:@" %.2f M = %.2f G", activeMemory/1024/1024.0, activeMemory/1024/1024/1024.0];
 //        @"当前设备不活跃的内存空间",
-        int64_t inActiveMemory = [BAKit_DeviceInfoManagerShared ba_deviceGetInActiveMemory];
+        int64_t inActiveMemory = [BAKit_DeviceInfoManager.shared ba_deviceGetInActiveMemory];
         NSLog(@"totalMemory-->%lld", totalMemory);
         NSString *inActiveMemoryNumber = [NSString stringWithFormat:@" %.2f M = %.2f G", inActiveMemory/1024/1024.0, inActiveMemory/1024/1024/1024.0];
 //        @"当前设备空闲的内存空间",
-        int64_t freeMemory = [BAKit_DeviceInfoManagerShared ba_deviceGetFreeMemory];
+        int64_t freeMemory = [BAKit_DeviceInfoManager.shared ba_deviceGetFreeMemory];
         NSLog(@"totalMemory-->%lld", totalMemory);
         NSString *freeMemoryNumber = [NSString stringWithFormat:@" %.2f M = %.2f G", freeMemory/1024/1024.0, freeMemory/1024/1024/1024.0];
 //        @"当前设备正在使用的内存空间",
-        int64_t usedMemory = [BAKit_DeviceInfoManagerShared ba_deviceGetUsedMemory];
+        int64_t usedMemory = [BAKit_DeviceInfoManager.shared ba_deviceGetUsedMemory];
         NSLog(@"totalMemory-->%lld", totalMemory);
         NSString *usedMemoryNumber = [NSString stringWithFormat:@" %.2f M = %.2f G", usedMemory/1024/1024.0, usedMemory/1024/1024/1024.0];
 //        @"当前设备存放内核的内存空间",
-        int64_t writedMemory = [BAKit_DeviceInfoManagerShared ba_deviceGetWritedMemory];
+        int64_t writedMemory = [BAKit_DeviceInfoManager.shared ba_deviceGetWritedMemory];
         NSLog(@"totalMemory-->%lld", totalMemory);
         NSString *writedMemoryNumber = [NSString stringWithFormat:@" %.2f M = %.2f G", writedMemory/1024/1024.0, writedMemory/1024/1024/1024.0];
 //        @"当前设备可释放的内存空间",
-        int64_t purgableMemory = [BAKit_DeviceInfoManagerShared ba_deviceGetPurgableMemory];
+        int64_t purgableMemory = [BAKit_DeviceInfoManager.shared ba_deviceGetPurgableMemory];
         NSLog(@"totalMemory-->%lld", totalMemory);
         NSString *purgableMemoryNumber = [NSString stringWithFormat:@" %.2f M = %.2f G", purgableMemory/1024/1024.0, purgableMemory/1024/1024/1024.0];
 //        @"当前任务所占用的内存（单位：MB）"
-        int64_t currentTaskUsedMemory = [BAKit_DeviceInfoManagerShared ba_deviceGetCurrentTaskUsedMemory];
+        int64_t currentTaskUsedMemory = [BAKit_DeviceInfoManager.shared ba_deviceGetCurrentTaskUsedMemory];
         NSLog(@"totalMemory-->%lld", totalMemory);
         NSString *currentTaskUsedMemoryNumber = [NSString stringWithFormat:@" %.2f M = %.2f G", currentTaskUsedMemory/1024/1024.0, currentTaskUsedMemory/1024/1024/1024.0];
         
         _descTitleArray = @[
                             @[
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetDeviceModel],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetCurrentDeviceName],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetCurrentLocalizedModel],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetCurrentSystemName],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetCurrentSystemVersion],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetUUID],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetIDFA],
-                                [[NSDateFormatter ba_setupDateFormatterWithYMDHMS] stringFromDate:[BAKit_DeviceInfoManagerShared ba_deviceGetLastSystemUptime]]
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetDeviceModel],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetCurrentDeviceName],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetCurrentLocalizedModel],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetCurrentSystemName],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetCurrentSystemVersion],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetUUID],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetIDFA],
+                                [[NSDateFormatter ba_setupDateFormatterWithYMDHMS] stringFromDate:[BAKit_DeviceInfoManager.shared ba_deviceGetLastSystemUptime]]
                                 ],
                             @[
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetCurrentAppDisplayName],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetCurrentAppShortVersionString],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetCurrentAppVersion]
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetCurrentAppDisplayName],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetCurrentAppShortVersionString],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetCurrentAppVersion]
                                 ],
                             @[
-                                @([BAKit_DeviceInfoManagerShared ba_deviceGetCPUFrequency]),
-                                @([BAKit_DeviceInfoManagerShared ba_deviceGetBusFrequency]),
-                                @([BAKit_DeviceInfoManagerShared ba_deviceGetCPUCount]),
-                                @([BAKit_DeviceInfoManagerShared ba_deviceGetCanUseCPUCount]),
-                                @([BAKit_DeviceInfoManagerShared ba_deviceGetCPUUsage]),
+                                @([BAKit_DeviceInfoManager.shared ba_deviceGetCPUFrequency]),
+                                @([BAKit_DeviceInfoManager.shared ba_deviceGetBusFrequency]),
+                                @([BAKit_DeviceInfoManager.shared ba_deviceGetCPUCount]),
+                                @([BAKit_DeviceInfoManager.shared ba_deviceGetCanUseCPUCount]),
+                                @([BAKit_DeviceInfoManager.shared ba_deviceGetCPUUsage]),
                                 perCPUUsage
                                 ],
                             @[
                                 totalDiskNumber,
                                 freeDiskNumber,
                                 usedDiskNumber,
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetApplicationSize]
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetApplicationSize]
                                 ],
                             @[
                                 totalMemoryNumber,
@@ -302,11 +292,12 @@
                                 currentTaskUsedMemoryNumber
                                 ],
                             @[
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetDeviceIPAddresses],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetIpAddressWIFI],
-                                [BAKit_DeviceInfoManagerShared ba_deviceGetIpAddressCellular],
-                                [NSString stringWithFormat:@"域名：%@，转换为 iP：%@", @"www.baidu.com", [BAKit_DeviceInfoManagerShared ba_deviceInfoQueryIpWithDomain:@"www.baidu.com"]],
-                                [BAKit_DeviceInfoManagerShared ba_deviceInfoGetCuttrntConnectWifiName]
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetDeviceIPAddresses],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetIpAddressWIFI],
+                                [BAKit_DeviceInfoManager.shared ba_deviceGetIpAddressCellular],
+                                [NSString stringWithFormat:@"域名：%@，转换为 iP：%@", @"www.baidu.com", [BAKit_DeviceInfoManager.shared ba_deviceInfoQueryIpWithDomain:@"www.baidu.com"]],
+//                                @"123"
+                                [BAKit_DeviceInfoManager.shared ba_deviceInfoGetCuttrntConnectWifiName]
                                 ],
                             @[
                                 @"请插拔 USB 充电线 再查看弹出的 alert ！",
@@ -319,20 +310,16 @@
     return _descTitleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
-        for (NSInteger i = 0; i < self.sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < self.sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = self.sectionTitleArray[i];
             NSMutableArray *cellModelArray = @[].mutableCopy;
             
-            for (NSInteger j = 0; j < self.titleArray[i].count; j ++)
-            {
+            for (NSInteger j = 0; j < self.titleArray[i].count; j ++) {
                 BABaseListViewCellModel *cellModel = [BABaseListViewCellModel new];
                 
                 cellModel.title = self.titleArray[i][j];

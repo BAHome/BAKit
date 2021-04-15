@@ -14,18 +14,15 @@
 
 BAKit_SingletonM(BAKit_LanguageSwitchManager)
 
-- (void)setLanguageType:(BAKit_LanguageType)languageType
-{
+- (void)setLanguageType:(BAKit_LanguageType)languageType {
     _languageType = languageType;
     
     switch (languageType) {
-        case BAKit_LanguageType_CN:
-        {
+        case BAKit_LanguageType_CN: {
             [self ba_changeLanguageTo:BAKit_Define_NotiName_Language_CN];
         }
             break;
-        case BAKit_LanguageType_EN:
-        {
+        case BAKit_LanguageType_EN: {
             [self ba_changeLanguageTo:BAKit_Define_NotiName_Language_EN];
         }
             break;
@@ -35,8 +32,7 @@ BAKit_SingletonM(BAKit_LanguageSwitchManager)
     }
 }
 
-- (void)ba_changeLanguageTo:(NSString *)language
-{
+- (void)ba_changeLanguageTo:(NSString *)language {
     [NSBundle ba_setLanguage:language];
     
     [BAKit_UserDefaults ba_archive_setObject:language forKey:BAKit_Define_NotiName_Language_Key];

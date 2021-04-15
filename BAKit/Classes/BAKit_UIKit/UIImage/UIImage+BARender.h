@@ -59,23 +59,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-typedef NS_ENUM(NSUInteger, BAKit_ImageType) {
-    BAKit_ImageTypeUnknow = 0,
-    BAKit_ImageTypeJPEG,
-    BAKit_ImageTypeJPEG2000,
-    BAKit_ImageTypeTIFF,
-    BAKit_ImageTypeBMP,
-    BAKit_ImageTypeICO,
-    BAKit_ImageTypeICNS,
-    BAKit_ImageTypeGIF,
-    BAKit_ImageTypePNG,
-    BAKit_ImageTypeWebP,
-    BAKit_ImageTypeMp4,
-    BAKit_ImageTypeOther
-};
-CG_EXTERN BAKit_ImageType ImageDetectType(id imageURL);
-
 @interface UIImage (BARender)
 
 //@property (nonatomic, assign) BAKit_ImageType imageType;
@@ -188,13 +171,25 @@ CG_EXTERN BAKit_ImageType ImageDetectType(id imageURL);
  */
 - (UIImage *)ba_imageScaleToWidth:(CGFloat)width;
 
-/*!
- *  通过图片Data数据第一个字节 来获取图片扩展名
+#pragma mark - 图片压缩
++ (NSData *)ba_resetSizeOfSourceImage:(UIImage *)sourceImage maxSize:(NSInteger)maxSize;
+
+#pragma mark - 调整图片分辨率/尺寸（等比例缩放）
++ (UIImage *)ba_newSizeImage:(CGSize)size image:(UIImage *)sourceImage;
+
+/**
+ *  截屏功能。via：http://stackoverflow.com/a/8017292/3825920
  *
- *  @param imageURL description
- *
- *  @return 通过图片Data数据第一个字节 来获取图片扩展名
+ *  @return 对当前窗口截屏。（支付宝可能需要）
  */
-//+ (BAKit_ImageType)ba_imageGetContentTypeWihtImageURL:(id)imageURL;
++ (UIImage *)ba_getCurrentScreenShot;
+
+/**
+修改图片到指定的尺寸
+
+@param size 目标尺寸
+@return 修改后的图片
+*/
+- (UIImage *)ba_modifyImageToTargetSize:(CGSize)size;
 
 @end

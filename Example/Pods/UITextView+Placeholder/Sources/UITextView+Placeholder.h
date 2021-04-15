@@ -20,14 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#if __has_feature(modules)
 @import UIKit;
+#else
+#import <UIKit/UIKit.h>
+#endif
 
 FOUNDATION_EXPORT double UITextView_PlaceholderVersionNumber;
 FOUNDATION_EXPORT const unsigned char UITextView_PlaceholderVersionString[];
 
 @interface UITextView (Placeholder)
 
-@property (nonatomic, readonly) UILabel *placeholderLabel;
+@property (nonatomic, readonly) UITextView *placeholderTextView NS_SWIFT_NAME(placeholderTextView);
 
 @property (nonatomic, strong) IBInspectable NSString *placeholder;
 @property (nonatomic, strong) NSAttributedString *attributedPlaceholder;

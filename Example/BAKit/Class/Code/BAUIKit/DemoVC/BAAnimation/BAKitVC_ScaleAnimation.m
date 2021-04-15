@@ -27,8 +27,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"下拉动画";
     
     self.dataArray = [self.mutableDataArray mutableCopy];
@@ -37,35 +36,27 @@
     [self.tableView addSubview:_animationView];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSLog(@"offset is %f", self.tableView.contentOffset.y);
     
     CGFloat delta = 8./-150;
     
-    if (self.tableView.contentOffset.y > -150)
-    {
+    if (self.tableView.contentOffset.y > -150) {
         _animationView.progress = self.tableView.contentOffset.y * delta;
-    }
-    else
-    {
+    } else {
         _animationView.progress = 8.0f;
     }
 }
 
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[@"111111111", @"222222", @"33333"];;
     }
     return _titleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
@@ -73,8 +64,7 @@
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

@@ -16,8 +16,7 @@
  @param duration 持续时间
  @return CABasicAnimation
  */
-+ (CABasicAnimation *)ba_basicAnimation_opacityFlashingWithDuration:(CFTimeInterval)duration
-{
++ (CABasicAnimation *)ba_basicAnimation_opacityFlashingWithDuration:(CFTimeInterval)duration {
     CABasicAnimation *animation = [CABasicAnimation ba_basicAnimation_opacityWithDuration:duration repeatCount:FLT_MAX beginTime:0 fromValueOpacity:1.0f toValueOpacity:0.f autoreverses:NO];
 
     return animation;
@@ -31,8 +30,7 @@
  @return CABasicAnimation
  */
 + (CABasicAnimation *)ba_basicAnimation_opacityFlashingWithDuration:(CFTimeInterval)duration
-                                                        repeatCount:(CGFloat)repeatCount
-{
+                                                        repeatCount:(CGFloat)repeatCount {
     CABasicAnimation *animation = [CABasicAnimation ba_basicAnimation_opacityWithDuration:duration repeatCount:repeatCount beginTime:0 fromValueOpacity:1.0f toValueOpacity:0.f autoreverses:YES];
     
     return animation;
@@ -54,8 +52,7 @@
                                                   beginTime:(CFTimeInterval)beginTime
                                            fromValueOpacity:(CGFloat)fromValueOpacity
                                              toValueOpacity:(CGFloat)toValueOpacity
-                                               autoreverses:(BOOL)autoreverses
-{
+                                               autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_Opacity beginTime:beginTime fromValue:@(fromValueOpacity) toValue:@(toValueOpacity) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
 
     return animation;
@@ -77,8 +74,7 @@
                                                 beginTime:(CFTimeInterval)beginTime
                                            fromValueScale:(CGFloat)fromValueScale
                                              toValueScale:(CGFloat)toValueScale
-                                             autoreverses:(BOOL)autoreverses
-{
+                                             autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformScale beginTime:beginTime fromValue:@(fromValueScale) toValue:@(toValueScale) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
 
     return animation;
@@ -100,8 +96,7 @@
                                                  beginTime:(CFTimeInterval)beginTime
                                             fromValueScale:(CGFloat)fromValueScale
                                               toValueScale:(CGFloat)toValueScale
-                                              autoreverses:(BOOL)autoreverses
-{
+                                              autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformScaleX beginTime:beginTime fromValue:@(fromValueScale) toValue:@(toValueScale) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -123,8 +118,7 @@
                                                  beginTime:(CFTimeInterval)beginTime
                                             fromValueScale:(CGFloat)fromValueScale
                                               toValueScale:(CGFloat)toValueScale
-                                              autoreverses:(BOOL)autoreverses
-{
+                                              autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformScaleY beginTime:beginTime fromValue:@(fromValueScale) toValue:@(toValueScale) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -146,8 +140,7 @@
                                                        beginTime:(CFTimeInterval)beginTime
                                            fromValueCornerRadius:(CGFloat)fromValueCornerRadius
                                              toValueCornerRadius:(CGFloat)toValueCornerRadius
-                                                    autoreverses:(BOOL)autoreverses
-{
+                                                    autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_CornerRadius beginTime:beginTime fromValue:@(fromValueCornerRadius) toValue:@(toValueCornerRadius) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
 
     return animation;
@@ -167,8 +160,7 @@
                                                           beginTime:(CFTimeInterval)beginTime
                                            fromValuebackgroundColor:(UIColor *)fromValuebackgroundColor
                                              toValuebackgroundColor:(UIColor *)toValuebackgroundColor
-                                                       autoreverses:(BOOL)autoreverses
-{
+                                                       autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_BGColor beginTime:beginTime fromValue:(__bridge id _Nullable)(((UIColor *)fromValuebackgroundColor).CGColor) toValue:(__bridge id _Nullable)(((UIColor *)toValuebackgroundColor).CGColor) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
 
     return animation;
@@ -188,8 +180,7 @@
                                                 beginTime:(CFTimeInterval)beginTime
                                                fromValueX:(CGFloat)fromValueX
                                                  toValueX:(CGFloat)toValueX
-                                             autoreverses:(BOOL)autoreverses
-{
+                                             autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformTranslationX beginTime:beginTime fromValue:@(fromValueX) toValue:@(toValueX) duration:duration repeatCount:0 autoreverses:autoreverses];
     animation.removedOnCompletion = NO;
     animation.fillMode = kCAFillModeForwards;
@@ -211,8 +202,7 @@
                                                 beginTime:(CFTimeInterval)beginTime
                                                fromValueY:(CGFloat)fromValueY
                                                  toValueY:(CGFloat)toValueY
-                                             autoreverses:(BOOL)autoreverses
-{
+                                             autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformTranslationY beginTime:beginTime fromValue:@(fromValueY) toValue:@(toValueY) duration:duration repeatCount:0 autoreverses:autoreverses];
     animation.removedOnCompletion = NO;
     animation.fillMode = kCAFillModeForwards;
@@ -234,8 +224,7 @@
                                                    beginTime:(CFTimeInterval)beginTime
                                                 toValueAngle:(CGFloat)toValueAngle
                                                  repeatCount:(CGFloat)repeatCount
-                                                autoreverses:(BOOL)autoreverses
-{
+                                                autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformRotation beginTime:beginTime fromValue:[NSValue new] toValue:@(toValueAngle) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -255,8 +244,7 @@
                                                     beginTime:(CFTimeInterval)beginTime
                                                  toValueAngle:(CGFloat)toValueAngle
                                                   repeatCount:(CGFloat)repeatCount
-                                                 autoreverses:(BOOL)autoreverses
-{
+                                                 autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformRotationX beginTime:beginTime fromValue:[NSValue new] toValue:@(toValueAngle) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -276,8 +264,7 @@
                                                     beginTime:(CFTimeInterval)beginTime
                                                  toValueAngle:(CGFloat)toValueAngle
                                                   repeatCount:(CGFloat)repeatCount
-                                                 autoreverses:(BOOL)autoreverses
-{
+                                                 autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformRotationY beginTime:beginTime fromValue:[NSValue new] toValue:@(toValueAngle) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -297,8 +284,7 @@
                                                     beginTime:(CFTimeInterval)beginTime
                                                  toValueAngle:(CGFloat)toValueAngle
                                                   repeatCount:(CGFloat)repeatCount
-                                                 autoreverses:(BOOL)autoreverses
-{
+                                                 autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_TransformRotationZ beginTime:beginTime fromValue:[NSValue new] toValue:@(toValueAngle) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -320,8 +306,7 @@
                                            fromValuePosition:(CGPoint)fromValuePosition
                                              toValuePosition:(CGPoint)toValuePosition
                                                  repeatCount:(CGFloat)repeatCount
-                                                autoreverses:(BOOL)autoreverses
-{
+                                                autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_Position beginTime:beginTime fromValue:[NSValue valueWithCGPoint:fromValuePosition] toValue:[NSValue valueWithCGPoint:toValuePosition] duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -343,8 +328,7 @@
                                            fromValuePositionX:(CGFloat)fromValuePositionX
                                              toValuePositionX:(CGFloat)toValuePositionX
                                                   repeatCount:(CGFloat)repeatCount
-                                                 autoreverses:(BOOL)autoreverses
-{
+                                                 autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_PositionX beginTime:beginTime fromValue:@(fromValuePositionX) toValue:@(toValuePositionX) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -366,8 +350,7 @@
                                            fromValuePositionY:(CGFloat)fromValuePositionY
                                              toValuePositionY:(CGFloat)toValuePositionY
                                                   repeatCount:(CGFloat)repeatCount
-                                                 autoreverses:(BOOL)autoreverses
-{
+                                                 autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:kBAKit_animationKeyPath_PositionY beginTime:beginTime fromValue:@(fromValuePositionY) toValue:@(toValuePositionY) duration:duration repeatCount:repeatCount autoreverses:autoreverses];
     
     return animation;
@@ -390,8 +373,7 @@
                                           toValue:(NSValue *)toValue
                                          duration:(NSTimeInterval)duration
                                       repeatCount:(float)repeatCount
-                                     autoreverses:(BOOL)autoreverses
-{
+                                     autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:keyPath beginTime:beginTime fromValue:[NSValue new] toValue:toValue duration:duration repeatCount:repeatCount autoreverses:autoreverses];
 
     return animation;
@@ -412,8 +394,7 @@
                                         beginTime:(CFTimeInterval)beginTime
                                         fromValue:(id)fromValue
                                           toValue:(id)toValue
-                                         duration:(NSTimeInterval)duration
-{
+                                         duration:(NSTimeInterval)duration {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:keyPath beginTime:beginTime fromValue:fromValue toValue:toValue duration:duration repeatCount:0 autoreverses:false];
 
     return animation;
@@ -436,8 +417,7 @@
                                                 beginTime:(CFTimeInterval)beginTime
                                                 fromValue:(id)fromValue
                                                   toValue:(id)toValue
-                                                 duration:(NSTimeInterval)duration
-{
+                                                 duration:(NSTimeInterval)duration {
     CABasicAnimation *animation = [CABasicAnimation ba_baseAnimatioWithKeyPath:keyPath beginTime:beginTime fromValue:fromValue toValue:toValue duration:duration repeatCount:0 autoreverses:false];
 
     animation.fillMode = kCAFillModeForwards;
@@ -462,8 +442,7 @@
                                          toValue:(NSValue *)toValue
                                         duration:(NSTimeInterval)duration
                                      repeatCount:(float)repeatCount
-                                    autoreverses:(BOOL)autoreverses
-{
+                                    autoreverses:(BOOL)autoreverses {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
     animation.fromValue = fromValue;
     animation.toValue = toValue;
@@ -489,8 +468,7 @@
 + (CAAnimationGroup *)ba_animationGroupAnimations:(NSArray *)animations
                                          duration:(float)duration
                                       repeatCount:(float)repeatCount
-                              removedOnCompletion:(BOOL)removedOnCompletion
-{
+                              removedOnCompletion:(BOOL)removedOnCompletion {
     CAAnimationGroup *animation = [CAAnimationGroup animation];
     animation.animations = animations;
     animation.duration = duration;
@@ -516,8 +494,7 @@
                                                   duration:(NSTimeInterval)duration
                                                repeatCount:(float)repeatCount
                                               autoreverses:(BOOL)autoreverses
-                                                      path:(CGPathRef)path
-{
+                                                      path:(CGPathRef)path {
     CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:kBAKit_animationKeyPath_Position];
     pathAnimation.removedOnCompletion = NO;
     pathAnimation.duration = duration;
@@ -547,8 +524,7 @@
                                                            times:(NSArray<NSNumber *> *)times
                                                         toValues:(NSArray<id> *)toValues
                                                      repeatCount:(float)repeatCount
-                                                    autoreverses:(BOOL)autoreverses
-{
+                                                    autoreverses:(BOOL)autoreverses {
     CAKeyframeAnimation *keyAnimation = [CAKeyframeAnimation animationWithKeyPath:keyPath];
     keyAnimation.removedOnCompletion = NO;
     keyAnimation.duration = duration;

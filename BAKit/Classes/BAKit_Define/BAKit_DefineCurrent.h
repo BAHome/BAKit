@@ -10,6 +10,7 @@
 #define BAKit_DefineCurrent_h
 
 #import "NSString+BATime.h"
+#import "NSDate+BAKit.h"
 
 /**
  当前日期

@@ -27,8 +27,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.imageView.hidden = NO;
     
     CABasicAnimation *animation1 = [CABasicAnimation ba_basicAnimation_opacityFlashingWithDuration:0.2f];
@@ -113,10 +112,8 @@
 }
 
 #pragma mark - setter getter
-- (UIImageView *)imageView
-{
-    if (!_imageView)
-    {
+- (UIImageView *)imageView {
+    if (!_imageView) {
         _imageView = [UIImageView new];
         _imageView.backgroundColor = BAKit_Color_Yellow;
         

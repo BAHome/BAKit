@@ -13,7 +13,9 @@
 @implementation UIView (DoraemonViewMetrics)
 
 + (void)load{
-    [[self  class] doraemon_swizzleInstanceMethodWithOriginSel:@selector(layoutSubviews) swizzledSel:@selector(doraemon_layoutSubviews)];
+    if ([NSStringFromClass([self class]) isEqualToString:@"UIView"]) {
+        [[self  class] doraemon_swizzleInstanceMethodWithOriginSel:@selector(layoutSubviews) swizzledSel:@selector(doraemon_layoutSubviews)];
+    }
 }
 
 - (void)doraemon_layoutSubviews
@@ -29,6 +31,12 @@
     }
     
     if ([self isKindOfClass:[DoraemonMetricsView class]]) {
+        return NO;
+    }
+    
+    //高德地图也有问题
+    NSString *className = NSStringFromClass([self class]);
+    if ([className hasPrefix:@"MA"]) {
         return NO;
     }
     

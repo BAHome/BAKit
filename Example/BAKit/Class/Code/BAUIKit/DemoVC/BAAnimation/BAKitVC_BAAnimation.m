@@ -26,8 +26,7 @@
     
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"BAAnimation";
     self.view.backgroundColor = BAKit_Color_White;
     self.tableView.sectionImage = BAKit_ImageName(@"tabHengxian");
@@ -38,15 +37,13 @@
     self.ba_tabelViewDidSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath, BABaseListViewSectionModel *model) {
         BAKit_StrongSelf
         
-        if (indexPath.section == 0)
-        {
+        if (indexPath.section == 0) {
             BAKitVC_BasicAnimation *vc = [BAKitVC_BasicAnimation new];
             vc.animationType = indexPath.row;
             
             [self.navigationController pushViewController:vc animated:YES];
         }
-        else if (indexPath.section == 1)
-        {
+        else if (indexPath.section == 1) {
             if (indexPath.row == 0)
             {
                 [self.navigationController pushViewController:[BAKitVC_CABasicAnimation new] animated:YES];
@@ -65,8 +62,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }
-        else if (indexPath.section == 2)
-        {
+        else if (indexPath.section == 2) {
             BAKitVC_CATransition *vc = [BAKitVC_CATransition new];
             vc.title = model.sectionDataArray[indexPath.row].title;
             
@@ -76,10 +72,8 @@
     };
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[
@@ -122,8 +116,7 @@
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             NSMutableArray *cellModelArray = @[].mutableCopy;

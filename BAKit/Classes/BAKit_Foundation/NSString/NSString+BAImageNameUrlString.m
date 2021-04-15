@@ -37,20 +37,15 @@
 + (NSString *)ba_stringDefaultUserPortraitWithUserName:(NSString *)userName
                                                 userId:(NSString *)userId
                                              imageSize:(CGFloat)imageSize
-                                       backgroundColor:(UIColor *)backgroundColor
-{
-    if (imageSize == 0)
-    {
+                                       backgroundColor:(UIColor *)backgroundColor {
+    if (imageSize == 0) {
         imageSize = 40;
     }
     NSString *filePath = [[self class] ba_getIconCachePath:[NSString stringWithFormat:@"user_%@.png", userId]];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         NSURL *portraitPath = [NSURL fileURLWithPath:filePath];
         return [portraitPath absoluteString];
-    }
-    else
-    {
+    } else {
         BAKit_DefaultPortraitView *defaultPortrait =
         [[BAKit_DefaultPortraitView alloc] initWithFrame:CGRectMake(0, 0, imageSize, imageSize)];
         [defaultPortrait ba_setColorAndLabelWithNickname:userName backgroundColor:backgroundColor];
@@ -58,20 +53,16 @@
         
         BOOL result = [UIImagePNGRepresentation(portrait) writeToFile:filePath
                                                            atomically:YES];
-        if (result)
-        {
+        if (result) {
             NSURL *portraitPath = [NSURL fileURLWithPath:filePath];
             return [portraitPath absoluteString];
-        }
-        else
-        {
+        } else {
             return nil;
         }
     }
 }
 
-+ (NSString *)ba_getIconCachePath:(NSString *)fileName
-{
++ (NSString *)ba_getIconCachePath:(NSString *)fileName {
     NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     // 保存文件的名称
     NSString *filePath = [cachPath stringByAppendingPathComponent:[NSString stringWithFormat:@"CachedIcons/%@", fileName]];
@@ -79,8 +70,7 @@
     NSString *dirPath = [cachPath stringByAppendingPathComponent:[NSString stringWithFormat:@"CachedIcons"]];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    if (![fileManager fileExistsAtPath:dirPath])
-    {
+    if (![fileManager fileExistsAtPath:dirPath]) {
         [fileManager createDirectoryAtPath:dirPath
                withIntermediateDirectories:YES
                                 attributes:nil
@@ -96,22 +86,16 @@
  *
  *  @return 转换后的拼音
  */
-+ (NSString *)ba_hanZiToPinYinWithString:(NSString *)hanZi
-{
-    if (!hanZi)
-    {
++ (NSString *)ba_hanZiToPinYinWithString:(NSString *)hanZi {
+    if (!hanZi) {
         return nil;
     }
     NSString *pinYinResult = [NSString string];
-    for (int j = 0; j < hanZi.length; j++)
-    {
+    for (int j = 0; j < hanZi.length; j++) {
         NSString *singlePinyinLetter = nil;
-        if ([self ba_isChinese:[hanZi substringWithRange:NSMakeRange(j, 1)]])
-        {
+        if ([self ba_isChinese:[hanZi substringWithRange:NSMakeRange(j, 1)]]) {
 //            singlePinyinLetter = [[NSString stringWithFormat:@"%c", pinyinFirstLetter([hanZi characterAtIndex:j])] uppercaseString];
-        }
-        else
-        {
+        } else {
             singlePinyinLetter = [hanZi substringWithRange:NSMakeRange(j, 1)];
         }
         
@@ -120,32 +104,25 @@
     return pinYinResult;
 }
 
-+ (BOOL)ba_isChinese:(NSString *)text
-{
++ (BOOL)ba_isChinese:(NSString *)text {
     NSString *match = @"(^[\u4e00-\u9fa5]+$)";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF matches %@", match];
     return [predicate evaluateWithObject:text];
 }
 
-+ (NSString *)getFirstUpperLetter:(NSString *)hanzi
-{
++ (NSString *)getFirstUpperLetter:(NSString *)hanzi {
     NSString *pinyin = [self ba_hanZiToPinYinWithString:hanzi];
     NSString *firstUpperLetter = [[pinyin substringToIndex:1] uppercaseString];
     if ([firstUpperLetter compare:@"A"] != NSOrderedAscending &&
-        [firstUpperLetter compare:@"Z"] != NSOrderedDescending)
-    {
+        [firstUpperLetter compare:@"Z"] != NSOrderedDescending) {
         return firstUpperLetter;
-    }
-    else
-    {
+    } else {
         return @"#";
     }
 }
 
-+ (BOOL)ba_isContains:(NSString *)firstString withString:(NSString *)secondString
-{
-    if (firstString.length == 0 || secondString.length == 0)
-    {
++ (BOOL)ba_isContains:(NSString *)firstString withString:(NSString *)secondString {
+    if (firstString.length == 0 || secondString.length == 0) {
         return NO;
     }
     NSString *twoStr = [[secondString stringByReplacingOccurrencesOfString:@" "  withString:@""] lowercaseString];
@@ -161,43 +138,33 @@
 
 @implementation BAKit_DefaultPortraitView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
-    if (self)
-    {
+    if (self) {
         
     }
     return self;
 }
 
 - (void)ba_setColorAndLabelWithNickname:(NSString *)nickname
-                        backgroundColor:(UIColor *)backgroundColor
-{
+                        backgroundColor:(UIColor *)backgroundColor {
     // 设置背景色
-    if (BAKit_ObjectIsNull(backgroundColor))
-    {
+    if (BAKit_ObjectIsEmpty(backgroundColor)) {
         self.backgroundColor = BAKit_Color_RandomRGB();
-    }
-    else
-    {
+    } else {
         self.backgroundColor = backgroundColor;
     }
     [self ba_setLabelBackgroundColorWithNickname:nickname];
 }
 
-- (void)ba_setLabelBackgroundColorWithNickname:(NSString *)nickname
-{
+- (void)ba_setLabelBackgroundColorWithNickname:(NSString *)nickname {
     // 设置字母 Label
     UILabel *firstCharacterLabel = [[UILabel alloc] init];
     
     NSString *firstLetter = nil;
-    if(nickname.length > 0)
-    {
+    if(nickname.length > 0) {
         firstLetter = [nickname substringToIndex:1];
-    }
-    else
-    {
+    } else {
         firstLetter = @"#";
     }
     firstCharacterLabel.text = firstLetter;
@@ -210,8 +177,7 @@
 }
 
 
-- (UIImage *)ba_imageFromView
-{
+- (UIImage *)ba_imageFromView {
     UIGraphicsBeginImageContext(self.frame.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     [self.layer renderInContext:context];

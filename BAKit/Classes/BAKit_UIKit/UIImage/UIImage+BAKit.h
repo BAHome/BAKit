@@ -18,4 +18,17 @@
  */
 - (UIImage *)ba_imageGaussianBlur:(CGFloat)radius;
 
+/**
+ *  通过 Quartz 2D 在 UIImageView 绘制虚线
+ *
+ *  param imageView 传入要绘制成虚线的imageView
+ *  return
+ */
++ (UIImage *)drawLineOfDashByImageView:(UIImageView *)imageView
+                                 color:(UIColor *)color;
+
+/// 渲染原图，例如：tabbar image 原图显示
+/// @param imageName imageName description
++ (UIImage *)originalImageName:(NSString *)imageName;
+
 @end

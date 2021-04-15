@@ -70,10 +70,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSString *)ba_stringSentenceCapitalizedString;
 
-/**
- *  自编码成编码的URL字符串
- */
-- (NSString *)ba_stringUrlEncode;
+///**
+// *  自编码成编码的URL字符串
+// */
+//- (NSString *)ba_stringUrlEncode;
 
 /**
  *   Create a string from the file in main bundle (similar to [UIImage imageNamed:]).

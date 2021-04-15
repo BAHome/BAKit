@@ -36,24 +36,20 @@ static NSString * const kURL1 = @"https://www.baidu.com";
     [self setupUI];
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     self.title = @"BAWKWebView";
     self.view.backgroundColor = BAKit_Color_White;
     
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArray.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
     
-    if (!cell)
-    {
+    if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
     }
     
@@ -65,13 +61,11 @@ static NSString * const kURL1 = @"https://www.baidu.com";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     switch (indexPath.row) {
-        case 0:
-        {
+        case 0: {
             BAWebViewController *webVC = [BAWebViewController new];
             webVC.ba_web_progressTintColor = [UIColor cyanColor];
             webVC.ba_web_progressTrackTintColor = [UIColor whiteColor];
@@ -81,8 +75,7 @@ static NSString * const kURL1 = @"https://www.baidu.com";
             [self.navigationController pushViewController:webVC animated:YES];
         }
             break;
-        case 1:
-        {
+        case 1: {
             NSString *headStr = @"<head><style>img{width:100% !important}</style></head>";
             
             NSString *image1 = [NSString stringWithFormat:@"<div style=\"margin: -8px -8px;\"><img src='%@'/></div>",@"http://imgsrc.baidu.com/image/c0%3Dshijue%2C0%2C0%2C245%2C40/sign=4ea99ec2f8d3572c72ef949fe27a0952/f7246b600c338744af80e6575b0fd9f9d72aa050.jpg"];
@@ -96,8 +89,7 @@ static NSString * const kURL1 = @"https://www.baidu.com";
             [self.navigationController pushViewController:webVC animated:YES];
         }
             break;
-        case 2:
-        {
+        case 2: {
             NSURL *url = [[NSBundle mainBundle] URLForResource:@"BAWebView" withExtension:@"html"];
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
             
@@ -108,8 +100,7 @@ static NSString * const kURL1 = @"https://www.baidu.com";
             [self.navigationController pushViewController:webVC animated:YES];
         }
             break;
-        case 3:
-        {
+        case 3: {
             BAWebViewController *webVC = [BAWebViewController new];
             webVC.title = self.dataArray[indexPath.row];
             [webVC ba_web_loadHTMLFileName:@"BAHome"];
@@ -117,16 +108,14 @@ static NSString * const kURL1 = @"https://www.baidu.com";
             [self.navigationController pushViewController:webVC animated:YES];
         }
             break;
-        case 4:
-        {
+        case 4: {
             BAKitVC_WKWebView2 *vc2 = [BAKitVC_WKWebView2 new];
             vc2.title = self.dataArray[indexPath.row];
             
             [self.navigationController pushViewController:vc2 animated:YES];
         }
             break;
-        case 5:
-        {
+        case 5: {
             BAKitVC_WKWebView3 *vc2 = [BAKitVC_WKWebView3 new];
             vc2.title = self.dataArray[indexPath.row];
             
@@ -139,18 +128,15 @@ static NSString * const kURL1 = @"https://www.baidu.com";
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 15;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     self.tableView.frame = self.view.bounds;
@@ -158,10 +144,8 @@ static NSString * const kURL1 = @"https://www.baidu.com";
 }
 
 #pragma mark - setter / getter
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [[UITableView alloc] init];
         self.tableView.backgroundColor = BAKit_Color_Gray_11;
         self.tableView.delegate = self;
@@ -176,10 +160,8 @@ static NSString * const kURL1 = @"https://www.baidu.com";
     return _tableView;
 }
 
-- (NSArray *)dataArray
-{
-    if (!_dataArray)
-    {
+- (NSArray *)dataArray {
+    if (!_dataArray) {
         _dataArray = @[@"加载普通 URL",
                        @"加载 后台返回 的 htmlString",
                        @"加载自定义 request",

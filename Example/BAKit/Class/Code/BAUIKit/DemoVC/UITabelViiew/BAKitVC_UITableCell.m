@@ -22,8 +22,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     
     self.dataArray = [self.mutableDataArray mutableCopy];
     
@@ -33,12 +32,10 @@
     self.ba_tabelViewCellConfig_block = ^(UITableView *tableView, NSIndexPath *indexPath, UITableViewCell *cell) {
         BAKit_StrongSelf
         
-        if (indexPath.row == 0)
-        {
+        if (indexPath.row == 0) {
             [cell ba_cellSetAccessoryImage:BAKit_ImageName(@"1.jpg") frame:CGRectMake(BAKit_SCREEN_WIDTH - 30 - 20, 0, 25, 20)];
         }
-        else
-        {
+        else {
             [cell ba_cellSetAccessorySwitchWithIndexPath:indexPath frame:CGRectMake(BAKit_SCREEN_WIDTH - 30 - 50, 0, 51, 31) actionBlock:^(UISwitch *switcher) {
                 [switcher addTarget:self action:@selector(handleSwichAction:) forControlEvents:UIControlEventValueChanged];
             }];
@@ -47,8 +44,7 @@
     self.ba_tabelViewDidSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath, BABaseListViewSectionModel *model) {
         BAKit_StrongSelf
         UIViewController *vc;
-        if (indexPath.row == 0)
-        {
+        if (indexPath.row == 0) {
 //            vc = [BAKitVC_UITableCell new];
         }
         vc.title = model.sectionDataArray[indexPath.row].title;
@@ -59,8 +55,7 @@
 
 
 #pragma mark - custom method
-- (void)handleSwichAction:(UISwitch *)sender
-{
+- (void)handleSwichAction:(UISwitch *)sender {
     NSString *kai = sender.on ? @"打开":@"关闭";
     
     NSString *msg = [NSString stringWithFormat:@"你 %@ 了 开关%ld", kai, sender.tag];
@@ -70,10 +65,8 @@
 
 #pragma mark - setter / getter
 
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[
                         @"accessoryView 自定义样式：image",
                         @"accessoryView 自定义样式：switch1",
@@ -83,15 +76,12 @@
     return _titleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
-        for (NSInteger i = 0; i < sectionTitleArray.count; i++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

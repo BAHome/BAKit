@@ -17,8 +17,7 @@
  @param number 输入的数字
  @return 转换后的文字
  */
-+ (NSString *)ba_stringTransformNumberToString:(NSInteger)number
-{
++ (NSString *)ba_stringTransformNumberToString:(NSInteger)number {
     NSString *str = [NSString stringWithFormat:@"%ld", (long)number];
     
     NSRange range;
@@ -26,8 +25,7 @@
     
     NSString *finalStr = [NSString string];
     
-    for (NSUInteger i = 0; i < [str length]; i++)
-    {
+    for (NSUInteger i = 0; i < [str length]; i++) {
         range.location = i;
         NSString *subStr = [str substringWithRange:range];
         NSInteger subNum = [subStr integerValue];
@@ -81,37 +79,23 @@
  */
 + (NSString *)ba_replaceNewString:(NSString *)newString
                             range:(NSRange)range
-                        oldString:(NSString *)oldString
-{
+                        oldString:(NSString *)oldString {
     NSString *subStr = @"";
     
-    if (oldString.length == 1)
-    {
+    if (oldString.length == 1) {
         subStr = newString;
-    }
-    else if (oldString.length == 2)
-    {
-        if (range.location == 0)
-        {
+    } else if (oldString.length == 2) {
+        if (range.location == 0) {
             subStr = [NSString stringWithFormat:@"%@十", newString];
-        }
-        else if (range.location == 1)
-        {
+        } else if (range.location == 1) {
             subStr = newString;
         }
-    }
-    else if (oldString.length == 3)
-    {
-        if (range.location == 0)
-        {
+    } else if (oldString.length == 3) {
+        if (range.location == 0) {
             subStr = [NSString stringWithFormat:@"%@百", newString];
-        }
-        else if (range.location == 1)
-        {
+        } else if (range.location == 1) {
             subStr = [NSString stringWithFormat:@"%@十", newString];
-        }
-        else if (range.location == 2)
-        {
+        } else if (range.location == 2) {
             subStr = newString;
         }
     }

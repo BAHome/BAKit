@@ -17,8 +17,7 @@
 
 @implementation BAGradualProgressView
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self setupUI];
@@ -26,8 +25,7 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self setupUI];
@@ -35,15 +33,13 @@
     return self;
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     CAGradientLayer *layer = (CAGradientLayer *)[self layer];
     layer.startPoint = CGPointMake(0.0, 0.5);
     layer.endPoint = CGPointMake(1.0, 0.5);
     
     NSMutableArray *colorArray = @[].mutableCopy;
-    for (NSInteger i = 0; i <= 360; i += 5)
-    {
+    for (NSInteger i = 0; i <= 360; i += 5) {
         UIColor *color = [UIColor colorWithHue:1.0 * i / 360 saturation:1.0 brightness:1.0 alpha:1.0];
         [colorArray addObject:(id)color.CGColor];
     }
@@ -57,8 +53,7 @@
     [self ba_progressAnimation];
 }
 
-- (void)ba_progressAnimation
-{
+- (void)ba_progressAnimation {
     CAGradientLayer *layer = (CAGradientLayer *)[self layer];
     NSMutableArray *colorArray = [[layer colors] mutableCopy];
     
@@ -78,8 +73,7 @@
     [layer addAnimation:animation forKey:@"animateGradient"];
 }
 
-- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag
-{
+- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag {
     [self ba_progressAnimation];
 }
 
@@ -91,17 +85,14 @@
     self.layer_mask.frame = maskRect;
 }
 
-- (void)setProgress:(CGFloat)progress
-{
-    if (_progress != progress)
-    {
+- (void)setProgress:(CGFloat)progress {
+    if (_progress != progress) {
         _progress = MIN(1.0, fabs(progress));
         [self setNeedsLayout];
     }
 }
 
-+ (Class)layerClass
-{
++ (Class)layerClass {
     return [CAGradientLayer class];
 }
 

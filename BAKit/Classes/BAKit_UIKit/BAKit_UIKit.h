@@ -87,6 +87,7 @@
 
 #pragma mark - UITextField 封装
 #import "BATextField.h"
+#import "UITextField+intrinsicContentSize.h"
 
 #pragma mark - UITextView 封装
 #import "UITextView+BAKit.h"

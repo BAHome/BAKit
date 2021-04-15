@@ -19,18 +19,15 @@
 
 @implementation UIView (BABadgeView)
 
-- (void)ba_addBadgeWithText:(NSString *)text
-{
+- (void)ba_addBadgeWithText:(NSString *)text {
     [self lazyLoadBadgeLabel];
     [self ba_showBadge];
     self.badgeLabel.text = text;
     self.badgeLabel.hidden = !text.length;
 }
 
-- (void)ba_addBadgeWithNumber:(NSInteger)number
-{
-    if (number <= 0)
-    {
+- (void)ba_addBadgeWithNumber:(NSInteger)number {
+    if (number <= 0) {
         [self ba_addBadgeWithText:@"0"];
         [self ba_hiddenBadge];
         return;
@@ -38,18 +35,15 @@
     [self ba_addBadgeWithText:[NSString stringWithFormat:@"%ld",number]];
 }
 
-- (void)ba_addDotWithColor:(UIColor *)color
-{
+- (void)ba_addDotWithColor:(UIColor *)color {
     [self ba_addBadgeWithText:nil];
     [self ba_setBadgeHeightPoints:8];
-    if (color)
-    {
+    if (color) {
         self.badgeLabel.backgroundColor = color;
     }
 }
 
-- (void)ba_moveBadgeWithX:(CGFloat)x Y:(CGFloat)y
-{
+- (void)ba_moveBadgeWithX:(CGFloat)x Y:(CGFloat)y {
     [self lazyLoadBadgeLabel];
     
     /**
@@ -63,53 +57,43 @@
     self.badgeLabel.y = -self.badgeLabel.height * 0.5/*badge的y坐标*/ + y;
 }
 
-- (void)ba_setBadgeLabelAttributes:(void (^)(BABadgeLabel *))badgeLabel
-{
+- (void)ba_setBadgeLabelAttributes:(void (^)(BABadgeLabel *))badgeLabel {
     [self lazyLoadBadgeLabel];
     badgeLabel ? badgeLabel(self.badgeLabel) : nil;
 }
 
-- (void)ba_setBadgeHeightPoints:(CGFloat)points
-{
+- (void)ba_setBadgeHeightPoints:(CGFloat)points {
     CGFloat scale = points/self.badgeLabel.height;
     self.badgeLabel.transform = CGAffineTransformScale(self.badgeLabel.transform, scale, scale);
 }
 
-- (void)ba_showBadge
-{
+- (void)ba_showBadge {
     self.badgeLabel.hidden = NO;
 }
 
-- (void)ba_hiddenBadge
-{
+- (void)ba_hiddenBadge {
     self.badgeLabel.hidden = YES;
 }
 
-- (void)ba_increase
-{
+- (void)ba_increase {
     [self ba_increaseBy:1];
 }
 
-- (void)ba_increaseBy:(NSInteger)number
-{
+- (void)ba_increaseBy:(NSInteger)number {
     NSInteger result = self.badgeLabel.text.integerValue + number;
-    if (result > 0)
-    {
+    if (result > 0) {
         [self ba_showBadge];
     }
     self.badgeLabel.text = [NSString stringWithFormat:@"%ld",result];
 }
 
-- (void)ba_decrease
-{
+- (void)ba_decrease {
     [self ba_decreaseBy:1];
 }
 
-- (void)ba_decreaseBy:(NSInteger)number
-{
+- (void)ba_decreaseBy:(NSInteger)number {
     NSInteger result = self.badgeLabel.text.integerValue - number;
-    if (result <= 0)
-    {
+    if (result <= 0) {
         [self ba_hiddenBadge];
         self.badgeLabel.text = @"0";
         return;
@@ -117,10 +101,8 @@
     self.badgeLabel.text = [NSString stringWithFormat:@"%ld",result];
 }
 
-- (void)lazyLoadBadgeLabel
-{
-    if (!self.badgeLabel)
-    {
+- (void)lazyLoadBadgeLabel {
+    if (!self.badgeLabel) {
         self.badgeLabel = [BABadgeLabel ba_badgeLabelDefaultBadgeLabel];
         self.badgeLabel.center = CGPointMake(self.width, 0);
         [self addSubview:self.badgeLabel];
@@ -129,13 +111,11 @@
 }
 
 #pragma mark - setter/getter
-- (BABadgeLabel *)badgeLabel
-{
+- (BABadgeLabel *)badgeLabel {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBadgeLabel:(BABadgeLabel *)badgeLabel
-{
+- (void)setBadgeLabel:(BABadgeLabel *)badgeLabel {
     BAKit_Objc_setObj(@selector(badgeLabel), badgeLabel);
 }
 

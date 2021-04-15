@@ -12,80 +12,69 @@
 @implementation NSString (BAEncrypt)
 
 /* 创建一个MD5字符串 */
-- (NSString *)ba_stringMD5
-{
-    if (self == nil || [self length] == 0)
-    {
+- (NSString *)ba_stringMD5 {
+    if (self == nil || [self length] == 0) {
         return nil;
     }
     
     unsigned char digest[CC_MD5_DIGEST_LENGTH], i;
     CC_MD5([self UTF8String], (int)[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding], digest);
     NSMutableString *ms = [NSMutableString string];
-    for (i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
-    {
+    for (i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
         [ms appendFormat: @"%02x", (int)(digest[i])];
     }
     return [ms copy];
 }
 
 /* 创建一个SHA1字符串 */
-- (NSString *)ba_stringSHA1
-{
+- (NSString *)ba_stringSHA1 {
     if(self == nil || [self length] == 0)
         return nil;
     
     unsigned char digest[CC_SHA1_DIGEST_LENGTH], i;
     CC_SHA1([self UTF8String], (int)[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding], digest);
     NSMutableString *ms = [NSMutableString string];
-    for(i=0;i<CC_SHA1_DIGEST_LENGTH;i++)
-    {
+    for(i=0;i<CC_SHA1_DIGEST_LENGTH;i++) {
         [ms appendFormat: @"%02x", (int)(digest[i])];
     }
     return [ms copy];
 }
 
 /* 创建一个SHA256字符串 */
-- (NSString *)ba_stringSHA256
-{
+- (NSString *)ba_stringSHA256 {
     if(self == nil || [self length] == 0)
         return nil;
     
     unsigned char digest[CC_SHA256_DIGEST_LENGTH], i;
     CC_SHA256([self UTF8String], (int)[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding], digest);
     NSMutableString *ms = [NSMutableString string];
-    for(i=0;i<CC_SHA256_DIGEST_LENGTH;i++)
-    {
+    for(i=0;i<CC_SHA256_DIGEST_LENGTH;i++) {
         [ms appendFormat: @"%02x", (int)(digest[i])];
     }
     return [ms copy];
 }
 
 /* 创建一个SHA512字符串 */
-- (NSString *)ba_stringSHA512
-{
+- (NSString *)ba_stringSHA512 {
     if(self == nil || [self length] == 0)
         return nil;
     
     unsigned char digest[CC_SHA512_DIGEST_LENGTH], i;
     CC_SHA512([self UTF8String], (int)[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding], digest);
     NSMutableString *ms = [NSMutableString string];
-    for(i=0;i<CC_SHA512_DIGEST_LENGTH;i++)
-    {
+    for(i=0;i<CC_SHA512_DIGEST_LENGTH;i++) {
         [ms appendFormat: @"%02x", (int)(digest[i])];
     }
     return [ms copy];
 }
 
 /* 检查自身是否追加字符串 */
-- (BOOL)ba_stringIsHasString:(NSString *)substring
-{
+- (BOOL)ba_stringIsHasString:(NSString *)substring {
     return !([self rangeOfString:substring].location == NSNotFound);
 }
 
 /* 字符串转换为UTF8 */
-+ (NSString *)convertToUTF8Entities:(NSString *)string
-{
++ (NSString *)convertToUTF8Entities:(NSString *)string {
     NSString *isoEncodedString = [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
                                                                   [string stringByReplacingOccurrencesOfString:@"%27" withString:@"'"]
                                                                   stringByReplacingOccurrencesOfString:[@"%e2%80%99" capitalizedString] withString:@"’"]
@@ -131,8 +120,7 @@
  @param string 需要编码的 string
  @return Base64 编码后的 string
  */
-+ (NSString *)ba_stringEncodeToBase64:(NSString *)string
-{
++ (NSString *)ba_stringEncodeToBase64:(NSString *)string {
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
     return [data base64EncodedStringWithOptions:0];
 }
@@ -142,8 +130,7 @@
  
  @return Base64 编码后的 string
  */
-- (NSString *)ba_stringEncodeToBase64
-{
+- (NSString *)ba_stringEncodeToBase64 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
     return [data base64EncodedStringWithOptions:0];
 }
@@ -154,8 +141,7 @@
  @param string 需要解码的 string
  @return Base64 解码后的 string
  */
-+ (NSString *)ba_stringDecodeBase64:(NSString *)string
-{
++ (NSString *)ba_stringDecodeBase64:(NSString *)string {
     NSData *data = [[NSData alloc] initWithBase64EncodedString:string options:0];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
@@ -165,8 +151,7 @@
  
  @return Base64 解码后的 string
  */
-- (NSString *)ba_stringDecodeBase64
-{
+- (NSString *)ba_stringDecodeBase64 {
     NSData *data = [[NSData alloc] initWithBase64EncodedString:self options:0];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }

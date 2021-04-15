@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2DBA18E71426BAE3A4DE029537AA9822"
+               BlueprintIdentifier = "1C740322617D8EE2F874BD31781B7702"
                BuildableName = "DoraemonKit.framework"
                BlueprintName = "DoraemonKit"
                ReferencedContainer = "container:Pods.xcodeproj">

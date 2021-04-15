@@ -43,23 +43,19 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
 @implementation BAKitVC_BAGridView
 
 
-- (void)ba_base_viewWillAppear
-{
+- (void)ba_base_viewWillAppear {
     NSLog(@"BAKitVC_BAGridView：%s", __func__);
 }
 
-- (void)ba_base_viewDidDAppear
-{
+- (void)ba_base_viewDidDAppear {
     NSLog(@"BAKitVC_BAGridView：%s", __func__);
 }
 
-- (void)ba_base_viewWillDisappear
-{
+- (void)ba_base_viewWillDisappear {
     NSLog(@"BAKitVC_BAGridView：%s", __func__);
 }
 
-- (void)ba_base_viewDidDisappear
-{
+- (void)ba_base_viewDidDisappear {
     NSLog(@"BAKitVC_BAGridView：%s", __func__);
 }
 
@@ -69,29 +65,24 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"BAGridView";
     self.view.backgroundColor = BAKit_Color_White;
     self.isSelectCell = NO;
 }
 
-- (void)test
-{
+- (void)test {
     
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArray.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
     
-    if (!cell)
-    {
+    if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
     }
     
@@ -103,8 +94,7 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -112,8 +102,7 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     self.gridDataArray = nil;
     
     switch (indexPath.row) {
-        case 0:
-        {
+        case 0: {
             self.isSelectCell = !self.isSelectCell;
             if (self.isSelectCell)
             {
@@ -141,8 +130,7 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
             self.tableView.tableFooterView = footView;
         }
             break;
-        case 1:
-        {
+        case 1: {
             self.ba_GridViewConfig.gridViewType = BAGridViewTypeBgImageTitle;
             self.tableView.tableFooterView = [UIView new];
             
@@ -160,8 +148,7 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
             self.tableView.tableFooterView = footView;
         }
             break;
-        case 2:
-        {
+        case 2: {
             self.ba_GridViewConfig.gridViewType = BAGridViewTypeTitleDesc;
             self.tableView.tableFooterView = [UIView new];
             
@@ -187,18 +174,15 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 15;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     self.tableView.frame = self.view.bounds;
@@ -206,10 +190,8 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
 }
 
 #pragma mark - setter / getter
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [[UITableView alloc] init];
         self.tableView.backgroundColor = BAKit_Color_Gray_10_pod;
         self.tableView.delegate = self;
@@ -224,10 +206,8 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     return _tableView;
 }
 
-- (NSArray *)dataArray
-{
-    if (!_dataArray)
-    {
+- (NSArray *)dataArray {
+    if (!_dataArray) {
         _dataArray = @[@"图上文下 / 文上图下(点击更换样式)", @"带背景图片，中间是文字", @"两行文字"];
     }
     return _dataArray;
@@ -240,10 +220,8 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     return _ba_GridViewConfig;
 }
 
-- (BAGridView *)gridView
-{
-    if (!_gridView)
-    {
+- (BAGridView *)gridView {
+    if (!_gridView) {
         self.ba_GridViewConfig.scrollEnabled = YES;
         // 是否显示分割线
         self.ba_GridViewConfig.showLineView = YES;
@@ -279,10 +257,8 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     return _gridView;
 }
 
-- (BAGridView *)gridView2
-{
-    if (!_gridView2)
-    {
+- (BAGridView *)gridView2 {
+    if (!_gridView2) {
         self.ba_GridViewConfig.showLineView = YES;
         
         // item：分割线颜色，默认：BAKit_Color_Gray_11【BAKit_Color_RGB(248, 248, 248)】
@@ -317,10 +293,8 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     return _gridView2;
 }
 
-- (NSMutableArray <BAGridItemModel *> *)gridDataArray
-{
-    if (!_gridDataArray)
-    {
+- (NSMutableArray <BAGridItemModel *> *)gridDataArray {
+    if (!_gridDataArray) {
         _gridDataArray = @[].mutableCopy;
         
         // 可以为本地图片
@@ -330,16 +304,14 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
         NSArray *imageNameArray;
         NSArray *bgImageNameArray;
         
-        if (self.ba_GridViewConfig.gridViewType == BAGridViewTypeBgImageTitle)
-        {
+        if (self.ba_GridViewConfig.gridViewType == BAGridViewTypeBgImageTitle) {
             bgImageNameArray = @[@"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
                                  @"http://d.hiphotos.baidu.com/image/pic/item/b21c8701a18b87d67cda2ef50d0828381e30fd44.jpg",
                                  @"http://fc.topitme.com/c/08/e1/11235427029dbe108cm.jpg",
                                  @"http://120.24.177.96:1525/images/20170706/91c9e2ba-9493-4009-8f3d-e613350b7c17.png",
                                  @"http://120.24.177.96:1525/images/20170706/d36ab2cb-36e3-4492-89c8-5712848dadb8.png"];
         }
-        else
-        {
+        else {
             imageNameArray = @[@"http://120.24.177.96:1525/images/20170706/b2acbae9-020c-4eaa-87b4-f7286ae69ba1.png",
                                @"http://120.24.177.96:1525/images/20170706/ae3a4188-f01a-442e-aaf0-94739e30b698.png",
                                @"http://120.24.177.96:1525/images/20170706/d4c88154-eaed-441a-8c8a-89d9a6d4755e.png",
@@ -347,8 +319,7 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
                                @"http://120.24.177.96:1525/images/20170706/d36ab2cb-36e3-4492-89c8-5712848dadb8.png"];
         }
         
-        if (self.ba_GridViewConfig.gridViewType == BAGridViewTypeImageTitle || self.ba_GridViewConfig.gridViewType == BAGridViewTypeTitleImage)
-        {
+        if (self.ba_GridViewConfig.gridViewType == BAGridViewTypeImageTitle || self.ba_GridViewConfig.gridViewType == BAGridViewTypeTitleImage) {
             bgImageNameArray = @[
                                  @"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
                                  @"http://img.qq1234.org/uploads/allimg/161212/16012W921-11.jpg",
@@ -360,18 +331,14 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
         
         NSArray *titleArray = @[@"小区tabbar_main", @"商圈", @"社交57128423", @"出行", @"武术"];
         
-        for (NSInteger i = 0; i < titleArray.count; i++)
-        {
+        for (NSInteger i = 0; i < titleArray.count; i++) {
             BAGridItemModel *model = [BAGridItemModel new];
-            if (imageNameArray.count > 0)
-            {
+            if (imageNameArray.count > 0) {
                 model.imageName = imageNameArray[i];
             }
-            if (bgImageNameArray.count > 0)
-            {
+            if (bgImageNameArray.count > 0) {
                 model.bgImageName = bgImageNameArray[i];
             }
-            model.placdholderImageName = @"tabbar_mainframeHL";
             model.titleString = titleArray[i];
             
             [self.gridDataArray addObject:model];
@@ -380,17 +347,14 @@ static NSString * const kCellID = @"BAKitVC_BAGridViewCell";
     return _gridDataArray;
 }
 
-- (NSMutableArray <BAGridItemModel *> *)gridDataArray2
-{
-    if (!_gridDataArray2)
-    {
+- (NSMutableArray <BAGridItemModel *> *)gridDataArray2 {
+    if (!_gridDataArray2) {
         _gridDataArray2 = @[].mutableCopy;
         
         NSArray *titleArray = @[@"200", @"20", @"200", @"10", ];
         NSArray *descArray = @[@"新增积分总量", @"返还积分总量", @"全返单元总量", @"每单元返还积分"];
         
-        for (NSInteger i = 0; i < titleArray.count; i++)
-        {
+        for (NSInteger i = 0; i < titleArray.count; i++) {
             BAGridItemModel *model = [BAGridItemModel new];
             model.desc = descArray[i];
             model.titleString = titleArray[i];

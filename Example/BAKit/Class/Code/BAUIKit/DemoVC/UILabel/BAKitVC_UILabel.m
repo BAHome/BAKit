@@ -30,8 +30,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.view.backgroundColor = BAKit_Color_White;
     
     self.tableView.backgroundColor = BAKit_Color_Gray_11;
@@ -42,20 +41,16 @@
         BAKit_StrongSelf
         
         UIViewController *vc;
-        if (indexPath.row == 0)
-        {
+        if (indexPath.row == 0) {
             vc = [BAKitVC_UnderlineLabel new];
         }
-        else if(indexPath.row == 1)
-        {
+        else if(indexPath.row == 1) {
             vc = [BAKitVC_ScaleLabel new];
         }
-        else if(indexPath.row == 2)
-        {
+        else if(indexPath.row == 2) {
             vc = [BAKitVC_ShimmerLabel new];
         }
-        else if(indexPath.row == 3)
-        {
+        else if(indexPath.row == 3) {
             vc = [BAKitVC_InterestingLabel new];
         }
         
@@ -65,19 +60,15 @@
     };
 }
 
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[@"可点击的下划线文字", @"UILabel 缩放动画", @"Facebook 辉光动画", @"带阴影文字的 Label"];
     }
     return _titleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
@@ -85,8 +76,7 @@
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

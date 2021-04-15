@@ -23,8 +23,7 @@
     
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.view.backgroundColor = BAKit_Color_White;
 }
 
@@ -38,16 +37,13 @@
     
 }
 
-- (void)handleButtonAction:(UIButton *)sender
-{
+- (void)handleButtonAction:(UIButton *)sender {
     [BAKit_PhotoKitManager ba_photoKitManagerSaveImageToLocalWithImage:self.imageView.image viewController:self];
 }
 
 #pragma mark - setter / getter
-- (UIImageView *)imageView
-{
-    if (!_imageView)
-    {
+- (UIImageView *)imageView {
+    if (!_imageView) {
         _imageView = [UIImageView new];
         _imageView.image = BAKit_ImageName(@"icon1.jpg");
         
@@ -56,10 +52,8 @@
     return _imageView;
 }
 
-- (UIButton *)button
-{
-    if (!_button)
-    {
+- (UIButton *)button {
+    if (!_button) {
         _button = [UIButton ba_buttonWithFrame:CGRectZero title:@"保存图片" titleColor:BAKit_Color_Red titleFont:BAKit_Font_systemFontOfSize_15 backgroundColor:BAKit_Color_Gray_11];
 
         [_button addTarget:self action:@selector(handleButtonAction:) forControlEvents:UIControlEventTouchUpInside];

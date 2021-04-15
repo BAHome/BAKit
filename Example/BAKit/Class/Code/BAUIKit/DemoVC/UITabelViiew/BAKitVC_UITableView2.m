@@ -26,8 +26,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     
     self.dataArray = [self.mutableDataArray mutableCopy];
     
@@ -41,10 +40,8 @@
     };
 }
 
-- (NSArray <NSArray *>*)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray <NSArray *>*)titleArray {
+    if (!_titleArray) {
 //        @"专业人士对 iMac 情有独钟。因此，当他们要我们打造一款性能顶尖的 iMac 时，我们自然全力以赴。在设计上，我们不断突破极限，为这款 iMac 集成了 Mac 自诞生以来最强大的工作站级图形处理器、中央处理器、存储设备、内存和 I/O 端口，而机身仍能保持标志性的一体式设计，分毫未增。所以，无论是视频剪辑师、3D 动画师、音乐人、软件开发者还是科研人员，每个人都能以从未想象的方式，各展所长。这就是为你们打造的 iMac Pro，一台精简、凝练、梦想中的强大利器。",
         _titleArray = @[
                         @[
@@ -65,10 +62,8 @@
     return _titleArray;
 }
 
-- (NSArray *)sectionTitleArray
-{
-    if (!_sectionTitleArray)
-    {
+- (NSArray *)sectionTitleArray {
+    if (!_sectionTitleArray) {
         _sectionTitleArray = @[
                         @"测试数据section-title-1",
                         @"测试数据section-title-2",
@@ -78,10 +73,8 @@
     return _sectionTitleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray <NSArray *>*imageNameArray = @[
@@ -114,8 +107,7 @@
                                                    ]
                                                ];
         
-        for (NSInteger i = 0; i < self.sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < self.sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = self.sectionTitleArray[i];
             NSMutableArray *cellModelArray = @[].mutableCopy;

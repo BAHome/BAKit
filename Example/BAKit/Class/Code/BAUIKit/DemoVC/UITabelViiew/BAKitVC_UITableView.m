@@ -30,8 +30,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.dataArray = [self.mutableDataArray mutableCopy];
     
     self.tableView.backgroundColor = BAKit_Color_Gray_11;
@@ -40,12 +39,10 @@
     self.ba_tabelViewDidSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath, BABaseListViewSectionModel *model) {
         BAKit_StrongSelf
         UIViewController *vc;
-        if (indexPath.row == 0)
-        {
+        if (indexPath.row == 0) {
             vc = [BAKitVC_UITableCell new];
         }
-        else if (indexPath.row == 1)
-        {
+        else if (indexPath.row == 1) {
             vc = [BAKitVC_UITableView2 new];
         }
         vc.title = model.sectionDataArray[indexPath.row].title;
@@ -53,10 +50,8 @@
     };
 }
 
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[
                         @"cell 的 accessoryView 自定义样式",
                         @"BABaseListViewController 封装"
@@ -65,15 +60,12 @@
     return _titleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
-        for (NSInteger i = 0; i < sectionTitleArray.count; i++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

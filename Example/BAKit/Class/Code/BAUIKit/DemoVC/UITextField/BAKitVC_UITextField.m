@@ -7,6 +7,7 @@
 //
 
 #import "BAKitVC_UITextField.h"
+#import "UITextField+intrinsicContentSize.h"
 
 @interface BAKitVC_UITextField ()<UITextFieldDelegate>
 
@@ -22,8 +23,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"BATextField";
 //    self.view.backgroundColor = BAKit_Color_White;
     [self.view ba_animation_createGradientWithColorArray:@[BAKit_Color_Red, BAKit_Color_White] frame:self.view.bounds direction:UIViewLinearGradientDirectionVertical];
@@ -34,38 +34,40 @@
     [self performSelector:@selector(gradualProgressWithView:) withObject:gradualProgressView afterDelay:2.];
 //    [self.textField ba_textFieldAddInputAccessoryViewButtonWithTitle:@"测试"];
     
+    
+    self.textField.isNeedIntrinsicContentSize = true;
+    self.textField.rightUnit = @"头";
+    self.textField.rightUnitColor = [UIColor colorWithRed:144/255.0 green:255/255.0 blue:190/255.0 alpha:1.0];
+    self.textField.rightUnitFont = [UIFont systemFontOfSize:10];
+    
 }
 
-- (void)gradualProgressWithView:(BAGradualProgressView *)gradualProgressView
-{
+- (void)gradualProgressWithView:(BAGradualProgressView *)gradualProgressView {
     gradualProgressView.progress += 0.1;
     
-    if (gradualProgressView.progress == 1.0)
-    {
+    if (gradualProgressView.progress == 1.0) {
         return;
     }
     [self performSelector:@selector(gradualProgressWithView:) withObject:gradualProgressView afterDelay:0.3];
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
     self.textField.frame = CGRectMake(20, 80, BAKit_SCREEN_WIDTH - 20 * 2, 30);
     self.textField1.frame = CGRectMake(20, _textField.bottom + 20, BAKit_SCREEN_WIDTH - 20 * 2, 30);
+    
+    
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
     [_textField1 ba_textFieldHistoryArrayHide];
 }
 
 #pragma mark - UITextFieldDelegate
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    if (_textField1 == textField)
-    {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (_textField1 == textField) {
         // 当开始编辑的时候，显示 历史数据
         [_textField1 ba_textFieldHistoryArrayShow];
         return YES;
@@ -73,10 +75,8 @@
     return NO;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    if (_textField1 == textField)
-    {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (_textField1 == textField) {
         
         CGRect keyboardFrame = [BAKit_SharedApplication ba_applicationGetKeyboardFrame];
         
@@ -98,10 +98,8 @@
 
 #pragma mark - setter / getter
 
-- (UITextField *)textField
-{
-    if (!_textField)
-    {
+- (UITextField *)textField {
+    if (!_textField) {
         _textField = [UITextField new];
         _textField.placeholder = @"这里是 placeholder！限制最大位数：6！";
         _textField.backgroundColor = BAKit_Color_Gray_11;
@@ -118,10 +116,8 @@
     return _textField;
 }
 
-- (UITextField *)textField1
-{
-    if (!_textField1)
-    {
+- (UITextField *)textField1 {
+    if (!_textField1) {
         _textField1 = [UITextField new];
         _textField1.placeholder = @"点击 return 后，可以保存输入历史！【限制输入11位】";
         _textField1.backgroundColor = BAKit_Color_Gray_11;

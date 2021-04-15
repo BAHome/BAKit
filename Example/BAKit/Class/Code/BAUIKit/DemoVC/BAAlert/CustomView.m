@@ -25,8 +25,7 @@
 
 @implementation CustomView
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self setupUI];
@@ -34,8 +33,7 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self setupUI];
@@ -43,13 +41,11 @@
     return self;
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     self.viewPwdBgView.backgroundColor = [UIColor whiteColor];
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
     
     self.viewPwdBgView.frame = self.bounds;
@@ -92,22 +88,16 @@
 
 #pragma mark - custom method
 
-- (void)handleButtonAction:(UIButton *)sender
-{
+- (void)handleButtonAction:(UIButton *)sender {
     [_pwdTextField resignFirstResponder];
     
-    if (self.block)
-    {
+    if (self.block) {
         self.block(sender.tag);
     }
-    if (sender.tag == 1)
-    {
+    if (sender.tag == 1) {
         NSLog(@"点击了取消按钮！");
-    }
-    else
-    {
-        if (_pwdTextField.text.length < 4 || _pwdTextField.text.length > 8 )
-        {
+    } else {
+        if (_pwdTextField.text.length < 4 || _pwdTextField.text.length > 8 ) {
             self.pwdTextField.text = @"";
             BAKit_WeakSelf
             [BAAlert ba_alertShowWithTitle:@"温馨提示：" message:@"请输入正确的密码！" image:nil buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor redColor], [UIColor cyanColor]] configuration:^(BAAlert *tempView) {
@@ -121,17 +111,14 @@
     }
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [self removeFromSuperview];
 }
 
 #pragma mark - setter / getter
 
-- (UIView *)viewPwdBgView
-{
-    if (!_viewPwdBgView)
-    {
+- (UIView *)viewPwdBgView {
+    if (!_viewPwdBgView) {
         _viewPwdBgView                         = [UIView new];
         
         _viewPwdBgView.layer.masksToBounds     = YES;
@@ -142,10 +129,8 @@
     return _viewPwdBgView;
 }
 
-- (UILabel *)titleLabel
-{
-    if (!_titleLabel)
-    {
+- (UILabel *)titleLabel {
+    if (!_titleLabel) {
         _titleLabel                    = [UILabel new];
         _titleLabel.textAlignment               = NSTextAlignmentCenter;
         _titleLabel.font                        = [UIFont systemFontOfSize:18];
@@ -156,10 +141,8 @@
     return _titleLabel;
 }
 
-- (UIView *)lineView1
-{
-    if (!_lineView1)
-    {
+- (UIView *)lineView1 {
+    if (!_lineView1) {
         _lineView1 = [UIView new];
         _lineView1.backgroundColor = [UIColor lightGrayColor];
         
@@ -168,10 +151,8 @@
     return _lineView1;
 }
 
-- (UITextField *)pwdTextField
-{
-    if (!_pwdTextField)
-    {
+- (UITextField *)pwdTextField {
+    if (!_pwdTextField) {
         _pwdTextField                          = [UITextField new];
         _pwdTextField.borderStyle              = UITextBorderStyleRoundedRect;
         _pwdTextField.textAlignment            = NSTextAlignmentCenter;
@@ -182,10 +163,8 @@
     return _pwdTextField;
 }
 
-- (UIView *)lineView2
-{
-    if (!_lineView2)
-    {
+- (UIView *)lineView2 {
+    if (!_lineView2) {
         _lineView2 = [UIView new];
         _lineView2.backgroundColor = [UIColor lightGrayColor];
         
@@ -194,10 +173,8 @@
     return _lineView2;
 }
 
-- (UIButton *)cancleButton
-{
-    if (!_cancleButton)
-    {
+- (UIButton *)cancleButton {
+    if (!_cancleButton) {
         _cancleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_cancleButton setTitle:@"取消" forState:UIControlStateNormal];
         [_cancleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -210,10 +187,8 @@
     return _cancleButton;
 }
 
-- (UIButton *)sureButton
-{
-    if (!_sureButton)
-    {
+- (UIButton *)sureButton {
+    if (!_sureButton) {
         _sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sureButton setTitle:@"确定" forState:UIControlStateNormal];
         [_sureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

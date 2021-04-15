@@ -16,13 +16,11 @@
  @param text text description
  @param configBlock configBlock description
  */
-- (void)ba_labelSizeToFitWitText:(NSString *)text configBlock:(BAKit_LabelConfigBlock)configBlock
-{
+- (void)ba_labelSizeToFitWitText:(NSString *)text configBlock:(BAKit_LabelConfigBlock)configBlock {
     self.text = text;
     [self sizeToFit];
     
-    if (configBlock)
-    {
+    if (configBlock) {
         configBlock(self);
     }
 }
@@ -33,13 +31,11 @@
  @param attributedText attributedText description
  @param configBlock configBlock description
  */
-- (void)ba_labelSizeToFitWitAttributedText:(NSAttributedString *)attributedText configBlock:(BAKit_LabelConfigBlock)configBlock
-{
+- (void)ba_labelSizeToFitWitAttributedText:(NSAttributedString *)attributedText configBlock:(BAKit_LabelConfigBlock)configBlock {
     self.attributedText = attributedText;
     [self sizeToFit];
     
-    if (configBlock)
-    {
+    if (configBlock) {
         configBlock(self);
     }
 }

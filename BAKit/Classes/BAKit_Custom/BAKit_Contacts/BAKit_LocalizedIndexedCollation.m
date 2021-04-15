@@ -19,8 +19,7 @@
  @return 排序后的索引及 groupArray 字典形式 kBALocalizedIndexArrayKey kBALocalizedGroupArrayKey
  */
 + (NSDictionary *)ba_localizedWithDataArray:(NSMutableArray *)dataArray
-                           localizedNameSEL:(SEL)localizedNameSEL
-{
+                           localizedNameSEL:(SEL)localizedNameSEL {
     /*! 对数组重建索引，按照abcd字母顺序进行分组 */
     UILocalizedIndexedCollation *indexCollation = [UILocalizedIndexedCollation currentCollation];
     NSInteger index, sectionTitlesCount = [[indexCollation sectionTitles] count];
@@ -30,15 +29,13 @@
     NSMutableArray *newSectionsArray = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];
     
     /*! 设置sections数组初始化：元素包含userObjs数据的空数据 */
-    for (index = 0; index < sectionTitlesCount; index++)
-    {
+    for (index = 0; index < sectionTitlesCount; ++index) {
         NSMutableArray *array = [[NSMutableArray alloc] init];
         [newSectionsArray addObject:array];
     }
     
     /*! 分组 */
-    for (id object in dataArray)
-    {
+    for (id object in dataArray) {
         /*! 根据timezone的localename，获得对应的的section number */
         NSInteger sectionNumber = [indexCollation sectionForObject:object collationStringSelector:localizedNameSEL];
         /*! 根据sectionNumber获取数组 */
@@ -49,8 +46,7 @@
     
     /*! 获取空的数组的index */
     NSMutableArray *willDeleteAry = [NSMutableArray new];
-    for (int i = 0; i < newSectionsArray.count; i ++)
-    {
+    for (int i = 0; i < newSectionsArray.count; i ++) {
         NSArray *tempAry = newSectionsArray[i];
         if (tempAry.count == 0) {
             [willDeleteAry addObject:[NSString stringWithFormat:@"%d",i]];
@@ -58,8 +54,7 @@
     }
     
     /*! 删除空的数组 */
-    for (NSInteger i = willDeleteAry.count; i > 0; i -- )
-    {
+    for (NSInteger i = willDeleteAry.count; i > 0; i -- ) {
         NSInteger index = [willDeleteAry[i - 1] integerValue];
         [newSectionsArray removeObjectAtIndex:index];
         [indexArray removeObjectAtIndex:index];

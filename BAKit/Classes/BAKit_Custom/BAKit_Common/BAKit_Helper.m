@@ -25,18 +25,13 @@
  *
  *  @param phoneNumber 电话号码
  */
-+ (void)ba_helperTelWithPhoneNumber:(NSString *)phoneNumber
-{
-    if (![BAKit_RegularExpression ba_regularIsMobileNumber:phoneNumber])
-    {
++ (void)ba_helperTelWithPhoneNumber:(NSString *)phoneNumber {
+    if (![BAKit_RegularExpression ba_regularIsMobileNumber:phoneNumber]) {
         if ([phoneNumber isEqualToString:@"10010"] ||
             [phoneNumber isEqualToString:@"10086"] ||
-            [phoneNumber isEqualToString:@"10000"])
-        {
+            [phoneNumber isEqualToString:@"10000"]) {
 
-        }
-        else
-        {
+        } else {
             BAKit_ShowAlertWithMsg(@"电话号码格式错误！");
             return;
         }
@@ -77,15 +72,11 @@
 /*!
  *  跳转Safari浏览器
  */
-+ (void)ba_helperGotoSafariBrowserWithURL:(NSString *)url
-{
-    if ([BAKit_RegularExpression ba_regularIsUrl:url])
-    {
++ (void)ba_helperGotoSafariBrowserWithURL:(NSString *)url {
+    if ([BAKit_RegularExpression ba_regularIsUrl:url]) {
         /*! 跳转系统通知 */
         BAKit_OpenUrl(url);
-    }
-    else
-    {
+    } else {
         NSLog(@"url错误，请重新输入！");
     }
     
@@ -96,8 +87,7 @@
  
  @return 当前存在的 VisibleViewController
  */
-+ (nullable UIViewController *)ba_helperVisibleViewController
-{
++ (nullable UIViewController *)ba_helperVisibleViewController {
     UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     UIViewController *visibleViewController = [rootViewController ba_visibleViewControllerIfExist];
     return visibleViewController;
@@ -109,14 +99,10 @@
 
  @param sure YES：UIStatusBarStyleDefault（黑色字体），NO：UIStatusBarStyleLightContent（白色字体）
  */
-+ (void)ba_helperIsSetStatusBarStyleUIStatusBarStyleDefault:(BOOL)sure
-{
-    if (sure)
-    {
++ (void)ba_helperIsSetStatusBarStyleUIStatusBarStyleDefault:(BOOL)sure {
+    if (sure) {
         [UIApplication.sharedApplication setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    }
-    else
-    {
+    } else {
         [UIApplication.sharedApplication setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     }
 }
@@ -136,36 +122,30 @@
                                    font:(UIFont *__nullable)font
                               fontColor:(UIColor *__nullable)fontColor
                        isNeedBottomLine:(BOOL)isNeedBottomLine
-                   navigationController:(UINavigationController *)navigationController
-{
+                   navigationController:(UINavigationController *)navigationController {
     UINavigationBar *navigationBar = navigationController.navigationBar;
     navigationController.navigationBar.translucent = NO;
     navigationBar.tintColor = nil;
     navigationBar.barTintColor = nil;
 
-    if (tintColor)
-    {
+    if (tintColor) {
         navigationBar.tintColor = tintColor;
     }
-    if (barTintColor)
-    {
+    if (barTintColor) {
         navigationBar.barTintColor = barTintColor;
     }
     
     // 设置文字属性
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
-    if (fontColor)
-    {
+    if (fontColor) {
         textAttrs[NSForegroundColorAttributeName] = fontColor;
     }
-    if (font)
-    {
+    if (font) {
         textAttrs[NSFontAttributeName] = font;
     }
     [navigationBar setTitleTextAttributes:textAttrs];
     
-    if (!isNeedBottomLine)
-    {
+    if (!isNeedBottomLine) {
         // 去掉导航分割线
         [navigationController ba_hideBottonLineInView:navigationBar];
     }
@@ -182,10 +162,8 @@
 + (void)ba_helperSetTabbarSelectedTintColor:(UIColor * __nullable)selectedTintColor
                             normalTintColor:(UIColor * __nullable)normalTintColor
                             backgroundImage:(UIImage * __nullable)backgroundImage
-                            backgroundColor:(UIColor * __nullable)backgroundColor
-{
-    if (selectedTintColor)
-    {
+                            backgroundColor:(UIColor * __nullable)backgroundColor {
+    if (selectedTintColor) {
         // 自定义 tabBar：默认选中颜色
         [UITabBar appearance].tintColor = selectedTintColor;
         // 自定义 tabBar：默认非选中颜色
@@ -193,27 +171,22 @@
         [[UITabBarItem appearance] setTitleTextAttributes:textAttributes forState:UIControlStateSelected];
     }
     
-    if (normalTintColor)
-    {
+    if (normalTintColor) {
         // 自定义 tabBar：默认非选中颜色
         NSDictionary <NSString *, id> *textAttributes = @{NSForegroundColorAttributeName: normalTintColor};
         [[UITabBarItem appearance] setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     }
     
-    if (backgroundImage)
-    {
+    if (backgroundImage) {
         // 自定义 tabBar：默认背景图片
         [UITabBar appearance].backgroundImage = backgroundImage;
-    }
-    else if (backgroundColor)
-    {
+    } else if (backgroundColor) {
         // 自定义 tabBar：默认背景颜色
         [UITabBar appearance].backgroundImage = [UIImage ba_image_Color:backgroundColor];
     }
 }
 
-- (void)ba_helperSetTabbarItem
-{
+- (void)ba_helperSetTabbarItem {
     
 }
 
@@ -222,8 +195,7 @@
 @implementation BAKit_Helper (NSNULL)
 
 #pragma mark - ***** 判断字典是否为空
-+ (BOOL)ba_helperIsNSDictionaryNULL:(id)obj
-{
++ (BOOL)ba_helperIsNSDictionaryNULL:(id)obj {
     if(obj == nil) return YES;
     
     if(![obj isKindOfClass:[NSDictionary class]])
@@ -234,8 +206,7 @@
 }
 
 #pragma mark - ***** 判断字符串是否为空
-+ (BOOL)ba_helperIsNSStringNULL:(NSString *)stirng
-{
++ (BOOL)ba_helperIsNSStringNULL:(NSString *)stirng {
     if([stirng isKindOfClass:[NSNull class]]) return YES;
     if(![stirng isKindOfClass:[NSString class]]) return YES;
     
@@ -248,30 +219,24 @@
 }
 
 #pragma mark - ***** 判断字符串为空和只为空格
-+ (BOOL)ba_helperIsBlankString:(NSString *)string
-{
-    if (string == nil)
-    {
++ (BOOL)ba_helperIsBlankString:(NSString *)string {
+    if (string == nil) {
         return YES;
     }
     
-    if (string == NULL)
-    {
+    if (string == NULL) {
         return YES;
     }
     
-    if ([string isKindOfClass:[NSNull class]])
-    {
+    if ([string isKindOfClass:[NSNull class]]) {
         return YES;
     }
     
-    if (string.length==0)
-    {
+    if (string.length==0) {
         return YES;
     }
     
-    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]==0)
-    {
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]==0) {
         return YES;
     }
     
@@ -284,15 +249,11 @@
 @implementation BAKit_Helper (Location)
 
 /*! 判断是否打开定位 */
-+ (BOOL)ba_helperIsLocationOpen
-{
++ (BOOL)ba_helperIsLocationOpen {
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status)
-    {
+    if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status) {
         return NO;
-    }
-    else
-    {
+    } else {
         return YES;
     }
 }
@@ -309,14 +270,10 @@
  *
  *  @return YES / NO
  */
-+ (BOOL)ba_helperIsArray:(NSArray *)array containsObject:(NSString *)object
-{
-    if ([array containsObject:object])
-    {
++ (BOOL)ba_helperIsArray:(NSArray *)array containsObject:(NSString *)object {
+    if ([array containsObject:object]) {
         return YES;
-    }
-    else
-    {
+    } else {
         return NO;
     }
 }
@@ -330,15 +287,11 @@
  *
  *  @return YES / NO
  */
-+ (BOOL)ba_helperURLIsMp4WithUrl:(NSString *)url
-{
++ (BOOL)ba_helperURLIsMp4WithUrl:(NSString *)url {
     NSString *pathExtention = [url pathExtension];
-    if([pathExtention isEqualToString:@"mp4"])
-    {
+    if([pathExtention isEqualToString:@"mp4"]) {
         return YES;
-    }
-    else
-    {
+    } else {
         return NO;
     }
 }
@@ -352,8 +305,7 @@
 
  @param view view
  */
-+ (void)ba_helperViewAnimation:(UIView *)view
-{
++ (void)ba_helperViewAnimation:(UIView *)view {
     view.alpha = 0.f;
     [UIView animateWithDuration:1.5f animations:^{
         view.alpha = 1.0f;

@@ -10,8 +10,7 @@
 
 @implementation BAMobleCountryCodeManger
 
-+ (NSString *)serviceProvider
-{
++ (NSString *)serviceProvider {
     CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
     /*
      {
@@ -22,8 +21,7 @@
     if (@available(iOS 12.0, *)) {
         NSDictionary <NSString *, CTCarrier *>*dict = [info serviceSubscriberCellularProviders];
         
-        if (dict.allKeys > 0)
-        {
+        if (dict.allKeys > 0) {
 //            for (NSInteger i = 0; i < dict.allKeys.count; ++i)
 //            {
 //                NSString *key = dict.allKeys[i];
@@ -34,9 +32,7 @@
 //            }
             NSString *key = dict.allKeys[0];
             carrier = dict[key];
-        }
-        else
-        {
+        } else {
             carrier = [info subscriberCellularProvider];
         }
     } else {
@@ -47,24 +43,21 @@
     NSString *name = carrier.carrierName;
     NSLog(@"carrierName：%@", name);
     
-    if (carrier == nil)
-    {
+    if (carrier == nil) {
         carrier = nil;
         return nil;
     }
 
     // The mobile network code (MNC) for the user’s cellular service provider
     NSString *code = [carrier mobileNetworkCode];
-    if (code == nil)
-    {
+    if (code == nil) {
         carrier = nil;
         return nil;
     }
     return code;
 }
 
-+ (CTCarrier *)serviceCarrier
-{
++ (CTCarrier *)serviceCarrier {
     CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
     
     // information about the user’s home cellular service provider
@@ -78,8 +71,7 @@
     if (@available(iOS 12.0, *)) {
         NSDictionary <NSString *, CTCarrier *>*dict = [info serviceSubscriberCellularProviders];
         
-        if (dict.allKeys > 0)
-        {
+        if (dict.allKeys > 0) {
             //            for (NSInteger i = 0; i < dict.allKeys.count; ++i)
             //            {
             //                NSString *key = dict.allKeys[i];
@@ -90,20 +82,15 @@
             //            }
             NSString *key = dict.allKeys[0];
             carrier = dict[key];
-        }
-        else
-        {
+        } else {
             carrier = [info subscriberCellularProvider];
         }
-    }
-    else
-    {
+    } else {
         carrier = [info subscriberCellularProvider];
     }
     NSLog(@"\n\ncarrierName：%@\nmobileNetworkCode:%@\nmobileCountryCode：%@\nallowsVOIP：%@\n\n", carrier.carrierName, carrier.mobileNetworkCode, carrier.mobileCountryCode, carrier.allowsVOIP ? @"Y":@"N");
 
-    if (carrier == nil)
-    {
+    if (carrier == nil) {
         carrier = nil;
         return nil;
     }

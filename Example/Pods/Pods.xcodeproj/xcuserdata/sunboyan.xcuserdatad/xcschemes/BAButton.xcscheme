@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B2E72B5F55CF85CC6497F3D4730F4525"
+               BlueprintIdentifier = "050578DFDA72E2EBFDBD67185F56FF60"
                BuildableName = "BAButton.framework"
                BlueprintName = "BAButton"
                ReferencedContainer = "container:Pods.xcodeproj">

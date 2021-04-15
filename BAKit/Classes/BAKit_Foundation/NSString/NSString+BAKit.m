@@ -21,10 +21,8 @@
  *  例如: "This is a Test" 将返回 "This is a test"
  "this is a test"  将返回 "This is a test"
  */
-- (NSString *)ba_stringSentenceCapitalizedString
-{
-    if(![self length])
-    {
+- (NSString *)ba_stringSentenceCapitalizedString {
+    if(![self length]) {
         return [NSString string];
     }
     NSString *uppercase = [[self substringToIndex:1] uppercaseString];
@@ -34,25 +32,18 @@
 }
 
 /* 自编码成编码的URL字符串 */
-- (NSString *)ba_stringUrlEncode
-{
+- (NSString *)ba_stringUrlEncode {
     NSMutableString *output = [NSMutableString string];
     const unsigned char *source = (const unsigned char *)[self UTF8String];
     int sourceLen = (int)strlen((const char *)source);
-    for(int i = 0; i < sourceLen; ++i)
-    {
+    for(int i = 0; i < sourceLen; ++i) {
         const unsigned char thisChar = source[i];
         
-        if(thisChar == ' ')
-        {
+        if(thisChar == ' ') {
             [output appendString:@"+"];
-        }
-        else if(thisChar == '.' || thisChar == '-' || thisChar == '_' || thisChar == '~' || (thisChar >= 'a' && thisChar <= 'z') || (thisChar >= 'A' && thisChar <= 'Z') || (thisChar >= '0' && thisChar <= '9'))
-        {
+        } else if(thisChar == '.' || thisChar == '-' || thisChar == '_' || thisChar == '~' || (thisChar >= 'a' && thisChar <= 'z') || (thisChar >= 'A' && thisChar <= 'Z') || (thisChar >= '0' && thisChar <= '9')) {
             [output appendFormat:@"%c", thisChar];
-        }
-        else
-        {
+        } else {
             [output appendFormat:@"%%%02X", thisChar];
         }
     }
@@ -60,8 +51,7 @@
     return output;
 }
 
-+ (NSString *)ba_stringNamed:(NSString *)name
-{
++ (NSString *)ba_stringNamed:(NSString *)name {
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@""];
     NSString *str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
     if (!str) {
@@ -76,8 +66,7 @@
 
  @return Data
  */
-- (NSData *)ba_stringDataValue
-{
+- (NSData *)ba_stringDataValue {
     return [self dataUsingEncoding:NSUTF8StringEncoding];
 }
 
@@ -91,20 +80,16 @@
  */
 + (NSString *)ba_stringSearchInString:(NSString *)string
                             charStart:(char)start
-                              charEnd:(char)end
-{
+                              charEnd:(char)end {
     int inizio = 0, stop = 0;
-    for(int i = 0; i < [string length]; i++)
-    {
+    for(int i = 0; i < [string length]; i++) {
         // 定位起点索引字符
-        if([string characterAtIndex:i] == start)
-        {
+        if([string characterAtIndex:i] == start) {
             inizio = i+1;
             i += 1;
         }
         // 定位结束索引字符
-        if([string characterAtIndex:i] == end)
-        {
+        if([string characterAtIndex:i] == end) {
             stop = i;
             break;
         }
@@ -123,18 +108,14 @@
  @return 两个字符之间的字符串
  */
 - (NSString *)ba_stringSearchCharStart:(char)start
-                               charEnd:(char)end
-{
+                               charEnd:(char)end {
     int inizio = 0, stop = 0;
-    for(int i = 0; i < [self length]; i++)
-    {
-        if([self characterAtIndex:i] == start)
-        {
+    for(int i = 0; i < [self length]; i++) {
+        if([self characterAtIndex:i] == start) {
             inizio = i+1;
             i += 1;
         }
-        if([self characterAtIndex:i] == end)
-        {
+        if([self characterAtIndex:i] == end) {
             stop = i;
             break;
         }
@@ -150,8 +131,7 @@
  
  @return YES：为空，NO：不为空
  */
-- (BOOL)ba_stringIsBlank
-{
+- (BOOL)ba_stringIsBlank {
     NSCharacterSet *blank = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     for (NSInteger i = 0; i < self.length; ++i) {
         unichar c = [self characterAtIndex:i];
@@ -169,14 +149,10 @@
  @param string2 string2
  @return YES/NO
  */
-+ (BOOL)ba_stringIsEqualString1:(NSString *)string1 string2:(NSString *)string2
-{
-    if([string1 isEqualToString:string2])
-    {
++ (BOOL)ba_stringIsEqualString1:(NSString *)string1 string2:(NSString *)string2 {
+    if([string1 isEqualToString:string2]) {
         return YES;
-    }
-    else
-    {
+    } else {
         return NO;
     }
 }
@@ -186,16 +162,12 @@
 
  @return 生日
  */
-- (NSDate *)ba_stringExtractBirthdayFromIDNumber
-{
+- (NSDate *)ba_stringExtractBirthdayFromIDNumber {
     NSString *result = @"";
     NSDate *date;
-    if (self.length == 15)
-    {
+    if (self.length == 15) {
         result = [NSString stringWithFormat:@"19%@", [self substringWithRange:NSMakeRange(6, 6)]];
-    }
-    else if (self.length == 18)
-    {
+    } else if (self.length == 18) {
         result = [self substringWithRange:NSMakeRange(6, 8)];
     }
     date = [result ba_time_dateWithFormat:@"yyyyMMdd" timezoneName:@"Asia/Shanghai"];
@@ -207,19 +179,14 @@
 
  @return 性别
  */
-- (NSString *)ba_stringExtractGenderFromIDNumber
-{
-    if (![BAKit_RegularExpression ba_regularIsIdCardNumberQualified:self])
-    {
+- (NSString *)ba_stringExtractGenderFromIDNumber {
+    if (![BAKit_RegularExpression ba_regularIsIdCardNumberQualified:self]) {
         return nil;
     }
     
-    if (self.length == 15)
-    {
+    if (self.length == 15) {
         return [[self substringFromIndex:14] intValue] % 2 > 0 ? @"男" : @"女";
-    }
-    else if (self.length == 18)
-    {
+    } else if (self.length == 18) {
         return [[self substringWithRange:NSMakeRange(16, 1)] intValue] % 2 > 0 ? @"男" : @"女";
     }
     
@@ -231,21 +198,16 @@
 
  @return 年龄
  */
-- (NSUInteger)ba_stringExtractAgeFromIDNumber
-{
-    if (self.length != 15 && self.length != 18)
-    {
+- (NSUInteger)ba_stringExtractAgeFromIDNumber {
+    if (self.length != 15 && self.length != 18) {
         return 0;
     }
     
     NSDate *birthday;
-    if (self.length == 15)
-    {
+    if (self.length == 15) {
         // FIRST GENERATION ID
         birthday = [[NSString stringWithFormat:@"19%@", [self substringWithRange:NSMakeRange(6, 6)]] ba_time_dateWithFormat:@"yyyyMMdd" timezoneName:@"Asia/Shanghai"];
-    }
-    else if (self.length == 18)
-    {
+    } else if (self.length == 18) {
         // SECOND GENERATION ID
         birthday = [[self substringWithRange:NSMakeRange(6, 8)] ba_time_dateWithFormat:@"yyyyMMdd" timezoneName:@"Asia/Shanghai"];
     }
@@ -266,8 +228,7 @@
 
  @return IP 地址
  */
-+ (NSString *)ba_stringGetIPAddress
-{
++ (NSString *)ba_stringGetIPAddress {
     NSString *address = @"error";
     struct ifaddrs *interfaces = NULL;
     struct ifaddrs *temp_addr = NULL;
@@ -299,15 +260,12 @@
  @param string string
  @return YES/NO
  */
-- (BOOL)ba_stringIncludesString:(NSString *)string
-{
-    if ([string ba_stringIsBlank])
-    {
+- (BOOL)ba_stringIncludesString:(NSString *)string {
+    if ([string ba_stringIsBlank]) {
         return NO;
     }
     
-    if ([self respondsToSelector:@selector(containsString:)])
-    {
+    if ([self respondsToSelector:@selector(containsString:)]) {
         return [self containsString:string];
     }
     
@@ -320,14 +278,13 @@
  @param urlString 需要转换的字符
  @return 转码后的字符
  */
-- (NSString *)ba_stringUrlEncodeWithUrlString:(NSString *)urlString
-{
-    NSString *charactersToEscape = @"?!@#$^&%*+,:;='\"`<>()[]{}/\\| ";
-    NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:charactersToEscape] invertedSet];
-    NSString *encodedUrl = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
-    
-    return encodedUrl;
-}
+//- (NSString *)ba_stringUrlEncodeWithUrlString:(NSString *)urlString {
+//    NSString *charactersToEscape = @"?!@#$^&%*+,:;='\"`<>()[]{}/\\| ";
+//    NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:charactersToEscape] invertedSet];
+//    NSString *encodedUrl = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+//    
+//    return encodedUrl;
+//}
 
 /**
  UrlEncode 解码
@@ -335,8 +292,7 @@
  @param urlString 需要转换的字符
  @return 转码后的字符
  */
-- (NSString *)ba_stringUrlDecodeWithUrlString:(NSString *)urlString
-{
+- (NSString *)ba_stringUrlDecodeWithUrlString:(NSString *)urlString {
     return [urlString stringByRemovingPercentEncoding];
 }
 
@@ -346,10 +302,8 @@
  @param floatNumberString float 字符串
  @return NSString：float
  */
-+ (NSString *)ba_stringInterceptTwoDecimalPlacesWithFloatNumberString:(NSString *)floatNumberString
-{
-    if ([floatNumberString ba_stringIncludesString:@"."])
-    {
++ (NSString *)ba_stringInterceptTwoDecimalPlacesWithFloatNumberString:(NSString *)floatNumberString {
+    if ([floatNumberString ba_stringIncludesString:@"."]) {
         NSArray *array = [floatNumberString componentsSeparatedByString:@"."];
         NSString *firstString = array[0];
         NSString *lastString = array[1];
@@ -368,10 +322,8 @@
  @param floatNumberString float 字符串
  @return NSString：float
  */
-+ (NSString *)ba_stringInterceptNODecimalPlacesWithFloatNumberString:(NSString *)floatNumberString
-{
-    if ([floatNumberString ba_stringIncludesString:@"."])
-    {
++ (NSString *)ba_stringInterceptNODecimalPlacesWithFloatNumberString:(NSString *)floatNumberString {
+    if ([floatNumberString ba_stringIncludesString:@"."]) {
         NSArray *array = [floatNumberString componentsSeparatedByString:@"."];
         NSString *firstString = array[0];
         NSString *lastString = array[1];

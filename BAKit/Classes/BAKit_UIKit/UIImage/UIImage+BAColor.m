@@ -16,8 +16,7 @@
  @param color color
  @return 纯颜色 图片
  */
-+ (UIImage *)ba_image_Color:(UIColor *)color
-{
++ (UIImage *)ba_image_Color:(UIColor *)color {
     UIImage *image = [self ba_image_Color:color size:CGSizeMake(1.0f, 1.0f)];
     return image;
 }
@@ -29,8 +28,7 @@
  @param size size
  @return 纯颜色 图片
  */
-+ (UIImage *)ba_image_Color:(UIColor *)color size:(CGSize)size
-{
++ (UIImage *)ba_image_Color:(UIColor *)color size:(CGSize)size {
     CGRect rect          = CGRectMake(0.0f, 0.0f, size.width, size.height);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();

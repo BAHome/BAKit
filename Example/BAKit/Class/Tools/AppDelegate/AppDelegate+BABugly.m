@@ -13,8 +13,7 @@ static NSString *Bugly_ErrorName_AvoidCrash = @"AvoidCrash拦截的异常";
 
 @implementation AppDelegate (BABugly)
 
-- (void)initBugly
-{
+- (void)initBugly {
 //#if DEBUG
 //    return;
 //#endif
@@ -27,7 +26,7 @@ static NSString *Bugly_ErrorName_AvoidCrash = @"AvoidCrash拦截的异常";
     config.unexpectedTerminatingDetectionEnable = YES;
     config.viewControllerTrackingEnable = YES;
     config.reportLogLevel = BuglyLogLevelWarn;
-    config.deviceIdentifier = [[BAKit_DeviceInfoManager sharedDeviceInfoManager] ba_deviceGetUUID];
+    config.deviceIdentifier = [BAKit_DeviceInfoManager.shared ba_deviceGetUUID];
     config.channel = @"dev";
     
 //#if DEBUG
@@ -40,15 +39,14 @@ static NSString *Bugly_ErrorName_AvoidCrash = @"AvoidCrash拦截的异常";
 //#endif
                    config:config];
     
-    [Bugly setUserIdentifier:[[BAKit_DeviceInfoManager sharedDeviceInfoManager] ba_deviceGetUUID]];
+    [Bugly setUserIdentifier:[BAKit_DeviceInfoManager.shared ba_deviceGetUUID]];
     
     [self initAvoidCrash];
 }
 
 #pragma mark - AvoidCrash
 
-- (void)initAvoidCrash
-{
+- (void)initAvoidCrash {
     [AvoidCrash makeAllEffective];
     NSArray *noneSelClassStrings = @[
                                      @"NSString",
@@ -93,8 +91,7 @@ static NSString *Bugly_ErrorName_AvoidCrash = @"AvoidCrash拦截的异常";
 }
 
 #pragma mark - BuglyDelegate
-- (NSString *)attachmentForException:(NSException *)exception
-{
+- (NSString *)attachmentForException:(NSException *)exception {
     NSMutableString *str = [@"" mutableCopy];
     NSString *versionInfo = BADefine_APPVersion_VersionBuildString;
 //    NSString *userInfo = [YZAuthModel fetchAccount];

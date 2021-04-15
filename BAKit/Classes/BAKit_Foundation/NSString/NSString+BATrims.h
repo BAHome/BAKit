@@ -117,13 +117,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)ba_stringFromHexString:(NSString *)hexString;
 
 /*!
- *  字典转 json
+ *  obj 转 json
  *
- *  @param dictionary 传入的字典
+ *  @param id 传入的 obj
  *
  *  @return 返回 json 字符串
  */
-+ (NSString *)ba_stringJsonTurnWithDictionary:(NSDictionary *)dictionary;
++ (NSString *)ba_stringToJsonWithObj:(id)obj;
 
 /**
  获取 string 的长度
@@ -142,6 +142,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)ba_stringWithNeedRepeatString:(NSString *)repeatString
                                 repeatCount:(NSInteger)repeatCount;
+
+/// 版本更新中获取纯数字，最低4位数，位数不足在后面补0，例如：3.8.5 ==》3850，
+/// @param versionString versionString description
+/// @param maxLength maxLength description
++ (NSInteger)ba_scanNumFromVersionString:(NSString *)versionString maxLength:(NSInteger)maxLength;
+
+
+- (NSString *)ba_stringByURLEncode;
+- (NSString *)ba_stringByURLDecode;
 
 @end
 NS_ASSUME_NONNULL_END

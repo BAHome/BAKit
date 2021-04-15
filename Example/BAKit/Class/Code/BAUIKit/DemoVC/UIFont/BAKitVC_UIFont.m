@@ -27,8 +27,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"iOS 系统字体大全";
 //    self.view.backgroundColor = BAKit_Color_White;
 
@@ -62,19 +61,15 @@
     };
 }
 
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = [UIFont ba_fontGetAllFamilyFontNames];
     }
     return _titleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
@@ -82,8 +77,7 @@
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

@@ -71,11 +71,9 @@
 @implementation BAKit_LocationManager
 BAKit_SingletonM()
 
-- (void)ba_loaction_start
-{
+- (void)ba_loaction_start {
     // 如果没有授权则请求用户授权
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
-    {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         [self.locationManager requestWhenInUseAuthorization];
     }
 //    else if([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse)
@@ -94,8 +92,7 @@ BAKit_SingletonM()
         //    位置信息更新最小距离，只有移动大于这个距离才更新位置信息，默认为kCLDistanceFilterNone：不进行距离限制
         self.locationManager.distanceFilter = kCLDistanceFilterNone;
         
-        if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
-        {
+        if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0) {
             // 以下方法选择其中一个
             // 请求始终授权   无论app在前台或者后台都会定位
             //  [locationManager requestAlwaysAuthorization];
@@ -103,15 +100,13 @@ BAKit_SingletonM()
             [self.locationManager requestWhenInUseAuthorization];
         }
         
-        if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
-        {
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
             // 一定要勾选后台模式 location updates 否者程序奔溃, 注意:只要是想后台获取用户的位置,就必须开启后台模式 项目->TARGETS->Capabilities-> Background Modes 勾线 Location updates
             //                self.locationManager.allowsBackgroundLocationUpdates = YES;
         }
 //    }
     
-    if ([CLLocationManager locationServicesEnabled])
-    {
+    if ([CLLocationManager locationServicesEnabled]) {
         NSLog(@"定位服务已经打开!");
         //    位置信息更新最小距离，只有移动大于这个距离才更新位置信息，默认为kCLDistanceFilterNone：不进行距离限制
         [BAKit_LocationManager.shared.locationManager startUpdatingLocation];
@@ -119,8 +114,7 @@ BAKit_SingletonM()
     }
 }
 
-- (void)ba_loaction_stop
-{
+- (void)ba_loaction_stop {
     [self.locationManager stopUpdatingLocation];
     [self.locationManager stopMonitoringSignificantLocationChanges];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -128,8 +122,7 @@ BAKit_SingletonM()
 
 #pragma mark - CLLocationManagerDelegate
 #pragma mark 位置发生改变后执行
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(nonnull NSArray<CLLocation *> *)locations
-{
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(nonnull NSArray<CLLocation *> *)locations {
     /*
      经纬度
      @property(readonly, nonatomic) CLLocationCoordinate2D coordinate;
@@ -176,8 +169,7 @@ BAKit_SingletonM()
 //        NSString *ocean = placemark.ocean; // 海洋
 //        NSArray *areasOfInterest = placemark.areasOfInterest; //关联的或利益相关的地标
         
-        if (BAKit_LocationManager.shared.getCurrentLocationBlock)
-        {
+        if (BAKit_LocationManager.shared.getCurrentLocationBlock) {
             BAKit_LocationManager.shared.getCurrentLocationBlock(placemark);
         }
         
@@ -197,36 +189,27 @@ BAKit_SingletonM()
 }
 
 #pragma mark 导航方向发生变化后执行
-- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
-{
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
     
 }
 
 #pragma mark 进入某个区域
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     
 }
 
 #pragma mark 走出某个区域之后执行
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-{
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     
 }
 
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    if ([error code] == kCLErrorDenied)
-    {
-        if (BAKit_LocationManager.shared.refuseToUsePositioningSystemBlock)
-        {
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    if ([error code] == kCLErrorDenied) {
+        if (BAKit_LocationManager.shared.refuseToUsePositioningSystemBlock) {
             BAKit_LocationManager.shared.refuseToUsePositioningSystemBlock(@"已拒绝使用系统定位！");
         }
-    }
-    else if ([error code] == kCLErrorLocationUnknown)
-    {
-        if (BAKit_LocationManager.shared.locateFailureBlock)
-        {
+    } else if ([error code] == kCLErrorLocationUnknown) {
+        if (BAKit_LocationManager.shared.locateFailureBlock) {
             BAKit_LocationManager.shared.locateFailureBlock(@"无法获取位置信息！");
         }
     }
@@ -237,47 +220,38 @@ BAKit_SingletonM()
 // 第一次弹出请求定位权限会执行该代码块 用户如果点击 "不允许"  执行"定位开启，但被拒", 若点击 "允许" 执行 获取前后台定位授权 或者 获取前后台定位授权 如果在设置 设置隐私 定位服务 "永不" 则执 "行定位开启，但被拒"
 // 注意:在设置点击了"永不"之后不返回应用在切换后台跟前台选项是不会执行该代理方法的 当返回应用之后 才会对做出的改变执行代理方法
 // 关闭定位服务会执行 定位关闭，"不可用" 系统默认弹出弹框 提示用户去设置中打开定位服务选项
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     switch (status) {
             // 用户还未决定
-        case kCLAuthorizationStatusNotDetermined:
-        {
+        case kCLAuthorizationStatusNotDetermined: {
             NSLog(@"用户还未决定");
             
             break;
         }
             // 访问受限
-        case kCLAuthorizationStatusRestricted:
-        {
+        case kCLAuthorizationStatusRestricted: {
             NSLog(@"访问受限");
             break;
         }
             // 定位关闭时和对此APP授权为never时调用
-        case kCLAuthorizationStatusDenied:
-        {
+        case kCLAuthorizationStatusDenied: {
             // 定位是否可用（是否支持定位或者定位是否开启）
-            if([CLLocationManager locationServicesEnabled])
-            {
+            if([CLLocationManager locationServicesEnabled]) {
                 NSLog(@"定位开启，但被拒");
-            }
-            else
-            {
+            } else {
                 NSLog(@"定位关闭，不可用, 请在设置中打开定位服务选项");
             }
             //            NSLog(@"被拒");
             break;
         }
             // 获取前后台定位授权
-        case kCLAuthorizationStatusAuthorizedAlways:
+        case kCLAuthorizationStatusAuthorizedAlways: {
             //        case kCLAuthorizationStatusAuthorized: // 失效，不建议使用
-        {
             NSLog(@"获取前后台定位授权");
             break;
         }
             // 获得前台定位授权
-        case kCLAuthorizationStatusAuthorizedWhenInUse:
-        {
+        case kCLAuthorizationStatusAuthorizedWhenInUse: {
             NSLog(@"获得前台定位授权");
             break;
         }
@@ -333,8 +307,7 @@ BAKit_SingletonM()
 //    return _locationManager;
 //}
 
-- (void)dealloc
-{
+- (void)dealloc {
     BAKit_LocationManager.shared.locationManager = nil;
     [BAKit_LocationManager.shared ba_loaction_stop];
 }

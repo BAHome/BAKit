@@ -84,42 +84,32 @@
 }
 
 /*! 当用户刷时,导航控制器的navigationBar会隐藏或显示 */
-- (void)setNavigationBarHidden:(BOOL)navigationBarHidden
-{
-    if (navigationBarHidden)
-    {
+- (void)setNavigationBarHidden:(BOOL)navigationBarHidden {
+    if (navigationBarHidden) {
         self.hidesBarsOnSwipe = YES;
-    }
-    else
-    {
+    } else {
         self.hidesBarsOnSwipe = NO;
     }
 
 }
 
 // 导航控制器跳转完成的时候调用
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     //    BALog(@"%@", self.viewControllers[0]);
-    if (viewController == self.viewControllers[0])
-    {
+    if (viewController == self.viewControllers[0]) {
         // 显示根控制器
         // 返回滑动返回手势代理
         self.interactivePopGestureRecognizer.delegate = _popDelegate;
-    }
-    else
-    {
+    } else {
         // 实现滑动返回功能
         // 清空滑动返回手势代理
         self.interactivePopGestureRecognizer.delegate = nil;
     }
 }
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     // 设置非根控制器导航条内容
-    if (self.viewControllers.count)
-    {
+    if (self.viewControllers.count) {
         viewController.hidesBottomBarWhenPushed = YES;
         
 //        UIBarButtonItem *left = [UIBarButtonItem barButtonItemWithImage:[UIImage imageNamed:@"nav-back"] highImage:nil target:self action:@selector(backToPre) forControlEvents:UIControlEventTouchUpInside];
@@ -129,18 +119,15 @@
     [super pushViewController:viewController animated:animated];
 }
 
-- (void)backToPre
-{
+- (void)backToPre {
     [self popViewControllerAnimated:YES];
 }
 
-- (void)backToRoot
-{
+- (void)backToRoot {
     [self popToRootViewControllerAnimated:YES];
 }
 
-- (void)customNavBackButtonMethod
-{
+- (void)customNavBackButtonMethod {
     [self backToPre];
 }
 
@@ -148,8 +135,7 @@
  *  导航控制器 统一管理状态栏颜色
  *  @return 状态栏颜色
  */
--(UIStatusBarStyle)preferredStatusBarStyle
-{
+-(UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 

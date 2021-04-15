@@ -1,9 +1,9 @@
 # BAButton
 
 [![BAHome Team Name](https://img.shields.io/badge/Team-BAHome-brightgreen.svg?style=flat)](https://github.com/BAHome "BAHome Team")
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) [![LICENSE](https://img.shields.io/badge/license-NPL%20(The%20996%20Prohibited%20License)-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) 
 [![CI Status](https://img.shields.io/travis/boai/BAButton.svg?style=flat)](https://travis-ci.org/boai/BAButton)
 [![Version](https://img.shields.io/cocoapods/v/BAButton.svg?style=flat)](https://cocoapods.org/pods/BAButton)
-[![License](https://img.shields.io/cocoapods/l/BAButton.svg?style=flat)](https://cocoapods.org/pods/BAButton)
 [![Platform](https://img.shields.io/cocoapods/p/BAButton.svg?style=flat)](https://cocoapods.org/pods/BAButton)
 [![](https://img.shields.io/badge/微博-博爱1616-red.svg)](http://weibo.com/538298123)
 
@@ -28,7 +28,7 @@ boai, sunboyan@outlook.com
 
 ## License
 
-BAButton is available under the MIT license. See the LICENSE file for more info.
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) [![LICENSE](https://img.shields.io/badge/license-NPL%20(The%20996%20Prohibited%20License)-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) 
 
 ## 1、功能及简介
 * 1、UIButton 图片、文字自定义布局 <br>
@@ -801,8 +801,7 @@ CGFloat viewCornerRadius = 15;
 
 // 示例2：
 
-- (void)setupNavi
-{
+- (void)setupNavi {
 CGRect frame = CGRectMake(0, 0, 80, 40);
 UIButton *navi_rightButton = [UIButton ba_creatButtonWithFrame:frame title:@"xib" selTitle:nil titleColor:BAKit_Color_Red_pod titleFont:nil image:[UIImage imageNamed:@"tabbar_mainframeHL"] selImage:nil padding:2 buttonPositionStyle:BAKit_ButtonLayoutTypeCenterImageRight viewRectCornerType:BAKit_ViewRectCornerTypeAllCorners viewCornerRadius:20 target:self selector:@selector(handleRightNaviButtonAction:)];
 navi_rightButton.backgroundColor = BAKit_Color_RandomRGB_pod();
@@ -830,15 +829,13 @@ BAKit_StrongSelf
 };
 }
 
-- (void)handleLeftNaviButtonAction:(UIButton *)sender
-{
+- (void)handleLeftNaviButtonAction:(UIButton *)sender {
 // 添加按钮点击音效和震动效果
 //    [sender ba_viewPlaySoundEffectWithFileName:@"begin.mp3" isNeedShock:YES];
 //    [self.navigationController pushViewController:[ViewController3 new] animated:YES];
 }
 
-- (void)handleRightNaviButtonAction:(UIButton *)sender
-{
+- (void)handleRightNaviButtonAction:(UIButton *)sender {
 // 添加按钮点击音效和震动效果
 //    [sender ba_buttonPlaySoundEffectWithFileName:@"failure.mp3" isNeedShock:YES];
 //    [self.navigationController pushViewController:[ViewController2 new] animated:YES];
@@ -871,8 +868,7 @@ __block UIButton *btn = sender;
 }
 
 // 示例4：测试大图片 button 的 layout 布局，如果你的图片宽高大于 自身的宽高，则需要压缩后再配置布局
-- (void)test2
-{
+- (void)test2 {
 self.button.hidden = NO;
 }
 
@@ -899,10 +895,8 @@ _button.ba_buttonLayoutType = BAKit_ButtonLayoutTypeCenterImageTop;
 }
 
 #pragma mark - 测试大图片 button 的 layout 布局，如果你的图片宽高大于 自身的宽高，则需要压缩后再配置布局
-- (UIButton *)button
-{
-if (!_button)
-{
+- (UIButton *)button {
+if (!_button) {
 // 测试大图片 button 的 layout 布局，如果你的图片宽高大于 自身的宽高，则需要压缩后再配置布局
 // 原生写法
 //        _button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -924,6 +918,13 @@ return _button;
 ## 5、更新记录：【倒叙】
 欢迎使用 [【BAHome】](https://github.com/BAHome) 系列开源代码 ！
 如有更多需求，请前往：[【https://github.com/BAHome】](https://github.com/BAHome) 
+
+
+最新更新时间：2019-10-18【倒叙】<br>
+最新 Version：【Version：2.6.8】<br>
+更新内容：<br>
+2.6.8.1、修复 iPhone X 等异形屏 键盘异常问题！ <br>
+2.6.8.2、优化代码规范！ <br>
 
 最新更新时间：2018-11-15【倒叙】<br>
 最新 Version：【Version：2.6.7】<br>

@@ -28,8 +28,7 @@
     [self setupUI];
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     self.button.hidden = NO;
     [self test];
     
@@ -46,8 +45,7 @@
     
 }
 
-- (void)test
-{
+- (void)test {
     
 }
 
@@ -70,11 +68,10 @@
     self.laAnimation.center = point;
 }
 
-- (LOTAnimationView *)laAnimation
-{
-    if (!_laAnimation)
-    {
+- (LOTAnimationView *)laAnimation {
+    if (!_laAnimation) {
         _laAnimation = [LOTAnimationView animationNamed:@"laAnimation_Button.json"];
+//        _laAnimation.nam = @"laAnimation_Button.json";
         _laAnimation.contentMode = UIViewContentModeScaleAspectFill;
         _laAnimation.loopAnimation = YES;
         _laAnimation.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.3];
@@ -85,10 +82,8 @@
     return _laAnimation;
 }
 
-- (UIButton *)button
-{
-    if (!_button)
-    {
+- (UIButton *)button {
+    if (!_button) {
         _button = [UIButton buttonWithType:UIButtonTypeCustom];
         //        _button.backgroundColor = UIColor.greenColor;
         [_button setTitle:@"称重" forState:UIControlStateNormal];

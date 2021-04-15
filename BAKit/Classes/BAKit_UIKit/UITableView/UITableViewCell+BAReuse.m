@@ -75,16 +75,13 @@
  */
 + (__kindof UITableViewCell *)ba_cellDequeueFromNibIndex:(NSInteger)index
                                                 identify:(NSString *)identify
-                                               tableView:(UITableView *)tableView
-{
+                                               tableView:(UITableView *)tableView {
     UITableViewCell *cell = nil;
-    if (identify == nil)
-    {
+    if (identify == nil) {
         identify = NSStringFromClass([self class]);
     }
     cell = [tableView dequeueReusableCellWithIdentifier:identify];
-    if (cell == nil)
-    {
+    if (cell == nil) {
         cell = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:nil options:nil][index];
     }
     
@@ -101,16 +98,13 @@
  */
 + (__kindof UITableViewCell *)ba_cellDequeueFromIdentify:(NSString *)identify
                                                cellStyle:(UITableViewCellStyle)cellStyle
-                                               tableView:(UITableView *)tableView
-{
+                                               tableView:(UITableView *)tableView {
     UITableViewCell *cell = nil;
-    if (identify == nil)
-    {
+    if (identify == nil) {
         identify = @"_detail_cell_identify_";
     }
     cell = [tableView dequeueReusableCellWithIdentifier:identify];
-    if (cell == nil)
-    {
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:cellStyle reuseIdentifier:identify];
     }
 
@@ -124,8 +118,7 @@
  @return UITableViewCell
  */
 + (__kindof UITableViewCell *)ba_cellCreateCellFromNibName:(NSString *)nibName
-                                                     index:(NSInteger)index
-{
+                                                     index:(NSInteger)index {
     return [[NSBundle mainBundle] loadNibNamed:nibName?:NSStringFromClass([self class]) owner:nil options:nil][index];
 }
 

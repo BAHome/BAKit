@@ -25,14 +25,13 @@
    
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     [self ba_creatData];
     
     NSString *nilStr = nil;
 //    NSArray *array = @[@"chenfanfang", nilStr];
     NSArray *array = @[@"chenfanfang"];
-    NSString *a = array[2];
+//    NSString *a = array[2];
     
     self.tableView.backgroundColor = BAKit_Color_Clear;
     self.tableView.tableFooterView = [UIView new];
@@ -62,8 +61,7 @@
         
         NSString *className = self.classNamesArray[indexPath.row];
         Class class = NSClassFromString(className);
-        if (class)
-        {
+        if (class) {
             UIViewController *vc = class.new;
             vc.title = self.titlesArray[indexPath.row];
 
@@ -72,8 +70,7 @@
     };
 }
 
-- (void)ba_creatData
-{
+- (void)ba_creatData {
     
     [self ba_addCellWithTitle:@"DeviceInfoManager" className:@"BAKitVC_DeviceInfoManager"];
     
@@ -81,14 +78,12 @@
 
 }
 
-- (void)ba_addCellWithTitle:(NSString *)title className:(NSString *)className
-{
+- (void)ba_addCellWithTitle:(NSString *)title className:(NSString *)className {
     [self.titlesArray addObject:title];
     [self.classNamesArray addObject:className];
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
         
     BAKit_UITableViewSetSeparator(self.tableView, BAKit_Color_Orange, UIEdgeInsetsMake(0, 0, 0, 0));
@@ -96,28 +91,22 @@
 }
 
 #pragma mark - setter / getter
-- (NSMutableArray *)titlesArray
-{
-    if (!_titlesArray)
-    {
+- (NSMutableArray *)titlesArray {
+    if (!_titlesArray) {
         _titlesArray = @[].mutableCopy;
     }
     return _titlesArray;
 }
 
-- (NSMutableArray *)classNamesArray
-{
-    if (!_classNamesArray)
-    {
+- (NSMutableArray *)classNamesArray {
+    if (!_classNamesArray) {
         _classNamesArray = @[].mutableCopy;
     }
     return _classNamesArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
@@ -125,8 +114,7 @@
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

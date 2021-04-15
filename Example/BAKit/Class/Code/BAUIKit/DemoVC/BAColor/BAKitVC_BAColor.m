@@ -31,16 +31,14 @@ static NSString * const kCellID = @"BAKitVC_BAColorCell";
     [self setupUI];
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     self.title = @"BAColor";
     self.view.backgroundColor = BAKit_Color_White;
  
     [self setupNavi];
 }
 
-- (void)setupNavi
-{
+- (void)setupNavi {
     CGRect frame = CGRectMake(0, 0, 80, 30);
     UIButton *navi_rightButton = [UIButton ba_creatButtonWithFrame:frame title:@"random" selTitle:nil titleColor:BAKit_Color_Red titleFont:nil image:nil selImage:nil padding:2 buttonPositionStyle:BAKit_ButtonLayoutTypeCenterImageRight viewRectCornerType:BAKit_ViewRectCornerTypeAllCorners viewCornerRadius:15 target:self selector:@selector(handleRightNaviButtonAction:)];
     navi_rightButton.backgroundColor = BAKit_Color_RandomRGBA();
@@ -49,30 +47,25 @@ static NSString * const kCellID = @"BAKitVC_BAColorCell";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navi_rightButton];
 }
 
-- (void)handleRightNaviButtonAction:(UIButton *)sender
-{
+- (void)handleRightNaviButtonAction:(UIButton *)sender {
     sender.selected = !sender.selected;
     self.isRandom = sender.selected;
     [self.tableView reloadData];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.titleArray.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSArray *colorArray = self.dataArray[section];
     return colorArray.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
     
-    if (!cell)
-    {
+    if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
     }
     
@@ -87,23 +80,19 @@ static NSString * const kCellID = @"BAKitVC_BAColorCell";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
     
     UILabel *titleLable = [UILabel new];
@@ -120,8 +109,7 @@ static NSString * const kCellID = @"BAKitVC_BAColorCell";
     return headerView;
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     self.tableView.frame = self.view.bounds;
@@ -129,10 +117,8 @@ static NSString * const kCellID = @"BAKitVC_BAColorCell";
 }
 
 #pragma mark - setter / getter
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [[UITableView alloc] init];
         self.tableView.backgroundColor = BAKit_Color_Gray_11;
         
@@ -149,10 +135,8 @@ static NSString * const kCellID = @"BAKitVC_BAColorCell";
     return _tableView;
 }
 
-- (NSMutableArray *)dataArray
-{
-    if (!_dataArray)
-    {
+- (NSMutableArray *)dataArray {
+    if (!_dataArray) {
         _dataArray = @[].mutableCopy;
         
         BAColor *a1 = [BAColor ba_colorWithColorValue:0xFFE4E1 colorDesc:@"薄雾玫瑰" colorMethodName:@"mistyRose"];
@@ -289,10 +273,8 @@ static NSString * const kCellID = @"BAKitVC_BAColorCell";
     return _dataArray;
 }
 
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[@"红",@"黄",@"绿",@"青",@"蓝",@"紫",@"灰",@"白",@"棕",@"粉"];
     }
     return _titleArray;

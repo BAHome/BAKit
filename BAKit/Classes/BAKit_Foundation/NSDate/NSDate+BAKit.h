@@ -238,7 +238,9 @@
 - (NSDate *)ba_dateByAddingMinutes:(NSInteger)dMinutes;
 - (NSDate *)ba_dateBySubtractingMinutes:(NSInteger)dMinutes;
 - (NSDate *)ba_dateAtStartOfDay;
+// 比较两个日期相差 几天几小时几分几秒
 - (NSDateComponents *)ba_dateComponentsWithOffsetFromDate:(NSDate *)aDate;
+- (NSDateComponents *)ba_dateComponentsWithOffsetToDate:(NSDate *)aDate;
 
 #pragma mark - 时间间隔
 - (NSInteger)ba_dateMinutesAfterDate:(NSDate *)aDate;

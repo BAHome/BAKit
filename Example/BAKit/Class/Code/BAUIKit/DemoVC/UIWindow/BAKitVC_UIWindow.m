@@ -25,8 +25,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.view.backgroundColor = BAKit_Color_Blue_SkyBlue;
     
     self.button1.hidden = NO;
@@ -34,19 +33,16 @@
     [self handleActions];
 }
 
-- (void)handleActions
-{
+- (void)handleActions {
     BAKit_WeakSelf
     self.button1.ba_buttonActionBlock = ^(UIButton * _Nonnull button) {
         BAKit_StrongSelf
         
         button.selected = !button.selected;
-        if (button.selected)
-        {
+        if (button.selected) {
             [self test2];
         }
-        else
-        {
+        else {
 //        [self test1];
             [self test3];
             // 查看当前所有的window
@@ -72,16 +68,13 @@
 }
 
 
-- (void)handleWindowButtonAction:(UIButton *)sender
-{
+- (void)handleWindowButtonAction:(UIButton *)sender {
     switch (sender.tag) {
-        case 1:
-        {
+        case 1: {
             self.window1.hidden = YES;
         }
             break;
-        case 2:
-        {
+        case 2: {
             self.window2.hidden = YES;
         }
             break;
@@ -100,10 +93,8 @@
  * 1、创建 window 不用添加到任何的控件上面，直接创建完毕就能添加
  * 2、创建一个比默认window的windowLevel大的window来看一下什么效果，效果是会盖在原来的window上面
  */
-- (void)test1
-{
-    if (!_window1)
-    {
+- (void)test1 {
+    if (!_window1) {
         self.window1 = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         
         UIButton *windowBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -125,10 +116,8 @@
  * 1、创建 window 不用添加到任何的控件上面，直接创建完毕就能添加
  * 2、创建一个和默认window的windowLevel一样大的window来看一下什么效果，效果是会盖在原来的window上面
  */
-- (void)test2
-{
-    if (!_window2)
-    {
+- (void)test2 {
+    if (!_window2) {
         self.window2 = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         
         UIButton *windowBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -147,12 +136,10 @@
     [self.window2 makeKeyAndVisible];
 }
 
-- (void)test3
-{
+- (void)test3 {
     self.view.window.alpha = 0.5;
 
-    if (!_window3)
-    {
+    if (!_window3) {
         self.window3 = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     }
     
@@ -180,10 +167,8 @@
 }
 
 
-- (UIButton *)button1
-{
-    if (!_button1)
-    {
+- (UIButton *)button1 {
+    if (!_button1) {
         _button1 = [UIButton ba_buttonWithFrame:CGRectZero title:@"点我啊" backgroundColor:BAKit_Color_Red];
         _button1.tag = 0;
 

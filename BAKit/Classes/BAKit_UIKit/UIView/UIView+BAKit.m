@@ -74,51 +74,51 @@
  @return view
  */
 + (UIView *)ba_viewCreatWithFrame:(CGRect)frame
-                  backgroundColor:(UIColor *)backgroundColor
-{
+                  backgroundColor:(UIColor *)backgroundColor {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = backgroundColor;
     
     return view;
 }
 
-/**
- UIView：快速设置 view 的边框【系统方法】
+- (void)ba_viewSetSystemCornerRadius:(CGFloat)cornerRadius {
+    [self ba_viewSetSystemCornerRadius:cornerRadius borderColor:nil borderWidth:0];
+}
 
- @param color 边框颜色
- @param cornerRadius 边框角度
- @param width 边框线宽度
- */
-- (void)ba_viewSetSystemBorderWithColor:(UIColor *)color
-                           cornerRadius:(CGFloat)cornerRadius
-                                  width:(CGFloat)width
-{
+/**
+UIView：快速设置 view 的边框【系统方法】
+
+@param borderColor 边框颜色
+@param cornerRadius 边框角度
+@param borderWidth 边框线宽度
+*/
+- (void)ba_viewSetSystemCornerRadius:(CGFloat)cornerRadius
+                         borderColor:(UIColor *)borderColor
+                         borderWidth:(CGFloat)borderWidth {
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = cornerRadius;
-    self.layer.borderWidth = width;
-    self.layer.borderColor = color.CGColor;
+    self.layer.borderWidth = borderWidth;
+    self.layer.borderColor = borderColor.CGColor;
 }
 
 /**
  UIView：快速设置 view 的边框【自定义】
  
- @param color 边框颜色
+ @param borderColor 边框颜色
  @param cornerRadius 边框角度
- @param width 边框线宽度
+ @param borderWidth 边框线宽度
  */
-- (void)ba_viewSetBorderWithColor:(UIColor *)color
-                     cornerRadius:(CGFloat)cornerRadius
-                            width:(CGFloat)width
-{
-    [self ba_view_setViewRectCornerType:BAKit_ViewRectCornerTypeAllCorners viewCornerRadius:cornerRadius borderWidth:width borderColor:color];
+- (void)ba_viewSetCornerRadius:(CGFloat)cornerRadius
+                   borderColor:(UIColor *)borderColor
+                   borderWidth:(CGFloat)borderWidth {
+    [self ba_view_setViewRectCornerType:BAKit_ViewRectCornerTypeAllCorners viewCornerRadius:cornerRadius borderWidth:borderWidth borderColor:borderColor];
 }
 
 /**
  UIView：删除边框
  */
-- (void)ba_viewRemoveBorder
-{
-    [self ba_viewSetBorderWithColor:nil cornerRadius:0 width:0];
+- (void)ba_viewRemoveBorder {
+    [self ba_viewSetCornerRadius:0 borderColor:nil borderWidth:0];
 }
 
 /**
@@ -130,16 +130,14 @@
  */
 - (void)ba_viewSetRectShadowWithOffset:(CGSize)offset
                                opacity:(CGFloat)opacity
-                          shadowRadius:(CGFloat)shadowRadius
-{
+                          shadowRadius:(CGFloat)shadowRadius {
     [self ba_viewSetRoundShadowWithCornerRadius:0 shadowColor:nil offset:offset opacity:opacity shadowRadius:shadowRadius];
 }
 
 /**
  UIView：删除阴影
  */
-- (void)ba_viewRemoveShadow
-{
+- (void)ba_viewRemoveShadow {
     [self.layer setShadowColor:[[UIColor clearColor] CGColor]];
     [self ba_viewSetRectShadowWithOffset:CGSizeMake(0.0f, 0.0f) opacity:0.0f shadowRadius:0.f];
 }
@@ -155,8 +153,7 @@
 - (void)ba_viewSetRoundShadowWithCornerRadius:(CGFloat)cornerRadius
                                        offset:(CGSize)offset
                                       opacity:(CGFloat)opacity
-                                 shadowRadius:(CGFloat)shadowRadius
-{
+                                 shadowRadius:(CGFloat)shadowRadius {
     [self ba_viewSetRoundShadowWithCornerRadius:cornerRadius shadowColor:nil offset:offset opacity:opacity shadowRadius:shadowRadius];
 }
 
@@ -173,10 +170,8 @@
                                   shadowColor:(UIColor *)shadowColor
                                        offset:(CGSize)offset
                                       opacity:(CGFloat)opacity
-                                 shadowRadius:(CGFloat)shadowRadius
-{
-    if (!shadowColor)
-    {
+                                 shadowRadius:(CGFloat)shadowRadius {
+    if (!shadowColor) {
         shadowColor = [UIColor blackColor];
     }
     // 设置阴影的颜色
@@ -203,16 +198,12 @@
  *
  *  @param array 添加的 ViewArray
  */
-- (void)ba_viewAddSubViewsWithArray:(NSArray *)array
-{
-    if (array)
-    {
+- (void)ba_viewAddSubViewsWithArray:(NSArray *)array {
+    if (array) {
         [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [self addSubview:obj];
         }];
-    }
-    else
-    {
+    } else {
         NSLog(@"数组 %@ 为空！", array);
     }
 }
@@ -221,8 +212,7 @@
  *  UIView：移除所有 subviews
  *
  */
-- (void)ba_viewRemoveAllSubviews
-{
+- (void)ba_viewRemoveAllSubviews {
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
@@ -231,13 +221,10 @@
  *
  *  @return 获取当前 View 的 VC
  */
-- (UIViewController *)ba_viewGetCurrentViewController
-{
-    for (UIView *view = self; view; view = view.superview)
-    {
+- (UIViewController *)ba_viewGetCurrentViewController {
+    for (UIView *view = self; view; view = view.superview) {
         UIResponder *nextResponder = [view nextResponder];
-        if ([nextResponder isKindOfClass:[UIViewController class]])
-        {
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
             return (UIViewController *)nextResponder;
         }
     }
@@ -249,8 +236,7 @@
  *
  *  @return 获取当前 View 的 VC
  */
-- (UIViewController *)ba_viewGetCurrentParentController
-{
+- (UIViewController *)ba_viewGetCurrentParentController {
     UIResponder *responder = [self nextResponder];
     while (responder) {
         if ([responder isKindOfClass:[UIViewController class]]) {
@@ -268,8 +254,7 @@
  *  @param message message description
  */
 - (void)ba_viewShowAlertViewWithTitle:(NSString *)title
-                              message:(NSString *)message
-{
+                              message:(NSString *)message {
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"确 定" otherButtonTitles: nil] show];
 }
 
@@ -281,8 +266,7 @@
  @return UIView
  */
 + (UIView *)ba_viewAddLineViewWithFrame:(CGRect)frame
-                                  color:(UIColor *)color
-{
+                                  color:(UIColor *)color {
     UIView *line         = [[UIView alloc] initWithFrame:frame];
     line.backgroundColor = color;
     
@@ -299,8 +283,7 @@
  */
 + (UIView *)ba_viewAddLineViewWithFrame:(CGRect)frame
                                   color:(UIColor *)color
-                                    tag:(NSInteger)tag
-{
+                                    tag:(NSInteger)tag {
     UIView *line         = [[UIView alloc] initWithFrame:frame];
     line.backgroundColor = color;
     line.tag             = tag;
@@ -315,11 +298,9 @@
  @param isNeedShock 是否播放音效并震动
  */
 - (void)ba_viewPlaySoundEffectWithFileName:(NSString *)filename
-                               isNeedShock:(BOOL)isNeedShock
-{
+                               isNeedShock:(BOOL)isNeedShock {
     // 1、判断文件名是否为空
-    if (filename == nil)
-    {
+    if (filename == nil) {
         return;
     }
     [self ba_viewStopAlertSound];
@@ -341,8 +322,7 @@
     // 6、播放音频
     AudioServicesPlaySystemSound(soundID);
     
-    if (isNeedShock)
-    {
+    if (isNeedShock) {
         // 7、播放音效并震动
         AudioServicesPlayAlertSound(soundID);
     }
@@ -355,12 +335,10 @@
 /**
  UIView：停止播放音乐（按钮点击音效的停止）
  */
-- (void)ba_viewStopAlertSound
-{
+- (void)ba_viewStopAlertSound {
     NSString *soundIDString = [BAKit_UserDefaults ba_archive_getObjectForKey:@"soundID"];
     
-    if (BAKit_stringIsBlank(soundIDString))
-    {
+    if (BAKit_stringIsBlank(soundIDString)) {
         return;
     }
     SystemSoundID soundID = [soundIDString intValue];
@@ -370,18 +348,15 @@
 }
 
 #pragma mark - view 点击事件
-- (void)ba_handleViewAction
-{
-    if (self.ba_viewActionBlock)
-    {
+- (void)ba_handleViewAction {
+    if (self.ba_viewActionBlock) {
         self.ba_viewActionBlock(self);
     }
 }
 
 #pragma mark - setter getter
 
-- (void)setBa_viewActionBlock:(BAKit_UIViewActionBlock)ba_viewActionBlock
-{
+- (void)setBa_viewActionBlock:(BAKit_UIViewActionBlock)ba_viewActionBlock {
     BAKit_Objc_setObj(@selector(ba_viewActionBlock), ba_viewActionBlock);
     
     // 先判断当前是否有交互事件，如果没有的话。。。所有 gesture 的交互事件都会被添加进 gestureRecognizers 中
@@ -393,18 +368,15 @@
     }
 }
 
-- (BAKit_UIViewActionBlock)ba_viewActionBlock
-{
+- (BAKit_UIViewActionBlock)ba_viewActionBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_viewLayoutSubViewsBlock:(BAKit_UIViewLayoutSubViewsBlock)ba_viewLayoutSubViewsBlock
-{
+- (void)setBa_viewLayoutSubViewsBlock:(BAKit_UIViewLayoutSubViewsBlock)ba_viewLayoutSubViewsBlock {
     BAKit_Objc_setObj(@selector(ba_viewLayoutSubViewsBlock), ba_viewLayoutSubViewsBlock);
 }
 
-- (BAKit_UIViewLayoutSubViewsBlock)ba_viewLayoutSubViewsBlock
-{
+- (BAKit_UIViewLayoutSubViewsBlock)ba_viewLayoutSubViewsBlock {
     return BAKit_Objc_getObj;
 }
 
@@ -412,11 +384,103 @@
     BAKit_Objc_exchangeMethodAToB(@selector(layoutSubviews), @selector(ba_layoutSubviews))
 }
 
-- (void)ba_layoutSubviews
-{
+- (void)ba_layoutSubviews {
     [self ba_layoutSubviews];
     !self.ba_viewLayoutSubViewsBlock ?: self.ba_viewLayoutSubViewsBlock(self);
 }
 
+
+@end
+
+@implementation UIView (wbGradient)
+
++ (Class)layerClass {
+    return [CAGradientLayer class];
+}
+
++ (UIView *)ba_gradientViewWithColors:(NSArray<UIColor *> *)colors
+                            locations:(NSArray<NSNumber *> *)locations
+                           startPoint:(CGPoint)startPoint
+                             endPoint:(CGPoint)endPoint {
+    UIView *view = [[self alloc] init];
+    [view ba_setGradientBackgroundWithColors:colors locations:locations startPoint:startPoint endPoint:endPoint];
+    return view;
+}
+
+- (void)ba_setGradientBackgroundWithColors:(NSArray<UIColor *> *)colors
+                                 locations:(NSArray<NSNumber *> *)locations
+                                startPoint:(CGPoint)startPoint
+                                  endPoint:(CGPoint)endPoint {
+    NSMutableArray *colorsM = [NSMutableArray array];
+    
+    for (UIColor *color in colors) {
+        [colorsM addObject:(__bridge id)color.CGColor];
+    }
+    self.ba_colors = [colorsM copy];
+    self.ba_locations = locations;
+    self.ba_startPoint = startPoint;
+    self.ba_endPoint = endPoint;
+}
+
+- (void)ba_setGradientBackgroundWithCGColors:(NSArray<UIColor *> *_Nullable)colors
+                                   locations:(NSArray<NSNumber *> *_Nullable)locations
+                                  startPoint:(CGPoint)startPoint
+                                    endPoint:(CGPoint)endPoint {
+    NSMutableArray *colorsM = [NSMutableArray array];
+    
+    for (UIColor *color in colors) {
+        [colorsM addObject:color];
+    }
+    self.ba_colors = [colorsM copy];
+    self.ba_locations = locations;
+    self.ba_startPoint = startPoint;
+    self.ba_endPoint = endPoint;
+}
+
+#pragma mark- Getter&Setter
+
+- (NSArray *)ba_colors {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setBa_colors:(NSArray *)colors {
+    objc_setAssociatedObject(self, @selector(ba_colors), colors, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if ([self.layer isKindOfClass:[CAGradientLayer class]]) {
+        [((CAGradientLayer *)self.layer) setColors:self.ba_colors];
+    }
+}
+
+- (NSArray<NSNumber *> *)ba_locations {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setBa_locations:(NSArray<NSNumber *> *)locations {
+    objc_setAssociatedObject(self, @selector(ba_locations), locations, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if ([self.layer isKindOfClass:[CAGradientLayer class]]) {
+        [((CAGradientLayer *)self.layer) setLocations:self.ba_locations];
+    }
+}
+
+- (CGPoint)ba_startPoint {
+    return [objc_getAssociatedObject(self, _cmd) CGPointValue];
+}
+
+- (void)setBa_startPoint:(CGPoint)startPoint {
+    objc_setAssociatedObject(self, @selector(ba_startPoint), [NSValue valueWithCGPoint:startPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if ([self.layer isKindOfClass:[CAGradientLayer class]]) {
+        [((CAGradientLayer *)self.layer) setStartPoint:self.ba_startPoint];
+    }
+}
+
+- (CGPoint)ba_endPoint {
+    return [objc_getAssociatedObject(self, _cmd) CGPointValue];
+}
+
+- (void)setBa_endPoint:(CGPoint)endPoint {
+    objc_setAssociatedObject(self, @selector(ba_endPoint), [NSValue valueWithCGPoint:endPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if ([self.layer isKindOfClass:[CAGradientLayer class]]) {
+        [((CAGradientLayer *)self.layer) setEndPoint:self.ba_endPoint];
+    }
+}
 
 @end

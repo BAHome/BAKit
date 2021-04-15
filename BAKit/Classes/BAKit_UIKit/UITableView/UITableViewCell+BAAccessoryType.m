@@ -63,10 +63,8 @@
 
 @implementation UITableViewCell (BAAccessoryType)
 
-- (void)ba_cellSetAccessoryImage:(UIImage *)image frame:(CGRect)frame
-{
-    if (image)
-    {
+- (void)ba_cellSetAccessoryImage:(UIImage *)image frame:(CGRect)frame {
+    if (image) {
         UIImageView *imageView = [[UIImageView alloc] init];
         imageView.frame = frame;
 
@@ -80,17 +78,13 @@
 
 - (void)ba_cellSetAccessorySwitchWithIndexPath:(NSIndexPath *)indexPath
                                          frame:(CGRect)frame
-                                   actionBlock:(BAKit_UITableViewCell_AccessoryTypeActionBlock)actionBlock
-{
+                                   actionBlock:(BAKit_UITableViewCell_AccessoryTypeActionBlock)actionBlock {
     [self.accessoryView removeFromSuperview];
     UISwitch *switcher;
     BOOL switcherOn = NO;
-    if ([self.accessoryView isKindOfClass:[UISwitch class]])
-    {
+    if ([self.accessoryView isKindOfClass:[UISwitch class]]) {
         switcher = (UISwitch *)self.accessoryView;
-    }
-    else
-    {
+    } else {
         switcher = [[UISwitch alloc] init];
         switcher.frame = frame;
         switcher.tag = indexPath.row;
@@ -98,8 +92,7 @@
     switcher.on = switcherOn;
     [switcher removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     self.accessoryView = switcher;
-    if (actionBlock)
-    {
+    if (actionBlock) {
         actionBlock(switcher);
     }
 }

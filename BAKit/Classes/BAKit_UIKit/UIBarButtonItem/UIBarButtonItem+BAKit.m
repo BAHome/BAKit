@@ -15,8 +15,7 @@
                                      target:(id)target
                                      action:(SEL)action
                            forControlEvents:(UIControlEvents)controlEvents
-
-{
+ {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setBackgroundImage:image forState:UIControlStateNormal];
     [btn setBackgroundImage:highImage forState:UIControlStateHighlighted];

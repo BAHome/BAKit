@@ -34,10 +34,9 @@ typedef NS_ENUM(NSUInteger, BAKit_BatteryInfoState) {
  */
 typedef void (^BAKit_BatteryInfoBlock)(BAKit_BatteryInfoState batteryInfoState, NSUInteger batteryLevelPercent);
 
-#define BAKit_DeviceInfoManagerShared [BAKit_DeviceInfoManager sharedDeviceInfoManager]
 
 @interface BAKit_DeviceInfoManager : NSObject
-BAKit_SingletonH(DeviceInfoManager)
+BAKit_SingletonH()
 
 #pragma mark - 设备相关
 /**

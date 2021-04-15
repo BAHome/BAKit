@@ -44,12 +44,10 @@
 
 @implementation BAContactsIndexView
 
-- (instancetype)initWithFrame:(CGRect)frame indexArray:(NSArray *)array block:(BAContactsIndexView_Block)block
-{
+- (instancetype)initWithFrame:(CGRect)frame indexArray:(NSArray *)array block:(BAContactsIndexView_Block)block {
     self = [super initWithFrame:frame];
     
-    if (self)
-    {
+    if (self) {
         self.indexArray = [NSArray arrayWithArray:array];
         self.ba_ContactsIndexViewBlock = block;
         [self setupUI];
@@ -58,11 +56,9 @@
     return self;
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     CGFloat min_h = self.frame.size.height/self.indexArray.count;
-    for (int i = 0; i < self.indexArray.count; i ++)
-    {
+    for (int i = 0; i < self.indexArray.count; i ++) {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, i * min_h, self.frame.size.width, min_h)];
         label.text = self.indexArray[i];
         label.tag = TAG + i;
@@ -79,8 +75,7 @@
 
 #pragma mark - AnimationWithSection
 
-- (void)animationWithSection:(NSInteger)section
-{
+- (void)animationWithSection:(NSInteger)section {
     self.ba_ContactsIndexViewBlock(section);
     
     _animationLabel.text = self.indexArray[section];
@@ -89,12 +84,10 @@
 
 #pragma mark - PanAnimationFinish
 
-- (void)panAnimationFinish
-{
+- (void)panAnimationFinish {
     CGFloat hh = self.frame.size.height/self.indexArray.count;
     
-    for (int i = 0; i < self.indexArray.count; i ++)
-    {
+    for (int i = 0; i < self.indexArray.count; i ++) {
         UILabel * label = (UILabel *)[self viewWithTag:TAG + i];
         
         [UIView animateWithDuration:0.2 animations:^{
@@ -113,17 +106,14 @@
 
 #pragma mark - PanAnimationBegin
 
-- (void)panAnimationBeginWithToucher:(NSSet<UITouch *> *)touches
-{
+- (void)panAnimationBeginWithToucher:(NSSet<UITouch *> *)touches {
     UITouch * touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     CGFloat hh = self.frame.size.height/self.indexArray.count;
     
-    for (int i = 0; i < self.indexArray.count; i ++)
-    {
+    for (int i = 0; i < self.indexArray.count; i ++) {
         UILabel * label = (UILabel *)[self viewWithTag:TAG + i];
-        if (fabs(label.center.y - point.y) <= ANIMATION_HEIGHT)
-        {
+        if (fabs(label.center.y - point.y) <= ANIMATION_HEIGHT) {
             [UIView animateWithDuration:0.2 animations:^{
                 
                 label.center = CGPointMake(label.bounds.size.width/2 - sqrt(fabs(ANIMATION_HEIGHT * ANIMATION_HEIGHT - fabs(label.center.y - point.y) * fabs(label.center.y - point.y))), label.center.y);
@@ -140,8 +130,7 @@
                     for (int j = 0; j < self.indexArray.count; j ++)
                     {
                         UILabel * label = (UILabel *)[self viewWithTag:TAG + j];
-                        if (i != j)
-                        {
+                        if (i != j) {
                             label.textColor = STR_COLOR;
                             label.alpha = fabs(label.center.y - point.y) * ALPHA_RATE;
                         }
@@ -149,8 +138,7 @@
                 }
             }];
             
-        }else
-        {
+        }else {
             [UIView animateWithDuration:0.2 animations:^
              {
                  label.center = CGPointMake(self.frame.size.width/2, i * hh + hh/2);
@@ -164,23 +152,19 @@
 
 #pragma mark - UIResponder
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self panAnimationBeginWithToucher:touches];
 }
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self panAnimationBeginWithToucher:touches];
 }
 
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self panAnimationFinish];
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self panAnimationFinish];
 }
 
@@ -188,10 +172,8 @@
 
 #pragma mark - setter / getter
 
-- (UILabel *)animationLabel
-{
-    if (!_animationLabel)
-    {
+- (UILabel *)animationLabel {
+    if (!_animationLabel) {
         _animationLabel = [[UILabel alloc]initWithFrame:CGRectMake(-BAKit_SCREEN_WIDTH / 2 + self.frame.size.width/2, 100, 60, 60)];
         _animationLabel.layer.masksToBounds = YES;
         _animationLabel.layer.cornerRadius = 5.0f;
@@ -205,8 +187,7 @@
     return _animationLabel;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     self.animationLabel = nil;
     self.indexArray = nil;
     self.ba_ContactsIndexViewBlock = nil;

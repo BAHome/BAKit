@@ -67,8 +67,7 @@
                   clipsToBounds:(BOOL)clipsToBounds                 // 剪切边界，默认值是NO
                   pagingEnabled:(BOOL)pagingEnabled                 // 翻页，默认值是NO
            showScrollIndicators:(BOOL)showScrollIndicators          // 指标显示，默认YES
-                       delegate:(id<UIScrollViewDelegate>)delegate  // 委托
-{
+                       delegate:(id<UIScrollViewDelegate>)delegate { // 委托
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:frame];
     [scrollView setDelegate:delegate];
     [scrollView setPagingEnabled:pagingEnabled];

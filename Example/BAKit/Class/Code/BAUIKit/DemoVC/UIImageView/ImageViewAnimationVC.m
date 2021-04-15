@@ -29,8 +29,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.imageView.hidden = NO;
 
     _button = [UIButton new];
@@ -43,24 +42,20 @@
     [self addImageArray];
 }
 
-- (void)addImageArray
-{
+- (void)addImageArray {
 //    self.imageNameArray1 = [self ba_getImageArrayWithName:@"test" count:2];
     self.imageNameArray1 = [self ba_getImageArrayWithName:@"knockout" count:81];
 
 }
 
-- (void)click
-{
+- (void)click {
     [_imageView ba_imageViewAnimationWithImageArray:[self.imageNameArray1 mutableCopy]];
 }
 
 - (NSMutableArray *)ba_getImageArrayWithName:(NSString *)imageName
-                                       count:(NSInteger)count
-{
+                                       count:(NSInteger)count {
     NSMutableArray *imageArray = @[].mutableCopy;
-    for (NSInteger i = 0; i < count; i ++)
-    {
+    for (NSInteger i = 0; i < count; i ++) {
         NSString *imageName1 = [NSString stringWithFormat:@"%@_%02ld", imageName, (long)(i)];
         [imageArray addObject:imageName1];
     }
@@ -75,10 +70,8 @@
 
 }
 
-- (UIImageView *)imageView
-{
-    if (!_imageView)
-    {
+- (UIImageView *)imageView {
+    if (!_imageView) {
         _imageView = [UIImageView new];
         _imageView.backgroundColor = BAKit_Color_Yellow;
         _imageView.image = BAKit_ImageName(@"test_01");
@@ -89,17 +82,14 @@
     return _imageView;
 }
 
-- (NSMutableArray *)imageNameArray1
-{
-    if (!_imageNameArray1)
-    {
+- (NSMutableArray *)imageNameArray1 {
+    if (!_imageNameArray1) {
         _imageNameArray1 = @[].mutableCopy;
     }
     return _imageNameArray1;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     _imageView.animationImages = nil;
 }
 

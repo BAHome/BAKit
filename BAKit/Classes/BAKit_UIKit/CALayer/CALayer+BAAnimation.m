@@ -18,14 +18,11 @@ static NSString * const kAnimationKey_shake = @"kAnimationKey_shake";
  @param value 晃动的幅度，默认：5.0f
  @param repeatCount 晃动的次数，默认：5.0f
  */
-- (void)ba_layer_animationShakeWithValue:(CGFloat)value repeatCount:(CGFloat)repeatCount
-{
-    if (!value)
-    {
+- (void)ba_layer_animationShakeWithValue:(CGFloat)value repeatCount:(CGFloat)repeatCount {
+    if (!value) {
         value = 5.0f;
     }
-    if (!repeatCount)
-    {
+    if (!repeatCount) {
         repeatCount = 4.0f;
     }
     // 创建关键帧动画类

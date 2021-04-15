@@ -17,8 +17,7 @@ static const char _bundle = 0;
 
 @implementation BABundleEx
 
-- (NSString *)localizedStringForKey:(NSString *)key value:(NSString *)value table:(NSString *)tableName
-{
+- (NSString *)localizedStringForKey:(NSString *)key value:(NSString *)value table:(NSString *)tableName {
     NSBundle *bundle = objc_getAssociatedObject(self, &_bundle);
     return bundle ? [bundle localizedStringForKey:key value:value table:tableName] : [super localizedStringForKey:key value:value table:tableName];
 }
@@ -27,8 +26,7 @@ static const char _bundle = 0;
 
 @implementation NSBundle (BALanguage)
 
-+ (void)ba_setLanguage:(NSString *)language
-{
++ (void)ba_setLanguage:(NSString *)language {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         object_setClass([NSBundle mainBundle], [BABundleEx class]);

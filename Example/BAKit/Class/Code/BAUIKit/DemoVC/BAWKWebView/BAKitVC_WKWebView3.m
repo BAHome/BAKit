@@ -35,21 +35,18 @@ static NSString * const htmlString1 = @"<img style=\"width:100%;\" src=\"http://
     [self setupUI];
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
 //    self.title = @"BAGridView";
     self.view.backgroundColor = BAKit_Color_White;
     
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArray.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BACell *cell = [BACell ba_creatCellWithTableView:tableView];
     
     WebVIewModel *model = self.dataArray[indexPath.row];
@@ -57,8 +54,7 @@ static NSString * const htmlString1 = @"<img style=\"width:100%;\" src=\"http://
     
     cell.WebLoadFinish = ^(CGFloat cell_h) {
 
-        if (model.height != cell_h)
-        {
+        if (model.height != cell_h) {
             model.height = cell_h;
             [tableView reloadData];
         }
@@ -67,18 +63,15 @@ static NSString * const htmlString1 = @"<img style=\"width:100%;\" src=\"http://
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     switch (indexPath.row) {
-        case 0:
-        {
+        case 0: {
             
         }
             break;
-        case 1:
-        {
+        case 1: {
             
         }
             break;
@@ -88,35 +81,29 @@ static NSString * const htmlString1 = @"<img style=\"width:100%;\" src=\"http://
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     WebVIewModel *model = self.dataArray[indexPath.row];
    
     return model.height;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 15;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     self.tableView.frame = CGRectMake(0, 64, BAKit_SCREEN_WIDTH, BAKit_SCREEN_HEIGHT - 64);
 }
 
 #pragma mark - setter / getter
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [[UITableView alloc] init];
         self.tableView.backgroundColor = BAKit_Color_Gray_11_pod;
         self.tableView.delegate = self;
@@ -127,10 +114,8 @@ static NSString * const htmlString1 = @"<img style=\"width:100%;\" src=\"http://
     return _tableView;
 }
 
-- (NSMutableArray <WebVIewModel *>*)dataArray
-{
-    if (!_dataArray)
-    {
+- (NSMutableArray <WebVIewModel *>*)dataArray {
+    if (!_dataArray) {
         _dataArray = @[].mutableCopy;
         
 //        NSString *htmlPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@.html", @"BAHome2"] ofType:nil];
@@ -138,8 +123,7 @@ static NSString * const htmlString1 = @"<img style=\"width:100%;\" src=\"http://
 //        NSString *HTMLString = [NSString stringWithContentsOfFile:htmlPath
 //                                                         encoding:NSUTF8StringEncoding
 //                                                                error:nil];
-        for (int i = 0; i < 2; i++)
-        {
+        for (int i = 0; i < 2; i++) {
             WebVIewModel *model = [[WebVIewModel alloc]init];
             model.contentHtml = htmlString;
             model.height = 100;
@@ -149,8 +133,7 @@ static NSString * const htmlString1 = @"<img style=\"width:100%;\" src=\"http://
     return _dataArray;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
 //    [BAKit_NotiCenter removeObserver:self];
 }
 

@@ -20,111 +20,90 @@
 
 #pragma mark - AssociatedObjects
 
-- (NSMutableArray *)attributeStrings
-{
+- (NSMutableArray *)attributeStrings {
     return BAKit_Objc_getObj;
 }
 
-- (void)setAttributeStrings:(NSMutableArray *)attributeStrings
-{
+- (void)setAttributeStrings:(NSMutableArray *)attributeStrings {
     BAKit_Objc_setObj(@selector(attributeStrings), attributeStrings);
 }
 
-- (NSMutableDictionary *)effectDic
-{
+- (NSMutableDictionary *)effectDic {
     return BAKit_Objc_getObj;
 }
 
-- (void)setEffectDic:(NSMutableDictionary *)effectDic
-{
+- (void)setEffectDic:(NSMutableDictionary *)effectDic {
     BAKit_Objc_setObj(@selector(effectDic), effectDic);
 }
 
-- (BOOL)isTapAction
-{
+- (BOOL)isTapAction {
     return [BAKit_Objc_getObj boolValue];
 }
 
-- (void)setIsTapAction:(BOOL)isTapAction
-{
+- (void)setIsTapAction:(BOOL)isTapAction {
     BAKit_Objc_setObj(@selector(isTapAction), @(isTapAction));
 }
 
-- (void (^)(NSString *, NSRange, NSInteger))tapBlock
-{
+- (void (^)(NSString *, NSRange, NSInteger))tapBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setTapBlock:(void (^)(NSString *, NSRange, NSInteger))tapBlock
-{
+- (void)setTapBlock:(void (^)(NSString *, NSRange, NSInteger))tapBlock {
     BAKit_Objc_setObjCOPY(@selector(tapBlock), tapBlock);
 }
 
-- (id<BAAttributeTapActionDelegate>)delegate
-{
+- (id<BAAttributeTapActionDelegate>)delegate {
     return BAKit_Objc_getObj;
 }
 
-- (BOOL)enabledTapEffect
-{
+- (BOOL)enabledTapEffect {
     return [BAKit_Objc_getObj boolValue];
 }
 
-- (void)setEnabledTapEffect:(BOOL)enabledTapEffect
-{
+- (void)setEnabledTapEffect:(BOOL)enabledTapEffect {
     BAKit_Objc_setObj(@selector(enabledTapEffect), @(enabledTapEffect));
 
     self.isTapEffect = enabledTapEffect;
 }
 
-- (BOOL)isTapEffect
-{
+- (BOOL)isTapEffect {
     return BAKit_Objc_getObj;
 }
 
-- (void)setIsTapEffect:(BOOL)isTapEffect
-{
+- (void)setIsTapEffect:(BOOL)isTapEffect {
     BAKit_Objc_setObj(@selector(isTapEffect), @(isTapEffect));
 }
 
-- (void)setDelegate:(id<BAAttributeTapActionDelegate>)delegate
-{
+- (void)setDelegate:(id<BAAttributeTapActionDelegate>)delegate {
     BAKit_Objc_setObj(@selector(delegate), delegate);
 }
 
 #pragma mark - mainFunction
 - (void)ba_labelAddAttributeTapActionWithStrings:(NSArray <NSString *> *)strings
-                                      tapClicked:(void (^) (NSString *string , NSRange range , NSInteger index))tapClick
-{
+                                      tapClicked:(void (^) (NSString *string , NSRange range , NSInteger index))tapClick {
     [self ba_getRangesWithStrings:strings];
     
-    if (self.tapBlock != tapClick)
-    {
+    if (self.tapBlock != tapClick) {
         self.tapBlock = tapClick;
     }
 }
 
 - (void)ba_labelAddAttributeTapActionWithStrings:(NSArray <NSString *> *)strings
-                                        delegate:(id <BAAttributeTapActionDelegate> )delegate
-{
+                                        delegate:(id <BAAttributeTapActionDelegate> )delegate {
     [self ba_getRangesWithStrings:strings];
     
-    if (self.delegate != delegate)
-    {
+    if (self.delegate != delegate) {
         self.delegate = delegate;
     }
 }
 
 #pragma mark - touchAction
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    if (!self.isTapAction)
-    {
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.isTapAction) {
         return;
     }
     
-    if (objc_getAssociatedObject(self, @selector(enabledTapEffect)))
-    {
+    if (objc_getAssociatedObject(self, @selector(enabledTapEffect))) {
         self.isTapEffect = self.enabledTapEffect;
     }
     
@@ -165,8 +144,7 @@
 }
 
 #pragma mark - getTapFrame
-- (BOOL)ba_getTapFrameWithTouchPoint:(CGPoint)point result:(void (^) (NSString *string , NSRange range , NSInteger index))resultBlock
-{
+- (BOOL)ba_getTapFrameWithTouchPoint:(CGPoint)point result:(void (^) (NSString *string , NSRange range , NSInteger index))resultBlock {
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.attributedText);
     
     CGMutablePathRef Path = CGPathCreateMutable();
@@ -275,8 +253,7 @@
     return NO;
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     if (self.isTapEffect) {
         
         [self performSelectorOnMainThread:@selector(ba_tapEffectWithStatus:) withObject:nil waitUntilDone:NO];
@@ -284,8 +261,7 @@
     }
 }
 
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     if (self.isTapEffect) {
 
         [self performSelectorOnMainThread:@selector(ba_tapEffectWithStatus:) withObject:nil waitUntilDone:NO];
@@ -293,13 +269,11 @@
     }
 }
 
-- (CGAffineTransform)BA_transformForCoreText
-{
+- (CGAffineTransform)BA_transformForCoreText {
     return CGAffineTransformScale(CGAffineTransformMakeTranslation(0, self.bounds.size.height), 1.f, -1.f);
 }
 
-- (CGRect)BA_getLineBounds:(CTLineRef)line point:(CGPoint)point
-{
+- (CGRect)BA_getLineBounds:(CTLineRef)line point:(CGPoint)point {
     CGFloat ascent = 0.0f;
     CGFloat descent = 0.0f;
     CGFloat leading = 0.0f;
@@ -310,8 +284,7 @@
 }
 
 #pragma mark - tapEffect
-- (void)ba_tapEffectWithStatus:(BOOL)status
-{
+- (void)ba_tapEffectWithStatus:(BOOL)status {
     if (self.isTapEffect) {
         NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
         
@@ -331,8 +304,7 @@
     }
 }
 
-- (void)ba_saveEffectDicWithRange:(NSRange)range
-{
+- (void)ba_saveEffectDicWithRange:(NSRange)range {
     self.effectDic = [NSMutableDictionary dictionary];
     
     NSAttributedString *subAttribute = [self.attributedText attributedSubstringFromRange:range];
@@ -341,8 +313,7 @@
 }
 
 #pragma mark - getRange
-- (void)ba_getRangesWithStrings:(NSArray <NSString *>  *)strings
-{
+- (void)ba_getRangesWithStrings:(NSArray <NSString *>  *)strings {
     if (self.attributedText == nil) {
         self.isTapAction = NO;
         return;
@@ -379,8 +350,7 @@
     }];
 }
 
-- (NSString *)ba_getStringWithRange:(NSRange)range
-{
+- (NSString *)ba_getStringWithRange:(NSRange)range {
     NSMutableString *string = [NSMutableString string];
     
     for (int i = 0; i < range.length ; i++) {

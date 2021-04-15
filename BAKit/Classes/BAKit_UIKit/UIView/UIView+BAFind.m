@@ -16,12 +16,9 @@
  @param cla 需要查找的类
  @return UIView
  */
-- (UIView *)ba_viewFindSubViewWithClass:(Class)cla
-{
-    for (UIView * subView in self.subviews)
-    {
-        if ([subView isKindOfClass:cla])
-        {
+- (UIView *)ba_viewFindSubViewWithClass:(Class)cla {
+    for (UIView * subView in self.subviews) {
+        if ([subView isKindOfClass:cla]) {
             return subView;
         }
     }
@@ -35,14 +32,11 @@
  @param cla 需要查找的类
  @return NSArray
  */
-- (NSArray *)ba_viewFindAllSubViewsWithClass:(Class)cla
-{
+- (NSArray *)ba_viewFindAllSubViewsWithClass:(Class)cla {
     NSMutableArray *array = [NSMutableArray array];
     
-    for (UIView * subView in self.subviews)
-    {
-        if ([subView isKindOfClass:cla])
-        {
+    for (UIView * subView in self.subviews) {
+        if ([subView isKindOfClass:cla]) {
             [array addObject:subView];
         }
     }
@@ -56,22 +50,14 @@
  @param cla 需要查找的类
  @return UIView
  */
-- (UIView *)ba_viewFindSuperViewWithClass:(Class)cla;
-{
-    if (self == nil)
-    {
+- (UIView *)ba_viewFindSuperViewWithClass:(Class)cla; {
+    if (self == nil) {
         return nil;
-    }
-    else if (self.superview == nil)
-    {
+    } else if (self.superview == nil) {
         return nil;
-    }
-    else if ([self.superview isKindOfClass:cla])
-    {
+    } else if ([self.superview isKindOfClass:cla]) {
         return self.superview;
-    }
-    else
-    {
+    } else {
         return [self.superview ba_viewFindSuperViewWithClass:cla];
     }
 }
@@ -81,19 +67,15 @@
 
  @return UIView
  */
-- (UIView *)ba_viewFindFirstResponder
-{
+- (UIView *)ba_viewFindFirstResponder {
     if (([self isKindOfClass:[UITextField class]] || [self isKindOfClass:[UITextView class]])
-        && (self.isFirstResponder))
-    {
+        && (self.isFirstResponder)) {
         return self;
     }
     
-    for (UIView *view in self.subviews)
-    {
+    for (UIView *view in self.subviews) {
         UIView *fv = [view ba_viewFindFirstResponder];
-        if (fv)
-        {
+        if (fv) {
             return fv;
         }
     }
@@ -106,14 +88,12 @@
 
  @return NSArray
  */
-- (NSArray *)ba_viewGetAllSubviews
-{
+- (NSArray *)ba_viewGetAllSubviews {
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
     
     [array addObjectsFromArray:self.subviews];
     
-    for (UIView *view in self.subviews)
-    {
+    for (UIView *view in self.subviews) {
         [array addObjectsFromArray:[view ba_viewGetAllSubviews]];
     }
     
@@ -123,8 +103,7 @@
 /**
  UIView：移除所有 subviews
  */
-- (void)ba_viewRemoveAllSubviews
-{
+- (void)ba_viewRemoveAllSubviews {
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
@@ -133,14 +112,11 @@
 
  @return 获取当前 View 的 VC
  */
-- (UIViewController *)ba_viewGetCurrentViewController
-{
+- (UIViewController *)ba_viewGetCurrentViewController {
     
     UIResponder *responder = self.nextResponder;
-    do
-    {
-        if ([responder isKindOfClass:[UIViewController class]])
-        {
+    do {
+        if ([responder isKindOfClass:[UIViewController class]]) {
             return (UIViewController *)responder;
         }
         responder = responder.nextResponder;

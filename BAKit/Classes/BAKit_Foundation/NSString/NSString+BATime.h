@@ -121,6 +121,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)ba_time_getDateWithTimeStamp:(NSString *)timeStamp
                               formatString:(NSString *)formatString;
 
++ (NSString *)ba_time_getDateWithLongTimeStamp:(long long)timeStamp
+                                  formatString:(NSString *)formatString;
+
 #pragma mark - 当前时间转换成时间戳
 /**
  *  当前时间【YYYY-MM-dd HH:mm:ss】转换成时间戳【10位数，如：1492672164】
@@ -128,6 +131,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return 时间戳【10位数，如：1492672164】
  */
 + (NSString *)ba_time_getCurrentDateTransformTimeStampYMDHMS;
+
+/**
+*  当前时间【YYYY-MM-dd HH:mm:ss.ss】转换成时间戳【13位数，如：1492672164000】
+*
+*  @return 时间戳【13位数，如：1492672164000】
+*/
++ (NSString *)ba_time_getCurrentDateTransformTimeStampYMDHMSS;
 
 /**
  指定字符串日期，转换成指定 formatString 的时间戳

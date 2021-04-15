@@ -61,8 +61,7 @@
 
 #define IOS8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
-@interface BAKit_FPSLabel ()
-{
+@interface BAKit_FPSLabel () {
     NSUInteger _tickCount;
 }
 @property (nonatomic, strong) CADisplayLink *displayLink;
@@ -73,8 +72,7 @@
 
 @implementation BAKit_FPSLabel
 
-+ (instancetype)ba_showInWindow:(UIWindow *)window
-{
++ (instancetype)ba_showInWindow:(UIWindow *)window {
     BAKit_FPSLabel *label = [[BAKit_FPSLabel alloc] initWithFrame:CGRectZero];
     label.layer.cornerRadius = 4.f;
     label.layer.masksToBounds = YES;
@@ -116,21 +114,18 @@
                                                                      constant:20.f];
     if (IOS8_OR_LATER) {
         [NSLayoutConstraint activateConstraints:@[leadingLayout, bottomLayout, widthLayout, heightLayout]];
-    }
-    else {
+    } else {
         [window addConstraints:@[leadingLayout, bottomLayout, widthLayout, heightLayout]];
     }
     
     return label;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [_displayLink invalidate];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
@@ -142,8 +137,7 @@
     return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
-{
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if (object == self && [keyPath isEqualToString:NSStringFromSelector(@selector(fps))]) {
         NSUInteger oldFps = [[change valueForKey:NSKeyValueChangeOldKey] unsignedIntegerValue];
         NSUInteger newFps = [[change valueForKey:NSKeyValueChangeNewKey] unsignedIntegerValue];
@@ -153,8 +147,7 @@
     }
 }
 
-- (void)tick:(CADisplayLink *)displayLink
-{
+- (void)tick:(CADisplayLink *)displayLink {
     CFTimeInterval currentTime = displayLink.timestamp;
     if (_lastTime == 0) {
         // first time.
@@ -170,16 +163,14 @@
     _lastTime = currentTime;
 }
 
-- (void)fadeOut
-{
+- (void)fadeOut {
     CATransition *fadeTransition = [CATransition animation];
     [self.layer addAnimation:fadeTransition forKey:kCATransition];
     [self setAttributedText:nil];
     self.layer.backgroundColor = nil;
 }
 
-- (void)_displayFPS
-{
+- (void)_displayFPS {
     if (self.attributedText == nil) {
         // fade in
         CATransition *fadeTransition = [CATransition animation];

@@ -26,30 +26,25 @@ static NSString * const kCellID = @"BACell_id";
     return self;
 }
 
-+ (id)ba_creatCellWithTableView:(UITableView *)tableView
-{
++ (id)ba_creatCellWithTableView:(UITableView *)tableView {
     BACell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
     
-    if (!cell)
-    {
+    if (!cell) {
         cell = [[self alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
     }
     
     return cell;
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
 //    self.webView.hidden = NO;
     
 }
 
-- (void)setModel:(WebVIewModel *)model
-{
+- (void)setModel:(WebVIewModel *)model {
     _model = model;
     
-    if (self.model.height == 100)
-    {
+    if (self.model.height == 100) {
         [self.webView ba_web_loadHTMLString:self.model.contentHtml];
     }
 }
@@ -62,10 +57,8 @@ static NSString * const kCellID = @"BACell_id";
 //    self.webView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - self.webView.scrollView.contentInset.top);
 }
 
-- (WKWebView *)webView
-{
-    if (!_webView)
-    {
+- (WKWebView *)webView {
+    if (!_webView) {
 //        _webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:self.webConfig];
         _webView = [WKWebView new];
         _webView.ba_web_isAutoHeight = YES;

@@ -12,8 +12,7 @@
 
 + (instancetype)ba_colorWithColorValue:(NSInteger)colorValue
                              colorDesc:(NSString *)colorDesc
-                       colorMethodName:(NSString *)colorMethodName
-{
+                       colorMethodName:(NSString *)colorMethodName {
     BAColor *color = [[self alloc] init];
     
     color.ba_colorValue = colorValue;

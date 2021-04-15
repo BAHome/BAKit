@@ -23,8 +23,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     _button = [UIButton ba_buttonWithFrame:CGRectMake(20, 100, 100, 40) title:@"测试" backgroundColor:BAKit_Color_Yellow];
     [_button ba_buttonAddTarget:self tag:0 action:@selector(handleButtonClick:)];
     [self.view addSubview:_button];
@@ -54,8 +53,7 @@
     });
 }
 
-- (void)base_setupNavi
-{
+- (void)base_setupNavi {
 //    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithImage:BAKit_ImageName(@"dinnerHL") style:UIBarButtonItemStylePlain target:self action:@selector(handleRightNavi:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(handleLeftNavi)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(handleRightNavi)];
@@ -78,29 +76,21 @@
 
 }
 
-- (void)handleButtonClick:(UIButton *)sender
-{
-    if (sender.tag == 0)
-    {
+- (void)handleButtonClick:(UIButton *)sender {
+    if (sender.tag == 0) {
         [_button ba_increase];
-    }
-    else if (sender.tag == 1)
-    {
+    } else if (sender.tag == 1) {
         [_button2 ba_hiddenBadge];
-    }
-    else if (sender.tag == 2)
-    {
+    } else if (sender.tag == 2) {
         [_button3 ba_decrease];
     }
 }
 
-- (void)handleLeftNavi
-{
+- (void)handleLeftNavi {
     [self.navigationItem.leftBarButtonItem ba_increase];
 }
 
-- (void)handleRightNavi
-{
+- (void)handleRightNavi {
     [self.navigationItem.rightBarButtonItem ba_hiddenBadge];
     [self.navigationItem.leftBarButtonItem ba_decrease];
 }

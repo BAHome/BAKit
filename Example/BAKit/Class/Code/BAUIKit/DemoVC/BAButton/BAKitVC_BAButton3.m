@@ -35,8 +35,7 @@
     [self test];
 }
 
-- (void)test
-{
+- (void)test {
     [self.btn1 ba_buttonSetBackgroundColor:BAKit_Color_RandomRGB() forState:UIControlStateNormal animated:YES];
     [self.btn1 ba_buttonSetBackgroundColor:BAKit_Color_RandomRGB() forState:UIControlStateSelected animated:YES];
     

@@ -29,8 +29,7 @@
     [self setupUI];
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     self.view.backgroundColor = BAKit_Color_White_pod;
     self.webView.hidden = NO;
     
@@ -53,8 +52,7 @@
         BAKit_StrongSelf
         [self ba_web_progressShow];
         self.progressView.progress = progress;
-        if (self.progressView.progress == 1.0f)
-        {
+        if (self.progressView.progress == 1.0f) {
             [self ba_web_progressHidder];
         }
     };
@@ -73,8 +71,7 @@
 }
 
 #pragma mark - 修改 navigator.userAgent
-- (void)changeNavigatorUserAgent
-{
+- (void)changeNavigatorUserAgent {
     BAKit_WeakSelf
     [self.webView ba_web_stringByEvaluateJavaScript:@"navigator.userAgent" completionHandler:^(id  _Nullable result, NSError * _Nullable error) {
         BAKit_StrongSelf
@@ -82,12 +79,9 @@
         NSString *userAgent = result;
         
         NSString *customAgent = @" native_iOS";
-        if ([userAgent hasSuffix:customAgent])
-        {
+        if ([userAgent hasSuffix:customAgent]) {
             NSLog(@"navigator.userAgent已经修改过了");
-        }
-        else
-        {
+        } else {
             NSString *customUserAgent = [userAgent stringByAppendingString:[NSString stringWithFormat:@"%@", customAgent]]; // 这里加空格是为了好看
             NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:customUserAgent, @"UserAgent", nil];
             [BAKit_NSUserDefaults registerDefaults:dictionary];
@@ -100,14 +94,12 @@
     }];
 }
 
-- (void)ba_reload
-{
+- (void)ba_reload {
     [self.webView ba_web_reload];
 //    [self changeNavigatorUserAgent];
 }
 
-- (void)ba_web_progressShow
-{
+- (void)ba_web_progressShow {
     // 开始加载网页时展示出progressView
     self.progressView.hidden = NO;
     // 开始加载网页的时候将progressView的Height恢复为1.5倍
@@ -116,8 +108,7 @@
     [self.navigationController.view bringSubviewToFront:self.progressView];
 }
 
-- (void)ba_web_progressHidder
-{
+- (void)ba_web_progressHidder {
     /*
      *添加一个简单的动画，将progressView的Height变为1.4倍，在开始加载网页的代理中会恢复为1.5倍
      *动画时长0.25s，延时0.3s后开始动画
@@ -136,8 +127,7 @@
  *
  *  @param request 请求的 NSURL URLRequest
  */
-- (void)ba_web_loadRequest:(NSURLRequest *)request
-{
+- (void)ba_web_loadRequest:(NSURLRequest *)request {
     [self.webView ba_web_loadRequest:request];
 }
 
@@ -146,8 +136,7 @@
  *
  *  @param URL 请求的 URL
  */
-- (void)ba_web_loadURL:(NSURL *)URL
-{
+- (void)ba_web_loadURL:(NSURL *)URL {
     [self.webView ba_web_loadURL:URL];
 }
 
@@ -156,8 +145,7 @@
  *
  *  @param URLString 请求的 URLString
  */
-- (void)ba_web_loadURLString:(NSString *)URLString
-{
+- (void)ba_web_loadURLString:(NSString *)URLString {
     [self.webView ba_web_loadURLString:URLString];
 }
 
@@ -166,8 +154,7 @@
  *
  *  @param htmlName 请求的本地 HTML 文件名
  */
-- (void)ba_web_loadHTMLFileName:(NSString *)htmlName
-{
+- (void)ba_web_loadHTMLFileName:(NSString *)htmlName {
     [self.webView ba_web_loadHTMLFileName:htmlName];
 }
 
@@ -176,8 +163,7 @@
  *
  *  @param htmlString 请求的本地 htmlString
  */
-- (void)ba_web_loadHTMLString:(NSString *)htmlString
-{
+- (void)ba_web_loadHTMLString:(NSString *)htmlString {
     [self.webView ba_web_loadHTMLString:htmlString];
 }
 
@@ -194,16 +180,14 @@
  *
  *  @param javaScriptString js 字符串
  */
-- (void)ba_web_stringByEvaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^ _Nullable)(_Nullable id, NSError * _Nullable error))completionHandler
-{
+- (void)ba_web_stringByEvaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^ _Nullable)(_Nullable id, NSError * _Nullable error))completionHandler {
     [self.webView ba_web_stringByEvaluateJavaScript:javaScriptString completionHandler:completionHandler];
 }
 
 #pragma mark - custom Method
 
 #pragma mark 导航栏的返回按钮
-- (void)configBackItem
-{
+- (void)configBackItem {
     UIImage *backImage = [UIImage imageNamed:@"BAKit_WebView.bundle/navigationbar_back"];
     backImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIButton *backBtn = [[UIButton alloc] init];
@@ -217,8 +201,7 @@
 }
 
 #pragma mark 导航栏的菜单按钮
-- (void)configMenuItem
-{
+- (void)configMenuItem {
     UIImage *menuImage = [UIImage imageNamed:@"BAKit_WebView.bundle/navigationbar_more"];
     menuImage = [menuImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIButton *menuBtn = [[UIButton alloc] init];
@@ -232,8 +215,7 @@
 }
 
 #pragma mark 导航栏的关闭按钮
-- (void)configColseItem
-{
+- (void)configColseItem {
     UIButton *colseBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
     [colseBtn setTitle:@"关闭" forState:UIControlStateNormal];
     [colseBtn setTitleColor:BAKit_Color_Black_pod forState:UIControlStateNormal];
@@ -248,25 +230,19 @@
 
 #pragma mark - 按钮点击事件
 #pragma mark 返回按钮点击
-- (void)backBtnAction:(UIButton *)sender
-{
-    if (self.webView.ba_web_canGoBack)
-    {
+- (void)backBtnAction:(UIButton *)sender {
+    if (self.webView.ba_web_canGoBack) {
         [self.webView ba_web_goBack];
-        if (self.navigationItem.leftBarButtonItems.count == 1)
-        {
+        if (self.navigationItem.leftBarButtonItems.count == 1) {
             [self configColseItem];
         }
-    }
-    else
-    {
+    } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
 #pragma mark 菜单按钮点击
-- (void)menuBtnAction:(UIButton *)sender
-{
+- (void)menuBtnAction:(UIButton *)sender {
     BAKit_WeakSelf
     
     NSArray *buttonTitleArray = @[@"safari打开", @"复制链接", @"分享", @"刷新"];
@@ -279,39 +255,26 @@
         
         NSString *urlStr = self.ba_web_currentUrl.absoluteString;
         
-        if (buttonIndex == 0)
-        {
-            if (urlStr.length > 0)
-            {
+        if (buttonIndex == 0) {
+            if (urlStr.length > 0) {
                 /*! safari打开 */
                 BAKit_OpenUrl(urlStr);
                 return;
-            }
-            else
-            {
+            } else {
                 BAKit_ShowAlertWithMsg_ios8(@"无法获取到当前 URL！");
             }
-        }
-        else if (buttonIndex == 1)
-        {
+        } else if (buttonIndex == 1) {
             /*! 复制链接 */
-            if (urlStr.length > 0)
-            {
+            if (urlStr.length > 0) {
                 BAKit_CopyContent(urlStr);
                 BAKit_ShowAlertWithMsg_ios8(@"亲爱的，已复制URL到黏贴板中！");
                 return;
-            }
-            else
-            {
+            } else {
                 BAKit_ShowAlertWithMsg_ios8(@"无法获取到当前 URL！");
             }
-        }
-        else if (buttonIndex == 2)
-        {
+        } else if (buttonIndex == 2) {
 
-        }
-        else if (buttonIndex == 3)
-        {
+        } else if (buttonIndex == 3) {
             /*! 刷新 */
             [self.webView ba_web_reload];
         }
@@ -320,8 +283,7 @@
 }
 
 #pragma mark 关闭按钮点击
-- (void)colseBtnAction:(UIButton *)sender
-{
+- (void)colseBtnAction:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -334,10 +296,8 @@
 
 #pragma mark - setter / getter
 
-- (WKWebView *)webView
-{
-    if (!_webView)
-    {
+- (WKWebView *)webView {
+    if (!_webView) {
         _webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:self.webConfig];
         //  添加 WKWebView 的代理，注意：用此方法添加代理
         BAKit_WeakSelf
@@ -354,8 +314,7 @@
     return _webView;
 }
 
-- (WKWebViewConfiguration *)webConfig
-{
+- (WKWebViewConfiguration *)webConfig {
     if (!_webConfig) {
         
         // 创建并配置WKWebView的相关参数
@@ -386,10 +345,8 @@
     return _webConfig;
 }
 
-- (UIProgressView *)progressView
-{
-    if (!_progressView)
-    {
+- (UIProgressView *)progressView {
+    if (!_progressView) {
         _progressView = [UIProgressView new];
         _progressView.tintColor = BAKit_Color_Green_pod;
         _progressView.trackTintColor = BAKit_Color_Gray_8_pod;
@@ -401,22 +358,19 @@
     return _progressView;
 }
 
-- (void)setBa_web_progressTintColor:(UIColor *)ba_web_progressTintColor
-{
+- (void)setBa_web_progressTintColor:(UIColor *)ba_web_progressTintColor {
     _ba_web_progressTintColor = ba_web_progressTintColor;
 
     self.progressView.progressTintColor = ba_web_progressTintColor;
 }
 
-- (void)setBa_web_progressTrackTintColor:(UIColor *)ba_web_progressTrackTintColor
-{
+- (void)setBa_web_progressTrackTintColor:(UIColor *)ba_web_progressTrackTintColor {
     _ba_web_progressTrackTintColor = ba_web_progressTrackTintColor;
 
     self.progressView.trackTintColor = ba_web_progressTrackTintColor;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [self.webView removeFromSuperview];
     [self.progressView removeFromSuperview];
     self.webView = nil;
@@ -425,8 +379,7 @@
     self.ba_web_currentUrl = nil;
 }
 
-- (BOOL)willDealloc
-{
+- (BOOL)willDealloc {
     return NO;
 }
 

@@ -18,8 +18,7 @@
  @return UIAlertAction
  */
 + (instancetype)ba_alertActionDefaultStyleActionWithTitle:(NSString *)title
-                                              actionBlock:(BAKit_AlertActionBlock)actionBlock
-{
+                                              actionBlock:(BAKit_AlertActionBlock)actionBlock {
     return [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:actionBlock];
 }
 
@@ -31,8 +30,7 @@
  @return UIAlertAction
  */
 + (instancetype)ba_alertActionCancleStyleWithTitle:(NSString *)title
-                                       actionBlock:(BAKit_AlertActionBlock)actionBlock
-{
+                                       actionBlock:(BAKit_AlertActionBlock)actionBlock {
     return [UIAlertAction actionWithTitle:title style:UIAlertActionStyleCancel handler:actionBlock];
 }
 
@@ -44,8 +42,7 @@
  @return UIAlertAction
  */
 + (instancetype)ba_alertActionDestructiveStyleWithTitle:(NSString *)title
-                                            actionBlock:(BAKit_AlertActionBlock)actionBlock
-{
+                                            actionBlock:(BAKit_AlertActionBlock)actionBlock {
     return [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDestructive handler:actionBlock];
 }
 

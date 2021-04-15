@@ -16,47 +16,44 @@
 
 /**
  计算路径下的文件内存大小
-
+ 
  @param filepath 文件路径
  @return 文件内存大小
  */
-+ (int64_t)ba_fileManagerGetSizeWithFilePath:(NSString *)filepath
-{
-//    NSFileManager *fmgr = [NSFileManager defaultManager];
-//    // CHECK FILE EXIST
-//    BOOL isFolder = NO;
-//    if ([fmgr fileExistsAtPath:filepath isDirectory:&isFolder])
-//    {
-//        float filesize = 0;
-//        if (isFolder)
-//        {
-//            // FOLDER
-//            NSArray *files = [fmgr subpathsAtPath:filepath];
-//            for (NSString *filename in files)
-//            {
-//                filesize += [NSFileManager ba_fileManagerGetSizeWithFilePath:filename];
-//            }
-//        }
-//        else
-//        {
-//            // FILE
-//            filesize = [fmgr attributesOfItemAtPath:filepath error:NULL].fileSize / 1024.0f / 1024.0f;
-//        }
-//        return filesize;
-//    }
-//    return 0;
++ (int64_t)ba_fileManagerGetSizeWithFilePath:(NSString *)filepath {
+    //    NSFileManager *fmgr = [NSFileManager defaultManager];
+    //    // CHECK FILE EXIST
+    //    BOOL isFolder = NO;
+    //    if ([fmgr fileExistsAtPath:filepath isDirectory:&isFolder])
+    //    {
+    //        float filesize = 0;
+    //        if (isFolder)
+    //        {
+    //            // FOLDER
+    //            NSArray *files = [fmgr subpathsAtPath:filepath];
+    //            for (NSString *filename in files)
+    //            {
+    //                filesize += [NSFileManager ba_fileManagerGetSizeWithFilePath:filename];
+    //            }
+    //        }
+    //        else
+    //        {
+    //            // FILE
+    //            filesize = [fmgr attributesOfItemAtPath:filepath error:NULL].fileSize / 1024.0f / 1024.0f;
+    //        }
+    //        return filesize;
+    //    }
+    //    return 0;
     return [self folderSizeAtPath:[filepath cStringUsingEncoding:NSUTF8StringEncoding] maxTime:nil];
 }
 
 // 完全使用unix c 函数 性能最好
 // 实测  1000个文件速度 0.005896
-+ (int64_t)folderSizeAtPath:(const char *)folderPath maxTime:(NSNumber *)maxTime
-{
-    CFAbsoluteTime startTime =CFAbsoluteTimeGetCurrent();
++ (int64_t)folderSizeAtPath:(const char *)folderPath maxTime:(NSNumber *)maxTime {
+    CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
     
     int64_t folderSize = 0;
     DIR* dir = opendir(folderPath);
-    
     
     if (dir == NULL) return 0;
     struct dirent* child;
@@ -87,30 +84,33 @@
             // 把目录本身所占的空间也加上
             struct stat st;
             if(lstat(childPath, &st) == 0) folderSize += st.st_size;
-        }else if (child->d_type == DT_REG || child->d_type == DT_LNK) { // file or link
+        } else if (child->d_type == DT_REG || child->d_type == DT_LNK) { // file or link
             //特殊处理几个月前的内容
             if (maxTime) {
-                BOOL shouldCountSize = YES;
+                BOOL isShouldCountSize = YES;
+                
                 char *p = child->d_name;
                 NSString *fileName = [NSString stringWithCString:p encoding:NSUTF8StringEncoding];
                 NSComparisonResult result = [fileName compare:[maxTime stringValue]];
-                if (result == NSOrderedDescending)//小于三个月不统计
-                {
-                    shouldCountSize = NO;
+                if (result == NSOrderedDescending) {
+                    //小于三个月不统计
+                    isShouldCountSize = NO;
                 }
                 
-                if (!shouldCountSize) {
+                if (!isShouldCountSize) {
                     continue;
                 }
             }
             
             struct stat st;
-            if(lstat(childPath, &st) == 0) folderSize += st.st_size;
+            if (lstat(childPath, &st) == 0) {
+                folderSize += st.st_size;
+            }
+            
         }
+        CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
+        NSLog(@"ttttttttttt:%s,%f,%lld",__func__,endTime-startTime,folderSize);
+        return folderSize;
     }
-    CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent();
-    NSLog(@"ttttttttttt:%s,%f,%lld",__func__,endTime-startTime,folderSize);
-    return folderSize;
 }
-
 @end

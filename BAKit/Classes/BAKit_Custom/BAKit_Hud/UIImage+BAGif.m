@@ -11,8 +11,7 @@
 
 @implementation UIImage (BAGif)
 
-+ (UIImage *)imageWithGIFData:(NSData *)data
-{
++ (UIImage *)imageWithGIFData:(NSData *)data {
     if (!data) return nil;
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
     size_t count = CGImageSourceGetCount(source);
@@ -45,14 +44,12 @@
     return animatedImage;
 }
 
-+ (UIImage *)imageWithGIFNamed:(NSString *)name
-{
++ (UIImage *)imageWithGIFNamed:(NSString *)name {
     NSUInteger scale = (NSUInteger)[UIScreen mainScreen].scale;
     return [self GIFName:name scale:scale];
 }
 
-+ (UIImage *)GIFName:(NSString *)name scale:(NSUInteger)scale
-{
++ (UIImage *)GIFName:(NSString *)name scale:(NSUInteger)scale {
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@@%zdx", name, scale] ofType:@"gif"];
     if (!imagePath) {
         (scale + 1 > 3) ? (scale -= 1) : (scale += 1);
@@ -75,8 +72,7 @@
     }
 }
 
-+ (void)imageWithGIFUrl:(NSString *)url gifImageBlock:(GIFimageBlock)gifImageBlock
-{
++ (void)imageWithGIFUrl:(NSString *)url gifImageBlock:(GIFimageBlock)gifImageBlock {
     NSURL *GIFUrl = [NSURL URLWithString:url];
     if (!GIFUrl) return;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -90,8 +86,7 @@
 
 #pragma mark - <关于GIF图片帧时长(Learning...)>
 
-+ (float)sd_frameDurationAtIndex:(NSUInteger)index source:(CGImageSourceRef)source
-{
++ (float)sd_frameDurationAtIndex:(NSUInteger)index source:(CGImageSourceRef)source {
     float frameDuration = 0.1f;
     CFDictionaryRef cfFrameProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil);
     NSDictionary *frameProperties = (__bridge NSDictionary *)cfFrameProperties;
@@ -99,8 +94,7 @@
     NSNumber *delayTimeUnclampedProp = gifProperties[(NSString *)kCGImagePropertyGIFUnclampedDelayTime];
     if (delayTimeUnclampedProp) {
         frameDuration = [delayTimeUnclampedProp floatValue];
-    }
-    else {
+    } else {
         NSNumber *delayTimeProp = gifProperties[(NSString *)kCGImagePropertyGIFDelayTime];
         if (delayTimeProp) {
             frameDuration = [delayTimeProp floatValue];

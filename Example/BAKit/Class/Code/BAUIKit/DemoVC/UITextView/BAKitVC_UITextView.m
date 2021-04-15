@@ -26,16 +26,14 @@
 
 @implementation BAKitVC_UITextView
 
-- (void)ba_base_viewWillAppear
-{
+- (void)ba_base_viewWillAppear {
     [BAKit_Helper ba_helperIsSetStatusBarStyleUIStatusBarStyleDefault:YES];
     
     // 注意：此处 navi 下有阴影图片哦！
     [BAKit_Helper ba_helperSetNaviBarBarTintColor:BAKit_Color_White tintColor:BAKit_Color_Black font:BAKit_Font_systemFontOfSize_18 fontColor:BAKit_Color_Black isNeedBottomLine:YES navigationController:self.navigationController];
 }
 
-- (void)ba_base_viewWillDisappear
-{
+- (void)ba_base_viewWillDisappear {
     [BAKit_Helper ba_helperIsSetStatusBarStyleUIStatusBarStyleDefault:NO];
 
     [BAKit_Helper ba_helperSetNaviBarBarTintColor:BAKit_Color_Black tintColor:BAKit_Color_White font:BAKit_Font_systemFontOfSize_18 fontColor:BAKit_Color_White isNeedBottomLine:YES navigationController:self.navigationController];
@@ -47,8 +45,7 @@
     
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"BATextView";
     self.view.backgroundColor = BAKit_Color_White;
 
@@ -63,8 +60,7 @@
     
 }
 
-- (void)test
-{
+- (void)test {
     // Start glow.
 //    self.label1.glowRadius            = @(2.f);
 //    self.label1.glowOpacity           = @(1.f);
@@ -95,8 +91,7 @@
     } afterDelaySecs:1.f];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
     
 //    [self.label1 ba_animation_flipWithDuration:1.5f direction:BAKit_ViewAnimationFlipDirectionTypeLeft];
@@ -131,8 +126,7 @@
     
     _label2.frame = CGRectMake(min_x, min_y, min_w, min_h);
     
-    if (!self.textView_Height)
-    {
+    if (!self.textView_Height) {
         self.textView_Height = 40;
     }
     min_y = CGRectGetMaxY(_label2.frame) + 10;
@@ -152,10 +146,8 @@
     [self test];
 }
 
-- (UILabel *)label1
-{
-    if (!_label1)
-    {
+- (UILabel *)label1 {
+    if (!_label1) {
         _label1 = [UILabel new];
         _label1.text = @"1、textView 正常情况，自定义holder（颜色、字体），自定义文字（颜色、字体）";
         _label1.numberOfLines = 0;
@@ -165,10 +157,8 @@
     return _label1;
 }
 
-- (UILabel *)label2
-{
-    if (!_label2)
-    {
+- (UILabel *)label2 {
+    if (!_label2) {
         _label2 = [UILabel new];
         _label2.text = @"2、textView 自动布局，自定义holder（颜色、字体），自定义文字（颜色、字体）";
         _label2.numberOfLines = 0;
@@ -178,10 +168,8 @@
     return _label2;
 }
 
-- (UITextView *)textView1
-{
-    if (!_textView1)
-    {
+- (UITextView *)textView1 {
+    if (!_textView1) {
         _textView1 = [UITextView new];
         _textView1.backgroundColor = BAKit_Color_Gray_11;
         /**
@@ -206,10 +194,8 @@
     return _textView1;
 }
 
-- (UITextView *)textView
-{
-    if (!_textView)
-    {
+- (UITextView *)textView {
+    if (!_textView) {
         _textView = [UITextView new];
         _textView.userInteractionEnabled = YES;
         /**
@@ -261,10 +247,8 @@
     return _textView;
 }
 
-- (UILabel *)label3
-{
-    if (!_label3)
-    {
+- (UILabel *)label3 {
+    if (!_label3) {
         _label3 = [UILabel new];
         _label3.font = [UIFont systemFontOfSize:12];
         _label3.backgroundColor = [UIColor yellowColor];
@@ -276,10 +260,8 @@
     return _label3;
 }
 
-- (UIView *)testView
-{
-    if (!_testView)
-    {
+- (UIView *)testView {
+    if (!_testView) {
         _testView = [UIView new];
         _testView.backgroundColor = [UIColor cyanColor];
         

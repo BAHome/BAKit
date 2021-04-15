@@ -18,8 +18,7 @@
  @return result
  */
 + (int)ba_numberRandomIntBetweenSmallNumber:(int)smallNumber
-                                  bigNumber:(int)bigNumber
-{
+                                  bigNumber:(int)bigNumber {
     return smallNumber + arc4random() % (bigNumber - smallNumber);
 }
 
@@ -31,8 +30,7 @@
  @return result
  */
 + (float)ba_numberRandomFloatBetween:(float)smallNumber
-                           bigNumber:(float)bigNumber
-{
+                           bigNumber:(float)bigNumber {
     float diff = bigNumber - smallNumber;
     return (((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + smallNumber;
 }

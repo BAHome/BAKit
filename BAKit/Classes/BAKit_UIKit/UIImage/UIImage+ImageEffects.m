@@ -430,8 +430,7 @@
                                green:((CGFloat)rgba[1])*multiplier
                                 blue:((CGFloat)rgba[2])*multiplier
                                alpha:alpha];
-    }
-    else {
+    } else {
         return [UIColor colorWithRed:((CGFloat)rgba[0])/255.0
                                green:((CGFloat)rgba[1])/255.0
                                 blue:((CGFloat)rgba[2])/255.0
@@ -474,8 +473,7 @@
                        tintColor:(UIColor *)tintColor
            saturationDeltaFactor:(CGFloat)saturationDeltaFactor
                        maskImage:(UIImage *)maskImage
-                         atFrame:(CGRect)frame
-{
+                         atFrame:(CGRect)frame {
     UIImage *blurredFrame = \
     [[self croppedImageAtFrame:frame] applyBlurWithRadius:blurRadius
                                                 tintColor:tintColor

@@ -11,18 +11,15 @@
 
 @implementation UINavigationBar (BAKit)
 
-- (UIView *)overlay
-{
+- (UIView *)overlay {
     return BAKit_Objc_getObj;
 }
 
-- (void)setOverlay:(UIView *)overlay
-{
+- (void)setOverlay:(UIView *)overlay {
     BAKit_Objc_setObj(@selector(overlay), overlay);
 }
 
-- (void)ba_setBackgroundColor:(UIColor *)backgroundColor
-{
+- (void)ba_setBackgroundColor:(UIColor *)backgroundColor {
     if (!self.overlay) {
         [self setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
         self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) + 20)];
@@ -33,13 +30,11 @@
     self.overlay.backgroundColor = backgroundColor;
 }
 
-- (void)ba_setTranslationY:(CGFloat)translationY
-{
+- (void)ba_setTranslationY:(CGFloat)translationY {
     self.transform = CGAffineTransformMakeTranslation(0, translationY);
 }
 
-- (void)ba_setElementsAlpha:(CGFloat)alpha
-{
+- (void)ba_setElementsAlpha:(CGFloat)alpha {
     [[self valueForKey:@"_leftViews"] enumerateObjectsUsingBlock:^(UIView *view, NSUInteger i, BOOL *stop) {
         view.alpha = alpha;
     }];
@@ -61,8 +56,7 @@
     }];
 }
 
-- (void)ba_reset
-{
+- (void)ba_reset {
     [self setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [self.overlay removeFromSuperview];
     self.overlay = nil;

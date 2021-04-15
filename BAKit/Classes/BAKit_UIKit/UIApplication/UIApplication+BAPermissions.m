@@ -42,8 +42,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
 
  @return BAKit_PermissionAccess
  */
-- (BAKit_PermissionAccess)ba_hasAccessToBluetoothLE
-{
+- (BAKit_PermissionAccess)ba_hasAccessToBluetoothLE {
     switch ([[[CBCentralManager alloc] init] state]) {
         case CBCentralManagerStateUnsupported:
             return BAKit_PermissionAccessUnsupported;
@@ -64,8 +63,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
 
  @return BAKit_PermissionAccess
  */
-- (BAKit_PermissionAccess)ba_hasAccessToCalendar
-{
+- (BAKit_PermissionAccess)ba_hasAccessToCalendar {
     switch ([EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent]) {
         case EKAuthorizationStatusAuthorized:
             return BAKit_PermissionAccessGranted;
@@ -90,8 +88,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  
  @return BAKit_PermissionAccess
  */
-- (BAKit_PermissionAccess)ba_hasAccessToContacts
-{
+- (BAKit_PermissionAccess)ba_hasAccessToContacts {
     switch (ABAddressBookGetAuthorizationStatus()) {
         case kABAuthorizationStatusAuthorized:
             return BAKit_PermissionAccessGranted;
@@ -116,8 +113,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  
  @return BAKit_PermissionAccess
  */
-- (BAKit_PermissionAccess)ba_hasAccessToLocation
-{
+- (BAKit_PermissionAccess)ba_hasAccessToLocation {
     switch ([CLLocationManager authorizationStatus]) {
         case kCLAuthorizationStatusAuthorizedAlways:
             return BAKit_PermissionAccessGranted;
@@ -143,8 +139,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  
  @return BAKit_PermissionAccess
  */
-- (BAKit_PermissionAccess)ba_hasAccessToPhotos
-{
+- (BAKit_PermissionAccess)ba_hasAccessToPhotos {
     switch ([ALAssetsLibrary authorizationStatus]) {
         case ALAuthorizationStatusAuthorized:
             return BAKit_PermissionAccessGranted;
@@ -169,8 +164,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  
  @return BAKit_PermissionAccess
  */
-- (BAKit_PermissionAccess)ba_hasAccessToReminders
-{
+- (BAKit_PermissionAccess)ba_hasAccessToReminders {
     switch ([EKEventStore authorizationStatusForEntityType:EKEntityTypeReminder]) {
         case EKAuthorizationStatusAuthorized:
             return BAKit_PermissionAccessGranted;
@@ -201,17 +195,13 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  @param failureBlock failureBlock description
  */
 - (void)ba_requestAccessToCalendarWithSuccessBlock:(void(^)())successBlock
-                                      failureBlock:(void(^)())failureBlock
-{
+                                      failureBlock:(void(^)())failureBlock {
     EKEventStore *eventStore = [[EKEventStore alloc] init];
     [eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (granted)
-            {
+            if (granted) {
                 successBlock();
-            }
-            else
-            {
+            } else {
                 failureBlock();
             }
         });
@@ -225,19 +215,14 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  @param failureBlock failureBlock description
  */
 - (void)ba_requestAccessToContactsWithSuccessBlock:(void(^)())successBlock
-                                      failureBlock:(void(^)())failureBlock
-{
+                                      failureBlock:(void(^)())failureBlock {
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    if(addressBook)
-    {
+    if(addressBook) {
         ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (granted)
-                {
+                if (granted) {
                     successBlock();
-                }
-                else
-                {
+                } else {
                     failureBlock();
                 }
             });
@@ -252,17 +237,13 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  @param failureBlock failureBlock description
  */
 - (void)ba_requestAccessToMicrophoneWithSuccessBlock:(void(^)())successBlock
-                                        failureBlock:(void(^)())failureBlock
-{
+                                        failureBlock:(void(^)())failureBlock {
     AVAudioSession *session = [[AVAudioSession alloc] init];
     [session requestRecordPermission:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (granted)
-            {
+            if (granted) {
                 successBlock();
-            }
-            else
-            {
+            } else {
                 failureBlock();
             }
         });
@@ -274,8 +255,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  
  @param successBlock successBlock description
  */
-- (void)ba_requestAccessToMotionWithSuccessBlock:(void(^)())successBlock
-{
+- (void)ba_requestAccessToMotionWithSuccessBlock:(void(^)())successBlock {
     CMMotionActivityManager *motionManager = [[CMMotionActivityManager alloc] init];
     NSOperationQueue *motionQueue = [[NSOperationQueue alloc] init];
     [motionManager startActivityUpdatesToQueue:motionQueue withHandler:^(CMMotionActivity *activity) {
@@ -291,8 +271,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  @param failureBlock failureBlock description
  */
 - (void)ba_requestAccessToPhotosWithSuccessBlock:(void(^)())successBlock
-                                    failureBlock:(void(^)())failureBlock
-{
+                                    failureBlock:(void(^)())failureBlock {
     ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
     [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
         successBlock();
@@ -312,12 +291,9 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
     EKEventStore *eventStore = [[EKEventStore alloc] init];
     [eventStore requestAccessToEntityType:EKEntityTypeReminder completion:^(BOOL granted, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (granted)
-            {
+            if (granted) {
                 successBlock();
-            }
-            else
-            {
+            } else {
                 failureBlock();
             }
         });
@@ -333,8 +309,7 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
  */
 - (void)ba_requestAccessToLocationWithDelegate:(id<CLLocationManagerDelegate>)delegate
                                  successBlock:(void(^)())successBlock
-                                 failureBlock:(void(^)())failureBlock
-{
+                                 failureBlock:(void(^)())failureBlock {
     self.ba_locationManager = [[CLLocationManager alloc] init];
     self.ba_locationManager.delegate = delegate;
     
@@ -346,45 +321,35 @@ typedef void (^BAKit_LocationManagerFailureBlock)();
 #pragma mark - Location manager injection
 
 
-- (void)setBa_locationManager:(CLLocationManager *)ba_locationManager
-{
+- (void)setBa_locationManager:(CLLocationManager *)ba_locationManager {
     BAKit_Objc_setObj(@selector(ba_locationManager), ba_locationManager);
 }
 
-- (CLLocationManager *)ba_locationManager
-{
+- (CLLocationManager *)ba_locationManager {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_locationSuccessBlock:(BAKit_LocationManagerSuccessBlock)ba_locationSuccessBlock
-{
+- (void)setBa_locationSuccessBlock:(BAKit_LocationManagerSuccessBlock)ba_locationSuccessBlock {
     BAKit_Objc_setObj(@selector(ba_locationSuccessBlock), ba_locationSuccessBlock);
 }
 
-- (BAKit_LocationManagerSuccessBlock)ba_locationSuccessBlock
-{
+- (BAKit_LocationManagerSuccessBlock)ba_locationSuccessBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_locationFailureBlock:(BAKit_LocationManagerFailureBlock)ba_locationFailureBlock
-{
+- (void)setBa_locationFailureBlock:(BAKit_LocationManagerFailureBlock)ba_locationFailureBlock {
     BAKit_Objc_setObj(@selector(ba_locationFailureBlock), ba_locationFailureBlock);
 }
 
-- (BAKit_LocationManagerFailureBlock)ba_locationFailureBlock
-{
+- (BAKit_LocationManagerFailureBlock)ba_locationFailureBlock {
     return BAKit_Objc_getObj;
 }
 
 #pragma mark - Location manager delegate
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
-    if (status == kCLAuthorizationStatusAuthorizedAlways)
-    {
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedAlways) {
         self.ba_locationSuccessBlock();
-    }
-    else if (status != kCLAuthorizationStatusNotDetermined)
-    {
+    } else if (status != kCLAuthorizationStatusNotDetermined) {
         self.ba_locationFailureBlock();
     }
 }

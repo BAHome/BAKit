@@ -23,8 +23,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
 //    _testView = [UIView new];
 //    _testView.frame = CGRectMake(20, 100, 100, 100);
 //    _testView.center = self.view.center;

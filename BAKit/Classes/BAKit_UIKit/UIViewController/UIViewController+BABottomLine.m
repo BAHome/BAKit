@@ -62,29 +62,23 @@
 
 @implementation UIViewController (BABottomLine)
 
-- (void)ba_hideBottonLineInView:(UIView *)view
-{
+- (void)ba_hideBottonLineInView:(UIView *)view {
     UIImageView *naviBarLineImageView = [self ba_findLineImageViewUnderView:view];
     naviBarLineImageView.hidden = YES;
 }
 
-- (void)ba_showBottomLineInView:(UIView *)view
-{
+- (void)ba_showBottomLineInView:(UIView *)view {
     UIImageView *naviBarLineImageView = [self ba_findLineImageViewUnderView:view];
     naviBarLineImageView.hidden = NO;
 }
 
-- (UIImageView *)ba_findLineImageViewUnderView:(UIView *)view
-{
-    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0f)
-    {
+- (UIImageView *)ba_findLineImageViewUnderView:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0f) {
         return (UIImageView *)view;
     }
-    for (UIView *subView in view.subviews)
-    {
+    for (UIView *subView in view.subviews) {
         UIImageView *imageView = [self ba_findLineImageViewUnderView:subView];
-        if (imageView)
-        {
+        if (imageView) {
             return imageView;
         }
     }

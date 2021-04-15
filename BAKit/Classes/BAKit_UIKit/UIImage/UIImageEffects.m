@@ -57,32 +57,28 @@
 #pragma mark - Effects
 
 //| ----------------------------------------------------------------------------
-+ (UIImage *)imageByApplyingLightEffectToImage:(UIImage*)inputImage
-{
++ (UIImage *)imageByApplyingLightEffectToImage:(UIImage*)inputImage {
     UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     return [self imageByApplyingBlurToImage:inputImage withRadius:60 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
 }
 
 
 //| ----------------------------------------------------------------------------
-+ (UIImage *)imageByApplyingExtraLightEffectToImage:(UIImage*)inputImage
-{
++ (UIImage *)imageByApplyingExtraLightEffectToImage:(UIImage*)inputImage {
     UIColor *tintColor = [UIColor colorWithWhite:0.97 alpha:0.82];
     return [self imageByApplyingBlurToImage:inputImage withRadius:40 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
 }
 
 
 //| ----------------------------------------------------------------------------
-+ (UIImage *)imageByApplyingDarkEffectToImage:(UIImage*)inputImage
-{
++ (UIImage *)imageByApplyingDarkEffectToImage:(UIImage*)inputImage {
     UIColor *tintColor = [UIColor colorWithWhite:0.11 alpha:0.73];
     return [self imageByApplyingBlurToImage:inputImage withRadius:40 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
 }
 
 
 //| ----------------------------------------------------------------------------
-+ (UIImage *)imageByApplyingTintEffectWithColor:(UIColor *)tintColor toImage:(UIImage*)inputImage
-{
++ (UIImage *)imageByApplyingTintEffectWithColor:(UIColor *)tintColor toImage:(UIImage*)inputImage {
     const CGFloat EffectColorAlpha = 0.6;
     UIColor *effectColor = tintColor;
     size_t componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);
@@ -91,8 +87,7 @@
         if ([tintColor getWhite:&b alpha:NULL]) {
             effectColor = [UIColor colorWithWhite:b alpha:EffectColorAlpha];
         }
-    }
-    else {
+    } else {
         CGFloat r, g, b;
         if ([tintColor getRed:&r green:&g blue:&b alpha:NULL]) {
             effectColor = [UIColor colorWithRed:r green:g blue:b alpha:EffectColorAlpha];
@@ -105,25 +100,21 @@
 #pragma mark - Implementation
 
 //| ----------------------------------------------------------------------------
-+ (UIImage*)imageByApplyingBlurToImage:(UIImage*)inputImage withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage
-{
++ (UIImage*)imageByApplyingBlurToImage:(UIImage*)inputImage withRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage {
 #define ENABLE_BLUR                     1
 #define ENABLE_SATURATION_ADJUSTMENT    1
 #define ENABLE_TINT                     1
     
     // Check pre-conditions.
-    if (inputImage.size.width < 1 || inputImage.size.height < 1)
-    {
+    if (inputImage.size.width < 1 || inputImage.size.height < 1) {
         NSLog(@"*** error: invalid size: (%.2f x %.2f). Both dimensions must be >= 1: %@", inputImage.size.width, inputImage.size.height, inputImage);
         return nil;
     }
-    if (!inputImage.CGImage)
-    {
+    if (!inputImage.CGImage) {
         NSLog(@"*** error: inputImage must be backed by a CGImage: %@", inputImage);
         return nil;
     }
-    if (maskImage && !maskImage.CGImage)
-    {
+    if (maskImage && !maskImage.CGImage) {
         NSLog(@"*** error: effectMaskImage must be backed by a CGImage: %@", maskImage);
         return nil;
     }
@@ -142,16 +133,14 @@
     // Set up output context.
     BOOL useOpaqueContext;
     if (inputImageAlphaInfo == kCGImageAlphaNone || inputImageAlphaInfo == kCGImageAlphaNoneSkipLast || inputImageAlphaInfo == kCGImageAlphaNoneSkipFirst)
-        useOpaqueContext = YES;
-    else
+        useOpaqueContext = YES; else
         useOpaqueContext = NO;
     UIGraphicsBeginImageContextWithOptions(outputImageRectInPoints.size, useOpaqueContext, inputImageScale);
     CGContextRef outputContext = UIGraphicsGetCurrentContext();
     CGContextScaleCTM(outputContext, 1.0, -1.0);
     CGContextTranslateCTM(outputContext, 0, -outputImageRectInPoints.size.height);
     
-    if (hasBlur || hasSaturationChange)
-    {
+    if (hasBlur || hasSaturationChange) {
         vImage_Buffer effectInBuffer;
         vImage_Buffer scratchBuffer1;
         
@@ -171,8 +160,7 @@
         };
         
         vImage_Error e = vImageBuffer_InitWithCGImage(&effectInBuffer, &format, NULL, inputImage.CGImage, kvImagePrintDiagnosticsToConsole);
-        if (e != kvImageNoError)
-        {
+        if (e != kvImageNoError) {
             NSLog(@"*** error: vImageBuffer_InitWithCGImage returned error code %zi for inputImage: %@", e, inputImage);
             UIGraphicsEndImageContext();
             return nil;
@@ -183,8 +171,7 @@
         outputBuffer = &scratchBuffer1;
         
 #if ENABLE_BLUR
-        if (hasBlur)
-        {
+        if (hasBlur) {
             // A description of how to compute the box kernel width from the Gaussian
             // radius (aka standard deviation) appears in the SVG spec:
             // http://www.w3.org/TR/SVG/filters.html#feGaussianBlurElement
@@ -220,8 +207,7 @@
 #endif
         
 #if ENABLE_SATURATION_ADJUSTMENT
-        if (hasSaturationChange)
-        {
+        if (hasSaturationChange) {
             CGFloat s = saturationDeltaFactor;
             // These values appear in the W3C Filter Effects spec:
             // https://dvcs.w3.org/hg/FXTF/raw-file/default/filters/index.html#grayscaleEquivalent
@@ -266,17 +252,14 @@
         // Cleanup
         CGImageRelease(effectCGImage);
         free(outputBuffer->data);
-    }
-    else
-    {
+    } else {
         // draw base image
         CGContextDrawImage(outputContext, outputImageRectInPoints, inputCGImage);
     }
     
 #if ENABLE_TINT
     // Add in color tint.
-    if (tintColor)
-    {
+    if (tintColor) {
         CGContextSaveGState(outputContext);
         CGContextSetFillColorWithColor(outputContext, tintColor.CGColor);
         CGContextFillRect(outputContext, outputImageRectInPoints);
@@ -298,8 +281,7 @@
 //| ----------------------------------------------------------------------------
 //  Helper function to handle deferred cleanup of a buffer.
 //
-void cleanupBuffer(void *userData, void *buf_data)
-{ free(buf_data); }
+void cleanupBuffer(void *userData, void *buf_data) { free(buf_data); }
 
 @end
 

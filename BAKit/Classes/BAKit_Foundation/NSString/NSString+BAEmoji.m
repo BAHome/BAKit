@@ -15,8 +15,7 @@
  
  @return 表情字符
  */
-- (NSString *)ba_stringReplaceEmojiTextWithUnicode
-{
+- (NSString *)ba_stringReplaceEmojiTextWithUnicode {
     NSDictionary *emojis = @{
                              @"[哈哈]": @"😄",
                              @"[laughing]": @"😆",
@@ -879,8 +878,7 @@
 
  @return 文字
  */
-- (NSString *)ba_stringReplaceEmojiUnicodeWithText
-{
+- (NSString *)ba_stringReplaceEmojiUnicodeWithText {
     NSDictionary *emojis = @{
                              @"😄": @"[哈哈]",
                              @"😆": @"[laughing]",

@@ -16,8 +16,7 @@
  @param index index description
  @return UIView
  */
-+ (instancetype)ba_viewLoadFromNibWithIndex:(NSInteger)index
-{
++ (instancetype)ba_viewLoadFromNibWithIndex:(NSInteger)index {
     return [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:nil options:nil] [index];
 }
 
@@ -27,8 +26,7 @@
  @param nibName nibName description
  @return UIView
  */
-+ (instancetype)ba_viewLoadViewFromNibWithName:(NSString *)nibName
-{
++ (instancetype)ba_viewLoadViewFromNibWithName:(NSString *)nibName {
     return [self ba_viewLoadViewFromNibWithName:nibName owner:nil];
 }
 
@@ -40,8 +38,7 @@
  @return UIView
  */
 + (instancetype)ba_viewLoadViewFromNibWithName:(NSString *)nibName
-                                         owner:(id)owner
-{
+                                         owner:(id)owner {
     return [self ba_viewLoadViewFromNibWithName:nibName owner:owner bundle:[NSBundle mainBundle]];
 }
 
@@ -55,14 +52,11 @@
  */
 + (instancetype)ba_viewLoadViewFromNibWithName:(NSString *)nibName
                                          owner:(id)owner
-                                        bundle:(NSBundle *)bundle
-{
+                                        bundle:(NSBundle *)bundle {
     UIView *result = nil;
     NSArray* elements = [bundle loadNibNamed:nibName owner:owner options:nil];
-    for (id object in elements)
-    {
-        if ([object isKindOfClass:[self class]])
-        {
+    for (id object in elements) {
+        if ([object isKindOfClass:[self class]]) {
             result = object;
             break;
         }

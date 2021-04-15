@@ -22,14 +22,12 @@
 
 @implementation BAKitVC_UINavigation
 
-- (void)ba_base_viewWillAppear
-{
+- (void)ba_base_viewWillAppear {
     [BAKit_Helper ba_helperIsSetStatusBarStyleUIStatusBarStyleDefault:NO];
     [BAKit_Helper ba_helperSetNaviBarBarTintColor:BAKit_Color_Black tintColor:BAKit_Color_White font:BAKit_Font_systemFontOfSize_18 fontColor:BAKit_Color_White isNeedBottomLine:YES navigationController:self.navigationController];
 }
 
-- (void)ba_base_viewWillDisappear
-{
+- (void)ba_base_viewWillDisappear {
 
 }
 
@@ -38,13 +36,11 @@
     // Do any additional setup after loading the view.
 }
 
-- (NSString *)ba_setupNaviTitle
-{
+- (NSString *)ba_setupNaviTitle {
     return @"返回";
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"自定义 navi ";
     self.view.backgroundColor = BAKit_Color_White;
     self.dataArray = [self.mutableDataArray mutableCopy];
@@ -59,19 +55,15 @@
     };
 }
 
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[@"自定义 navi 黑色背景", @"自定义 navi 白色背景", @"自定义 返回按钮文字", @"原生 navi"];;
     }
     return _titleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
@@ -79,8 +71,7 @@
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

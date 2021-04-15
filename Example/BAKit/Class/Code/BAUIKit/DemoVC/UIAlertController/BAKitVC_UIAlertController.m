@@ -39,8 +39,7 @@ static NSString * const msg2 = @"请输入账号密码";
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"BAAlertController";
     self.tableView.hidden = NO;
 }
@@ -52,23 +51,19 @@ static NSString * const msg2 = @"请输入账号密码";
 }
 
 #pragma mark - UITableViewDataSource / UITableViewDelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataArray.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.dataArray[section] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
-    if ( !cell )
-    {
+    if ( !cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.textLabel.numberOfLines = 0;
         cell.accessoryType = (indexPath.section == 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
@@ -78,13 +73,11 @@ static NSString * const msg2 = @"请输入账号密码";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     self.indexPath = indexPath;
-    if ( 0 == indexPath.section )
-    {
+    if ( 0 == indexPath.section ) {
         switch ( indexPath.row ) {
             case 0:
             {
@@ -123,8 +116,7 @@ static NSString * const msg2 = @"请输入账号密码";
     }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
     
     UILabel *headerTitle = [UILabel new];
@@ -139,20 +131,17 @@ static NSString * const msg2 = @"请输入账号密码";
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
 #pragma mark - custom method
 
-- (void)alertController1
-{
+- (void)alertController1 {
     [UIAlertController ba_alertShowInViewController:self
                                               title:title0
                                             message:msg0
@@ -164,8 +153,7 @@ static NSString * const msg2 = @"请输入账号密码";
                                               }];
 }
 
-- (void)alertController2
-{
+- (void)alertController2 {
     [UIAlertController ba_alertShowInViewController:self
                                               title:title0
                                             message:msg0
@@ -178,20 +166,17 @@ static NSString * const msg2 = @"请输入账号密码";
                                               }];
 }
 
-- (void)alertController3
-{
+- (void)alertController3 {
     // AlertController 的 textField placeholder 数组，根据这个添加 textField
     NSArray *textFieldPlaceholderArray = @[@"用户名/手机号/邮箱", @"密码"];
     [UIAlertController ba_alertTextFieldShowInViewController:self title:msg2 message:nil  buttonTitleArray:@[@"取 消", @"确 定"] buttonTitleColorArray:@[BAKit_Color_Green, BAKit_Color_Red] buttonEnabledNoWithTitleArray:@[@"确 定"] textFieldPlaceholderArray:textFieldPlaceholderArray textFieldConfigurationActionBlock:^(UITextField * _Nullable textField, NSInteger index) {
         // 添加通知，监听 textField 输入的文字变化
         [BAKit_NotiCenter addObserver:self selector:@selector(handleAlertTextFieldDidChangeAction:) name:UITextFieldTextDidChangeNotification object:textField];
         
-        if (index == 0)
-        {
+        if (index == 0) {
             textField.keyboardType = UIKeyboardTypeNumberPad;
         }
-        if (index == 1)
-        {
+        if (index == 1) {
             textField.secureTextEntry = YES;
         }
         
@@ -206,20 +191,17 @@ static NSString * const msg2 = @"请输入账号密码";
     }];
 }
 
-- (void)handleAlertTextFieldDidChangeAction:(NSNotification *)notification
-{
+- (void)handleAlertTextFieldDidChangeAction:(NSNotification *)notification {
     // 通知处理，判断文字输入的长度 大于 3 的时候，确定按钮可点击，否则，不可点击
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
-    if (alertController)
-    {
+    if (alertController) {
         UITextField *login = alertController.textFields[0];
         UIAlertAction *sureAction = alertController.actions[1];
         sureAction.enabled = login.text.length > 3;
     }
 }
 
-- (void)alertController4
-{
+- (void)alertController4 {
     NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:title0 attributes:@{NSForegroundColorAttributeName:[UIColor orangeColor]}];
     
     NSString *result = @"当前用户未 登录 ，是否 登录 ？";
@@ -248,12 +230,10 @@ static NSString * const msg2 = @"请输入账号密码";
                                                         }];
 }
 
-- (void)alertController5
-{
+- (void)alertController5 {
     [UIAlertController ba_actionSheetShowInViewController:self title:title0 message:nil buttonTitleArray:@[@"safari打开", @"复制链接", @"分享", @"刷新"] buttonTitleColorArray:@[BAKit_Color_Red, BAKit_Color_Green, BAKit_Color_Yellow, BAKit_Color_Orange]  popoverPresentationControllerBlock:^(UIPopoverPresentationController * _Nonnull popover) {
         
-        if (popover)
-        {
+        if (popover) {
             // 在使用 UITableViewCell 的frame属性获取origin得到的坐标是不变的. 也就是说如果UITableView初始化完毕后,每个cell的坐标是固定的,x不变,y 随index递增的. 经过测试发现,任何一个cell拖拽或则滑动到UITableView的任意相对位置,cell的frame属性都没有改变. 那怎样获取UITableViewCell相对于UITableView的坐标?
             CGRect rectInTableView = [self.tableView rectForRowAtIndexPath:self.indexPath];
             CGRect frame = [self.tableView convertRect:rectInTableView toView:[self.tableView superview]];
@@ -272,8 +252,7 @@ static NSString * const msg2 = @"请输入账号密码";
     }];
 }
 
-- (void)alertController6
-{
+- (void)alertController6 {
     NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:title0 attributes:@{NSForegroundColorAttributeName:[UIColor orangeColor]}];
     
     NSString *result = @"当前用户未 登录 ，是否 登录 ？";
@@ -291,8 +270,7 @@ static NSString * const msg2 = @"请输入账号密码";
     [attributedMessage ba_changeAttributeDict:dic range:range];
     
     [UIAlertController ba_actionSheetAttributedShowInViewController:self attributedTitle:attributedTitle attributedMessage:attributedMessage buttonTitleArray:@[@"safari打开", @"复制链接", @"分享", @"刷新"] buttonTitleColorArray:@[BAKit_Color_Red, BAKit_Color_Green, BAKit_Color_Yellow, BAKit_Color_Orange] popoverPresentationControllerBlock:^(UIPopoverPresentationController * _Nonnull popover) {
-        if (popover)
-        {
+        if (popover) {
             // 在使用 UITableViewCell 的frame属性获取origin得到的坐标是不变的. 也就是说如果UITableView初始化完毕后,每个cell的坐标是固定的,x不变,y 随index递增的. 经过测试发现,任何一个cell拖拽或则滑动到UITableView的任意相对位置,cell的frame属性都没有改变. 那怎样获取UITableViewCell相对于UITableView的坐标?
             CGRect rectInTableView = [self.tableView rectForRowAtIndexPath:self.indexPath];
             CGRect frame = [self.tableView convertRect:rectInTableView toView:[self.tableView superview]];
@@ -313,10 +291,8 @@ static NSString * const msg2 = @"请输入账号密码";
 
 #pragma mark - setter / getter
 
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [UITableView new];
         self.tableView.delegate = self;
         self.tableView.dataSource =  self;
@@ -329,10 +305,8 @@ static NSString * const msg2 = @"请输入账号密码";
     return _tableView;
 }
 
-- (NSArray *)dataArray
-{
-    if ( !_dataArray )
-    {
+- (NSArray *)dataArray {
+    if ( !_dataArray ) {
         _dataArray = [NSArray arrayWithObjects:@[@"1、普通的 UIAlertController-alert，可以自由设置按钮数量、按钮颜色",
                                                  @"2、普通的 UIAlertController-alert，可以自由设置按钮数量、按钮颜色【多按钮样式，颜色数组和title数组个数不等】",
                                                  @"3、普通的 带 textField 的 UIAlertController-alert，可添加一个或者多个 textField",

@@ -25,8 +25,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.location = BAKit_LocationManager.shared;
     BAKit_WeakSelf
     self.location.getCurrentLocationBlock = ^(CLPlacemark *place) {
@@ -45,20 +44,15 @@
     };
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.location ba_loaction_start];
 }
 
 
-- (IBAction)handleButtonActions:(UIButton *)sender
-{
-    if (sender.tag == 0)
-    {
+- (IBAction)handleButtonActions:(UIButton *)sender {
+    if (sender.tag == 0) {
         [self.location ba_loaction_start];
-    }
-    else if (sender.tag == 1)
-    {
+    } else if (sender.tag == 1) {
         [self.location ba_loaction_stop];
     }
 }

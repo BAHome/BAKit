@@ -16,4 +16,8 @@
 @property (nonatomic, copy) UIImage  *user_Image;
 @property (nonatomic, copy) NSString *user_PhoneNumber;
 
+@property (nonatomic, copy) NSAttributedString *attributedUser_Name;
+
+//@property(nonatomic, assign) bool isActive;
+
 @end

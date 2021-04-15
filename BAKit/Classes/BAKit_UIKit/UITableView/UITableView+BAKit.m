@@ -13,8 +13,7 @@
 @implementation UITableView (BAKit)
 
 
-- (void)ba_changeBackgroundImageWithImageName:(UIImage *)image
-{
+- (void)ba_changeBackgroundImageWithImageName:(UIImage *)image {
     self.backgroundColor = BAKit_Color_Clear;
     self.backgroundView = nil;
     
@@ -27,25 +26,21 @@
 
 #pragma mark - setter getter
 
-- (void)setBa_tableViewBackgroundImage:(UIImage *)ba_tableViewBackgroundImage
-{
+- (void)setBa_tableViewBackgroundImage:(UIImage *)ba_tableViewBackgroundImage {
     BAKit_Objc_setObj(@selector(ba_tableViewBackgroundImage), ba_tableViewBackgroundImage);
     
     [self ba_changeBackgroundImageWithImageName:ba_tableViewBackgroundImage];
 }
 
-- (UIImage *)ba_tableViewBackgroundImage
-{
+- (UIImage *)ba_tableViewBackgroundImage {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_tableViewCellStyle:(UITableViewCellStyle)ba_tableViewCellStyle
-{
+- (void)setBa_tableViewCellStyle:(UITableViewCellStyle)ba_tableViewCellStyle {
     BAKit_Objc_setObj(@selector(ba_tableViewCellStyle), @(ba_tableViewCellStyle));
 }
 
-- (UITableViewCellStyle)ba_tableViewCellStyle
-{
+- (UITableViewCellStyle)ba_tableViewCellStyle {
     return [BAKit_Objc_getObj integerValue];
 }
 

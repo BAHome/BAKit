@@ -16,12 +16,9 @@
  @param className 需要查找的类名
  @return UIViewController
  */
-- (UIViewController *)ba_navigationControllerFindViewControllerClassName:(Class)className
-{
-    for (UIViewController *viewController in self.viewControllers)
-    {
-        if ([viewController isKindOfClass:className])
-        {
+- (UIViewController *)ba_navigationControllerFindViewControllerClassName:(Class)className {
+    for (UIViewController *viewController in self.viewControllers) {
+        if ([viewController isKindOfClass:className]) {
             return viewController;
         }
     }
@@ -33,10 +30,8 @@
 
  @return YES / NO
  */
-- (BOOL)ba_navigationControllerIsOnlyContainRootViewController
-{
-    if (self.viewControllers && self.viewControllers.count == 1)
-    {
+- (BOOL)ba_navigationControllerIsOnlyContainRootViewController {
+    if (self.viewControllers && self.viewControllers.count == 1) {
         return YES;
     }
     return NO;
@@ -47,10 +42,8 @@
 
  @return UIViewController
  */
-- (UIViewController *)ba_navigationControllerGetRootViewController
-{
-    if (self.viewControllers && [self.viewControllers count] >0)
-    {
+- (UIViewController *)ba_navigationControllerGetRootViewController {
+    if (self.viewControllers && [self.viewControllers count] >0) {
         return [self.viewControllers firstObject];
     }
     return nil;
@@ -63,12 +56,10 @@
  @param animated animated description
  */
 - (void)ba_navigationControllerPopToViewControllerClassName:(Class)ClassName
-                                                   animated:(BOOL)animated
-{
+                                                   animated:(BOOL)animated {
     id vc = [self ba_navigationControllerFindViewControllerClassName:ClassName];
     
-    if(vc != nil && [vc isKindOfClass:[UIViewController class]])
-    {
+    if(vc != nil && [vc isKindOfClass:[UIViewController class]]) {
         [self popToViewController:vc animated:animated];
     }
 }

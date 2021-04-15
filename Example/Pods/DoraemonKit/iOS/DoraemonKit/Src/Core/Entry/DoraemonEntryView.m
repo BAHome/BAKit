@@ -13,7 +13,7 @@
 #import "UIImage+Doraemon.h"
 #import "DoraemonDefine.h"
 #import "DoraemonHomeWindow.h"
-
+#import "DoraemonStatusBarViewController.h"
 @interface DoraemonEntryView()
 
 @property (nonatomic, assign) BOOL isOpen;
@@ -25,15 +25,22 @@
 @implementation DoraemonEntryView
 
 - (instancetype)init{
-    _kEntryViewSize = kDoraemonSizeFrom750(116);
+    _kEntryViewSize = 58;
     self = [super initWithFrame:CGRectMake(0, DoraemonScreenHeight/3, _kEntryViewSize, _kEntryViewSize)];
-    if (self) {
-        
-        
+    if (self) { 
         self.backgroundColor = [UIColor clearColor];
         self.windowLevel = UIWindowLevelStatusBar + 100.f;
-        if (!self.rootViewController) {
-            self.rootViewController = [[UIViewController alloc] init];
+        self.layer.masksToBounds = YES;
+        NSString *version= [UIDevice currentDevice].systemVersion;
+        if(version.doubleValue >=10.0) {
+            if (!self.rootViewController) {
+                self.rootViewController = [[UIViewController alloc] init];
+            }
+        }else{
+            //iOS9.0的系统中，新建的window设置的rootViewController默认没有显示状态栏
+            if (!self.rootViewController) {
+                self.rootViewController = [[DoraemonStatusBarViewController alloc] init];
+            }
         }
         
         UIButton *entryBtn = [[UIButton alloc] initWithFrame:self.bounds];
@@ -42,8 +49,7 @@
         entryBtn.layer.cornerRadius = 20.;
         [entryBtn addTarget:self action:@selector(entryClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.rootViewController.view addSubview:entryBtn];
-        _entryBtn = entryBtn;
-        
+        _entryBtn = entryBtn; 
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
         [self addGestureRecognizer:pan];
     }

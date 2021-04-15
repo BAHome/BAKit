@@ -23,8 +23,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.label.hidden = NO;
     self.label2.hidden = NO;
 
@@ -59,10 +58,8 @@
 
 #pragma mark - setter getter
 
-- (BAKit_ScaleLabel *)label
-{
-    if (!_label)
-    {
+- (BAKit_ScaleLabel *)label {
+    if (!_label) {
         _label = [BAKit_ScaleLabel new];
         _label.ba_text = @"欢迎来到博爱之家！";
         _label.ba_scaleStart = 0.1f;
@@ -76,10 +73,8 @@
     return _label;
 }
 
-- (BAKit_ScaleLabel *)label2
-{
-    if (!_label2)
-    {
+- (BAKit_ScaleLabel *)label2 {
+    if (!_label2) {
         _label2 = [BAKit_ScaleLabel new];
         _label2.ba_text = @"BAHome";
         _label2.ba_scaleStart = 1.5f;

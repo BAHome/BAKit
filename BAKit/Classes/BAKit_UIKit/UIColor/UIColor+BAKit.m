@@ -18,23 +18,19 @@
  @param alpha alpha
  @return 颜色
  */
-+ (UIColor *)ba_colorWithHex:(NSString *)hexstring andAlpha:(CGFloat)alpha
-{
-    if (hexstring.length == 0)
-    {
++ (UIColor *)ba_colorWithHex:(NSString *)hexstring andAlpha:(CGFloat)alpha {
+    if (hexstring.length == 0) {
         return [UIColor clearColor];
     }
     
-    if('#' != [hexstring characterAtIndex:0])
-    {
+    if('#' != [hexstring characterAtIndex:0]) {
         hexstring = [NSString stringWithFormat:@"#%@", hexstring];
     }
     
     // RETURNING NO OBJECT ON WRONG ALPHA VALUES
     NSArray *validHexStringLengths = @[@7,];
     NSNumber *hexStringLengthNumber = [NSNumber numberWithUnsignedInteger:hexstring.length];
-    if ([validHexStringLengths indexOfObject:hexStringLengthNumber] == NSNotFound)
-    {
+    if ([validHexStringLengths indexOfObject:hexStringLengthNumber] == NSNotFound) {
         return nil;
     }
     

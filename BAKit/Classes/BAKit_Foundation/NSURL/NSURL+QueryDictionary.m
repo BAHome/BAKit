@@ -25,8 +25,7 @@ static NSString *const kFragmentBegin       = @"#";
 }
 
 - (NSURL *)uq_URLByAppendingQueryDictionary:(NSDictionary *)queryDictionary
-                             withSortedKeys:(BOOL)sortedKeys
-{
+                             withSortedKeys:(BOOL)sortedKeys {
   NSMutableArray *queries = [self.query length] > 0 ? @[self.query].mutableCopy : @[].mutableCopy;
   NSString *dictionaryQuery = [queryDictionary uq_URLQueryStringWithSortedKeys:sortedKeys percentageEncoding:YES];
   if (dictionaryQuery) {
@@ -62,8 +61,7 @@ static NSString *const kFragmentBegin       = @"#";
 }
 
 - (NSURL*)uq_URLByReplacingQueryWithDictionary:(NSDictionary*)queryDictionary
-                                withSortedKeys:(BOOL) sortedKeys
-{
+                                withSortedKeys:(BOOL) sortedKeys {
   NSURL *stripped = [self uq_URLByRemovingQuery];
   return [stripped uq_URLByAppendingQueryDictionary:queryDictionary withSortedKeys:sortedKeys];
 }
@@ -109,16 +107,11 @@ static NSString *const kFragmentBegin       = @"#";
   {
     const unsigned char thisChar = source[i];
 
-    if(thisChar == ' ')
-    {
+    if(thisChar == ' ') {
       [output appendString:@"+"];
-    }
-    else if(thisChar == '.' || thisChar == '-' || thisChar == '_' || thisChar == '~' || (thisChar >= 'a' && thisChar <= 'z') || (thisChar >= 'A' && thisChar <= 'Z') || (thisChar >= '0' && thisChar <= '9'))
-    {
+    } else if(thisChar == '.' || thisChar == '-' || thisChar == '_' || thisChar == '~' || (thisChar >= 'a' && thisChar <= 'z') || (thisChar >= 'A' && thisChar <= 'Z') || (thisChar >= '0' && thisChar <= '9')) {
       [output appendFormat:@"%c", thisChar];
-    }
-    else
-    {
+    } else {
       [output appendFormat:@"%%%02X", thisChar];
     }
   }

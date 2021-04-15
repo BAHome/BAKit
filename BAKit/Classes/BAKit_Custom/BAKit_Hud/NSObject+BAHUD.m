@@ -17,21 +17,17 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
 
 #pragma mark - hud loading
 
-- (void)hud_showLoadingView
-{
+- (void)hud_showLoadingView {
     [self hud_Appearance];
     [SVProgressHUD show];
 }
 
-- (void)hud_showLoadingViewOnView:(UIView *)view
-{
+- (void)hud_showLoadingViewOnView:(UIView *)view {
     [self hud_showLoadingViewWithStatus:nil onView:view];
 }
 
-- (void)hud_showLoadingViewWithStatus:(nullable NSString *)string onView:(nullable UIView *)view
-{
-    if (!string || !string.length)
-    {
+- (void)hud_showLoadingViewWithStatus:(nullable NSString *)string onView:(nullable UIView *)view {
+    if (!string || !string.length) {
         NSLog(@"提示语为空！");
 //        return;
     }
@@ -40,10 +36,8 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
     [SVProgressHUD showWithStatus:string];
 }
 
-- (void)hud_showInfoWithStatus:(nullable NSString *)string
-{
-    if (!string || !string.length)
-    {
+- (void)hud_showInfoWithStatus:(nullable NSString *)string {
+    if (!string || !string.length) {
         NSLog(@"提示语为空！");
 //        return;
     }
@@ -51,10 +45,8 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
     [SVProgressHUD showInfoWithStatus:string];
 }
 
-- (void)hud_showSuccessWithStatus:(nullable NSString *)string
-{
-    if (!string || !string.length)
-    {
+- (void)hud_showSuccessWithStatus:(nullable NSString *)string {
+    if (!string || !string.length) {
         NSLog(@"提示语为空！");
 //        return;
     }
@@ -62,10 +54,8 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
     [SVProgressHUD showSuccessWithStatus:string];
 }
 
-- (void)hud_showErrorWithStatus:(nullable NSString *)string
-{
-    if (!string || !string.length)
-    {
+- (void)hud_showErrorWithStatus:(nullable NSString *)string {
+    if (!string || !string.length) {
         NSLog(@"提示语为空！");
 //        return;
     }
@@ -75,10 +65,8 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
 
 #pragma mark - hud image
 
-- (void)hud_showImage:(nonnull UIImage *)image status:(nullable NSString *)string
-{
-    if (!string || !string.length)
-    {
+- (void)hud_showImage:(nonnull UIImage *)image status:(nullable NSString *)string {
+    if (!string || !string.length) {
         NSLog(@"提示语为空！");
 //        return;
     }
@@ -86,10 +74,8 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
     [SVProgressHUD showImage:image status:string];
 }
 
-- (void)hud_showGifImage:(nonnull NSString *)gifImageName status:(nullable NSString *)string
-{
-    if (!string || !string.length)
-    {
+- (void)hud_showGifImage:(nonnull NSString *)gifImageName status:(nullable NSString *)string {
+    if (!string || !string.length) {
         NSLog(@"提示语为空！");
         //        return;
     }
@@ -99,15 +85,12 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
 
 #pragma mark - toast
 
-- (void)hud_showToastStatus:(nullable NSString *)string
-{
+- (void)hud_showToastStatus:(nullable NSString *)string {
     [self hud_showToastStatus:string onView:nil];
 }
 
-- (void)hud_showToastStatus:(nullable NSString *)string onView:(nullable UIView *)view
-{
-    if (!string || !string.length)
-    {
+- (void)hud_showToastStatus:(nullable NSString *)string onView:(nullable UIView *)view {
+    if (!string || !string.length) {
         NSLog(@"提示语为空！");
         return;
     }
@@ -118,23 +101,19 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
 
 #pragma mark - dismiss
 
-- (void)hud_dismiss
-{
+- (void)hud_dismiss {
     [self hud_dismissWithDelay:0];
 }
 
-- (void)hud_dismissWithDelay:(NSTimeInterval)delay
-{
+- (void)hud_dismissWithDelay:(NSTimeInterval)delay {
     [self hud_dismissWithDelay:delay completion:nil];
 }
 
-- (void)hud_dismissWithCompletion:(nullable SVProgressHUDDismissCompletion)completion
-{
+- (void)hud_dismissWithCompletion:(nullable SVProgressHUDDismissCompletion)completion {
     [self hud_dismissWithDelay:0 completion:completion];
 }
 
-- (void)hud_dismissWithDelay:(NSTimeInterval)delay completion:(nullable SVProgressHUDDismissCompletion)completion
-{
+- (void)hud_dismissWithDelay:(NSTimeInterval)delay completion:(nullable SVProgressHUDDismissCompletion)completion {
     [SVProgressHUD dismissWithDelay:delay completion:completion];
 }
 
@@ -142,8 +121,7 @@ static CGFloat kMaximumDismissTimeInterval = 3.0;
 
 #pragma mark - private
 
-- (void)hud_Appearance
-{
+- (void)hud_Appearance {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wnonnull"
     [SVProgressHUD setInfoImage:nil];

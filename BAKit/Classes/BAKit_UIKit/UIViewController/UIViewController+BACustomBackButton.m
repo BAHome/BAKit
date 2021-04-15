@@ -62,19 +62,16 @@
     [self setBANavNeedLayout];
 }
 
-- (void)ba_setNaviBackItemTitle
-{
+- (void)ba_setNaviBackItemTitle {
     NSString *title = @"";
-    if ([self respondsToSelector:@selector(ba_setupNaviTitle)])
-    {
+    if ([self respondsToSelector:@selector(ba_setupNaviTitle)]) {
         title = [self ba_setupNaviTitle];
     }
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backButtonItem];
 }
 
-- (void)setBANavNeedLayout
-{
+- (void)setBANavNeedLayout {
     UIView *nav_backView = nil;
     BAMaskView *nav_qyView = nil;
     for (UIView *view in self.navigationController.navigationBar.subviews) {

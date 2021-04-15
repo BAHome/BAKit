@@ -16,8 +16,7 @@
  *
  * @return 清除后的结果
  */
-- (NSString *)ba_trimStrippingHTMLString
-{
+- (NSString *)ba_trimStrippingHTMLString {
     return [self stringByReplacingOccurrencesOfString:@"<[^>]+>" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, self.length)];
 }
 
@@ -26,14 +25,12 @@
  *
  * @return 清楚js后的结果
  */
-- (NSString *)ba_trimScriptsAndStrippingHTMLString
-{
+- (NSString *)ba_trimScriptsAndStrippingHTMLString {
     NSMutableString *mString = [self mutableCopy];
     NSError *error = nil;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<script[^>]*>[\\w\\W]*</script>" options:NSRegularExpressionCaseInsensitive error:&error];
     NSArray *matches = [regex matchesInString:mString options:NSMatchingReportProgress range:NSMakeRange(0, [mString length])];
-    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator])
-    {
+    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
         [mString replaceCharactersInRange:match.range withString:@""];
     }
     return [mString ba_trimStrippingHTMLString];
@@ -44,8 +41,7 @@
  *
  * @return 去除空格后的字符串
  */
-- (NSString *)ba_trimWhitespace
-{
+- (NSString *)ba_trimWhitespace {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
@@ -54,8 +50,7 @@
  *
  * @return 去除字符串与空行的字符串
  */
-- (NSString *)ba_trimWhitespaceAndNewlines
-{
+- (NSString *)ba_trimWhitespaceAndNewlines {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
@@ -65,12 +60,10 @@
  @param HTMLString HTMLString
  @return 去掉字符串中的 html 标签后的 string
  */
-+ (NSString *)ba_trimfilterHTML:(NSString *)HTMLString
-{
++ (NSString *)ba_trimfilterHTML:(NSString *)HTMLString {
     NSScanner *scanner = [NSScanner scannerWithString:HTMLString];
     NSString *text = nil;
-    while([scanner isAtEnd]==NO)
-    {
+    while([scanner isAtEnd]==NO) {
         // 找到标签的起始位置
         [scanner scanUpToString:@"<" intoString:nil];
         // 找到标签的结束位置
@@ -99,8 +92,7 @@
  *
  * @return 去除字符串的特殊字符
  */
-+ (nullable NSString *)ba_trimWithString:(nullable NSString *)string
-{
++ (nullable NSString *)ba_trimWithString:(nullable NSString *)string {
     // 去除字符串的特殊字符
     //    NSString *string = @"<f7091300 00000000 830000c4 00002c00 0000c500>";
     NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"@／：；（）¥「」＂、<>[]{}#%-*+=_\\|~＜＞$?^?'@#$%^&*()_+'\""];
@@ -119,12 +111,10 @@
  @param hexString 十六进制 string
  @return 转换后的 string
  */
-- (NSString *)ba_stringFromHexString:(NSString *)hexString
-{
+- (NSString *)ba_stringFromHexString:(NSString *)hexString {
     char *myBuffer = (char *)malloc((int)[hexString length] / 2 + 1);
     bzero(myBuffer, [hexString length] / 2 + 1);
-    for (int i = 0; i < [hexString length] - 1; i += 2)
-    {
+    for (int i = 0; i < [hexString length] - 1; i += 2) {
         unsigned int anInt;
         NSString * hexCharStr = [hexString substringWithRange:NSMakeRange(i, 2)];
         NSScanner * scanner = [[NSScanner alloc] initWithString:hexCharStr];
@@ -137,20 +127,31 @@
 }
 
 /*!
- *  字典转 json
+ *  obj 转 json
  *
- *  @param dictionary 传入的字典
+ *  @param id 传入的 obj
  *
  *  @return 返回 json 字符串
  */
-+ (NSString *)ba_stringJsonTurnWithDictionary:(NSDictionary *)dictionary
-{
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
++ (NSString *)ba_stringToJsonWithObj:(id)obj {
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString;
+    if (!jsonData) {
+        NSLog(@"字典转json出错,返回空字符串---%@",error);
+        return @"";
+    } else {
+        jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
+    NSRange range = {0,jsonString.length};
+    //去掉字符串中的空格
+    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+    NSRange range2 = {0,mutStr.length};
+    //去掉字符串中的换行符
+    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
     
-    NSString *jsonStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    NSLog(@"字典转 json：%@！", jsonStr);
-    
-    return jsonStr;
+    return mutStr;
 }
 
 /**
@@ -159,8 +160,7 @@
  @param string string
  @return string 的长度
  */
-+ (NSUInteger)ba_stringGetLengthOfString:(NSString*)string
-{
++ (NSUInteger)ba_stringGetLengthOfString:(NSString*)string {
     NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     NSData *data = [string dataUsingEncoding:enc];
     return [data length];
@@ -174,16 +174,58 @@
  @return 重复后的 string
  */
 + (NSString *)ba_stringWithNeedRepeatString:(NSString *)repeatString
-                                repeatCount:(NSInteger)repeatCount
-{
+                                repeatCount:(NSInteger)repeatCount {
     NSMutableString *String = [NSMutableString new];
-    for (int i = 0; i < repeatCount; i++)
-    {
+    for (int i = 0; i < repeatCount; i++) {
         [String appendString:repeatString];
     }
     return String;
 }
 
++ (NSString *)ba_getNumberFromStr:(NSString *)str {
+    NSCharacterSet *nonDigitCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    return[[str componentsSeparatedByCharactersInSet:nonDigitCharacterSet] componentsJoinedByString:@""];
+    
+}
 
++ (NSInteger)ba_scanNumFromVersionString:(NSString *)versionString maxLength:(NSInteger)maxLength {
+    NSString *numberString = [NSString ba_getNumberFromStr:versionString];
+    if (numberString.length < maxLength) {
+        NSString *a = @"";
+        NSInteger b = maxLength - numberString.length;
+        for (NSInteger i = 0; i < b; ++i) {
+            a = [a stringByAppendingString:@"0"];
+        }
+        numberString = [numberString stringByAppendingString:a];
+    }
+    NSInteger number = numberString.intValue;
+    
+    return number;
+}
+
+- (NSString *)ba_stringByURLEncode {
+    NSString *url = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,                                                                  (CFStringRef)self, (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",NULL, kCFStringEncodingUTF8));
+    return url;
+}
+
+- (NSString *)ba_stringByURLDecode {
+    if ([self respondsToSelector:@selector(stringByRemovingPercentEncoding)]) {
+        return [self stringByRemovingPercentEncoding];
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        CFStringEncoding en = CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding);
+        NSString *decoded = [self stringByReplacingOccurrencesOfString:@"+"
+                                                            withString:@" "];
+        decoded = (__bridge_transfer NSString *)
+        CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
+                                                                NULL,
+                                                                (__bridge CFStringRef)decoded,
+                                                                CFSTR(""),
+                                                                en);
+        return decoded;
+#pragma clang diagnostic pop
+    }
+}
 
 @end

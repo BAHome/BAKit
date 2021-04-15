@@ -84,27 +84,30 @@ typedef void (^BAKit_UIViewLayoutSubViewsBlock)(UIView *view);
 + (UIView *)ba_viewCreatWithFrame:(CGRect)frame
                   backgroundColor:(UIColor *)backgroundColor;
 
+
+- (void)ba_viewSetSystemCornerRadius:(CGFloat)cornerRadius;
+
 /**
- UIView：快速设置 view 的边框【系统方法】
- 
- @param color 边框颜色
- @param cornerRadius 边框角度
- @param width 边框线宽度
- */
-- (void)ba_viewSetSystemBorderWithColor:(UIColor *)color
-                           cornerRadius:(CGFloat)cornerRadius
-                                  width:(CGFloat)width;
+UIView：快速设置 view 的边框【系统方法】
+
+@param borderColor 边框颜色
+@param cornerRadius 边框角度
+@param borderWidth 边框线宽度
+*/
+- (void)ba_viewSetSystemCornerRadius:(CGFloat)cornerRadius
+                         borderColor:(UIColor *)borderColor
+                         borderWidth:(CGFloat)borderWidth;
 
 /**
  UIView：快速设置 view 的边框【自定义】
  
- @param color 边框颜色
+ @param borderColor 边框颜色
  @param cornerRadius 边框角度
- @param width 边框线宽度
+ @param borderWidth 边框线宽度
  */
-- (void)ba_viewSetBorderWithColor:(UIColor *)color
-                     cornerRadius:(CGFloat)cornerRadius
-                            width:(CGFloat)width;
+- (void)ba_viewSetCornerRadius:(CGFloat)cornerRadius
+                   borderColor:(UIColor *)borderColor
+                   borderWidth:(CGFloat)borderWidth;
 
 /**
  UIView：删除边框
@@ -229,3 +232,29 @@ typedef void (^BAKit_UIViewLayoutSubViewsBlock)(UIView *view);
 
 @end
 
+// 渐变色
+
+@interface UIView (WBGradient)
+
+@property(nullable, copy) NSArray *ba_colors;
+
+@property(nullable, copy) NSArray<NSNumber *> *ba_locations;
+
+@property CGPoint ba_startPoint;
+@property CGPoint ba_endPoint;
+
++ (UIView *_Nullable)ba_gradientViewWithColors:(NSArray<UIColor *> *_Nullable)colors
+                                     locations:(NSArray<NSNumber *> *_Nullable)locations
+                                    startPoint:(CGPoint)startPoint
+                                      endPoint:(CGPoint)endPoint;
+
+- (void)ba_setGradientBackgroundWithColors:(NSArray<UIColor *> *_Nullable)colors
+                                 locations:(NSArray<NSNumber *> *_Nullable)locations
+                                startPoint:(CGPoint)startPoint
+                                  endPoint:(CGPoint)endPoint;
+
+- (void)ba_setGradientBackgroundWithCGColors:(NSArray<UIColor *> *_Nullable)colors
+                                   locations:(NSArray<NSNumber *> *_Nullable)locations
+                                  startPoint:(CGPoint)startPoint
+                                    endPoint:(CGPoint)endPoint;
+@end

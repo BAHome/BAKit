@@ -18,6 +18,31 @@
 
 @implementation DoraemonAppInfoUtil
 
++ (NSString *)iphoneName
+{
+    return [UIDevice currentDevice].name;
+}
+
++ (NSString *)iphoneSystemVersion
+{
+    return [UIDevice currentDevice].systemVersion;
+}
+
++ (NSString *)bundleIdentifier
+{
+    return [[NSBundle mainBundle] bundleIdentifier];
+}
+
++ (NSString *)bundleVersion
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+}
+
++ (NSString *)bundleShortVersionString
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
+
 + (NSString *)iphoneType{
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -73,6 +98,14 @@
     }
     
     return iPhoneXSeries;
+}
+
++ (BOOL)isIpad{
+    NSString *deviceType = [UIDevice currentDevice].model;
+    if ([deviceType isEqualToString:@"iPad"]) {
+        return YES;
+    }
+    return NO;
 }
 
 + (NSString *)locationAuthority{
@@ -316,4 +349,16 @@
 }
 
 
+
+#pragma mark 设备是否模拟器
++ (NSString *)deviceIdentifier {
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    return [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+}
+
++ (BOOL)isSimulator {
+    NSString *identifier = [self deviceIdentifier];
+    return [identifier isEqualToString:@"i386"] || [identifier isEqualToString:@"x86_64"];
+}
 @end

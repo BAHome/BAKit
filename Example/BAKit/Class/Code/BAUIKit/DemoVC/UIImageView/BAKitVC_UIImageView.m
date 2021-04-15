@@ -23,8 +23,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.dataArray = [self.mutableDataArray mutableCopy];
     
     self.tableView.backgroundColor = BAKit_Color_Gray_11;
@@ -33,8 +32,7 @@
     self.ba_tabelViewDidSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath, BABaseListViewSectionModel *model) {
         BAKit_StrongSelf
         UIViewController *vc;
-        if (indexPath.row == 0)
-        {
+        if (indexPath.row == 0) {
             vc = [ImageViewAnimationVC new];
         }
         
@@ -43,10 +41,8 @@
     };
 }
 
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[
                         @"汤姆猫动画"
                         ];
@@ -54,15 +50,12 @@
     return _titleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
-        for (NSInteger i = 0; i < sectionTitleArray.count; i++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

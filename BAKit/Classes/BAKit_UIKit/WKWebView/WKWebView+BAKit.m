@@ -32,8 +32,7 @@
  @param uIDelegate uIDelegate
  */
 - (void)ba_web_initWithDelegate:(id<WKNavigationDelegate>)navigationDelegate
-                     uIDelegate:(id<WKUIDelegate>)uIDelegate
-{
+                     uIDelegate:(id<WKUIDelegate>)uIDelegate {
     self.navigationDelegate = navigationDelegate;
     self.UIDelegate = uIDelegate;
     self.webViewHeigt = 0.f;
@@ -64,27 +63,23 @@
 //    return self;
 //}
 
-- (void)ba_web_dealloc
-{
+- (void)ba_web_dealloc {
     [self ba_removeNoti];
 }
 
-- (void)ba_removeNoti
-{
+- (void)ba_removeNoti {
 //    NSLog(@"%s",__FUNCTION__);
 
     [self removeObserver:self forKeyPath:kBAKit_WK_title];
     [self removeObserver:self forKeyPath:kBAKit_WK_estimatedProgress];
     [self removeObserver:self forKeyPath:kBAKit_WK_URL];
-    if ( self.ba_web_isAutoHeight )
-    {
+    if ( self.ba_web_isAutoHeight ) {
         [self.scrollView removeObserver:self forKeyPath:kBAKit_WK_contentSize];
     }
 }
 
 #pragma mark - 添加对 WKWebView 属性的监听
-- (void)ba_web_addNoti
-{
+- (void)ba_web_addNoti {
     // 获取页面标题
     [self addObserver:self
                    forKeyPath:kBAKit_WK_title
@@ -107,72 +102,54 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary<NSString *,id> *)change
-                       context:(void *)context
-{
-    if ([keyPath isEqualToString:kBAKit_WK_title])
-    {
-        if (self.ba_web_getTitleBlock)
-        {
+                       context:(void *)context {
+    if ([keyPath isEqualToString:kBAKit_WK_title]) {
+        if (self.ba_web_getTitleBlock) {
             self.ba_web_getTitleBlock(self.title);
         }
-        if (self.ba_web_getCurrentUrlBlock)
-        {
+        if (self.ba_web_getCurrentUrlBlock) {
             self.ba_web_getCurrentUrlBlock(self.URL);
         }
-    }
-    else if ([keyPath isEqualToString:kBAKit_WK_estimatedProgress])
-    {
+    } else if ([keyPath isEqualToString:kBAKit_WK_estimatedProgress]) {
         // estimatedProgress：加载进度，范围：0.0f ~ 1.0f
 //        NSLog(@"progress: %f", self.estimatedProgress);
-        if (self.ba_web_isLoadingBlock)
-        {
+        if (self.ba_web_isLoadingBlock) {
             self.ba_web_isLoadingBlock(self.loading, self.estimatedProgress);
         }
-    }
-    else if ([keyPath isEqualToString:kBAKit_WK_URL])
-    {
+    } else if ([keyPath isEqualToString:kBAKit_WK_URL]) {
         NSURL *newUrl = [change objectForKey:NSKeyValueChangeNewKey];
         NSURL *oldUrl = [change objectForKey:NSKeyValueChangeOldKey];
         if (![newUrl isKindOfClass:[NSURL class]] && [oldUrl isKindOfClass:[NSURL class]]) {
 //            [self reload];
         };
-    }
-    else if ( [keyPath isEqualToString:kBAKit_WK_contentSize] && [object isEqual:self.scrollView] )
-    {
+    } else if ( [keyPath isEqualToString:kBAKit_WK_contentSize] && [object isEqual:self.scrollView] ) {
         __block CGFloat height = floorf([change[NSKeyValueChangeNewKey] CGSizeValue].height);
         
-        if ( height != self.webViewHeigt )
-        {
+        if ( height != self.webViewHeigt ) {
             self.webViewHeigt = height;
             
             CGRect frame = self.frame;
             frame.size.height = height;
             self.frame = frame;
             
-            if ( self.ba_web_getCurrentHeightBlock )
-            {
+            if ( self.ba_web_getCurrentHeightBlock ) {
                 self.ba_web_getCurrentHeightBlock(height);
             }
-        }
-        else if ( height == self.webViewHeigt && height > 0.f )
-        {
+        } else if ( height == self.webViewHeigt && height > 0.f ) {
             
         }
     }
     
     // 加载完成
-    if (!self.loading)
-    {
-        if (self.ba_web_isLoadingBlock)
-        {
+    if (!self.loading) {
+        if (self.ba_web_isLoadingBlock) {
             self.ba_web_isLoadingBlock(self.loading, 1.0F);
         }
     }
 }
 
 #ifndef NSFoundationVersionNumber_iOS_9_0
-- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView NS_AVAILABLE(10_11, 9_0)
-{
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView NS_AVAILABLE(10_11, 9_0) {
     NSLog(@"进程被终止 %@",webView.URL);
 //    [webView reload];
 }
@@ -181,8 +158,7 @@
 #endif
 
 #pragma mark - custom Mothed
-- (BOOL)ba_externalAppRequiredToOpenURL:(NSURL *)url
-{
+- (BOOL)ba_externalAppRequiredToOpenURL:(NSURL *)url {
     // 若需要限制只允许某些前缀的scheme通过请求，则取消下述注释，并在数组内添加自己需要放行的前缀
     //    NSSet *validSchemes = [NSSet setWithArray:@[@"http", @"https",@"file"]];
     //    return ![validSchemes containsObject:URL.scheme];
@@ -218,23 +194,19 @@
  *  @param userContentController  webview中配置的userContentController 信息
  *  @param message                JS执行传递的消息
  */
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
-{
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     // 这里可以通过 name 处理多组交互
     // body 只支持 NSNumber, NSString, NSDate, NSArray,NSDictionary 和 NSNull 类型
 //    NSLog(@"JS 中 message Body ：%@",message.body);
     
-    if (self.ba_web_userContentControllerDidReceiveScriptMessageBlock)
-    {
+    if (self.ba_web_userContentControllerDidReceiveScriptMessageBlock) {
         self.ba_web_userContentControllerDidReceiveScriptMessageBlock(userContentController, message);
     }
 }
 
 #pragma mark - WKUIDelegate
-- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
-{
-    if (!navigationAction.targetFrame.isMainFrame)
-    {
+- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
+    if (!navigationAction.targetFrame.isMainFrame) {
         [webView loadRequest:navigationAction.request];
     }
     return nil;
@@ -242,8 +214,7 @@
 
 #pragma mark = WKNavigationDelegate
 #pragma mark 这个代理方法表示当客户端收到服务器的响应头，根据 response 相关信息，可以决定这次跳转是否可以继续进行。在发送请求之前，决定是否跳转，如果不添加这个，那么 wkwebview 跳转不了 AppStore 和 打电话
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
-{
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 //    NSString *hostname = navigationAction.request.URL.host.lowercaseString;
 //    NSLog(@"%@",hostname);
     NSURL *url = navigationAction.request.URL;
@@ -256,27 +227,22 @@
 //    NSLog(@"URL scheme2:%@", self.ba_web_urlScheme);
 //    NSLog(@"URL query: %@", url_query);
     
-    if ([url_scheme isEqualToString:self.ba_web_urlScheme])
-    {
-        if (self.ba_web_decidePolicyForNavigationActionBlock)
-        {
+    if ([url_scheme isEqualToString:self.ba_web_urlScheme]) {
+        if (self.ba_web_decidePolicyForNavigationActionBlock) {
             self.ba_web_decidePolicyForNavigationActionBlock(url);
         }
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
     // APPStore
-    if ([url.absoluteString containsString:@"itunes.apple.com"])
-    {
+    if ([url.absoluteString containsString:@"itunes.apple.com"]) {
         [[UIApplication sharedApplication] openURL:navigationAction.request.URL];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
     // 调用电话
-    if ([url.scheme isEqualToString:@"tel"])
-    {
-        if ([BAKit_SharedApplication canOpenURL:url])
-        {
+    if ([url.scheme isEqualToString:@"tel"]) {
+        if ([BAKit_SharedApplication canOpenURL:url]) {
             [BAKit_SharedApplication openURL:url];
             decisionHandler(WKNavigationActionPolicyCancel);
             return;
@@ -288,17 +254,13 @@
 //    BOOL isMainframe = [frameInfo isMainFrame];
 //    NSLog(@"isMainframe :%d", isMainframe);
     
-    if (![self ba_externalAppRequiredToOpenURL:url])
-    {
-        if (!navigationAction.targetFrame)
-        {
+    if (![self ba_externalAppRequiredToOpenURL:url]) {
+        if (!navigationAction.targetFrame) {
             [self ba_web_loadURL:url];
             decisionHandler(WKNavigationActionPolicyCancel);
             return;
         }
-    }
-    else if ([BAKit_SharedApplication canOpenURL:url])
-    {
+    } else if ([BAKit_SharedApplication canOpenURL:url]) {
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
@@ -307,54 +269,45 @@
 }
 
 #pragma mark - 在响应完成时，调用的方法。如果设置为不允许响应，web内 容就不会传过来
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
-{
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
 #pragma mark - 接收到服务器跳转请求之后调用
-- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation
-{
+- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
     
 }
 
 #pragma mark - WKNavigationDelegate
 // 开始加载时调用
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
-{
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     webView.alpha = 0.f;
-    if (self.ba_web_didStartBlock)
-    {
+    if (self.ba_web_didStartBlock) {
         self.ba_web_didStartBlock(webView, navigation);
     }
 }
 
 // 当内容开始返回时调用
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation
-{
-    if (self.ba_web_didCommitBlock)
-    {
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
+    if (self.ba_web_didCommitBlock) {
         self.ba_web_didCommitBlock(webView, navigation);
     }
 }
 
 // 页面加载完成之后调用
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
-{
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
 
     [UIView animateWithDuration:1.f animations:^{
         webView.alpha = 1.f;
     }];
     
-    if (self.ba_web_didFinishBlock)
-    {
+    if (self.ba_web_didFinishBlock) {
         self.ba_web_didFinishBlock(webView, navigation);
     }
     
     NSString *heightString4 = @"document.body.scrollHeight";
 
-    if (self.ba_web_getCurrentHeightBlock && !self.ba_web_isAutoHeight)
-    {
+    if (self.ba_web_getCurrentHeightBlock && !self.ba_web_isAutoHeight) {
         // webView 高度自适应
         [self ba_web_stringByEvaluateJavaScript:heightString4 completionHandler:^(id _Nullable result, NSError * _Nullable error) {
             // 获取页面高度，并重置 webview 的 frame
@@ -373,10 +326,8 @@
 }
 
 // 页面加载失败时调用
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation
-{
-    if (self.ba_web_didFailBlock)
-    {
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation {
+    if (self.ba_web_didFailBlock) {
         self.ba_web_didFailBlock(webView, navigation);
     }
 }
@@ -385,10 +336,8 @@
 /**
  *  返回上一级页面
  */
-- (void)ba_web_goBack
-{
-    if (self.canGoBack)
-    {
+- (void)ba_web_goBack {
+    if (self.canGoBack) {
         [self goBack];
     }
 }
@@ -396,10 +345,8 @@
 /**
  *  进入下一级页面
  */
-- (void)ba_web_goForward
-{
-    if (self.canGoForward)
-    {
+- (void)ba_web_goForward {
+    if (self.canGoForward) {
         [self goForward];
     }
 }
@@ -407,8 +354,7 @@
 /**
  *  刷新 webView
  */
-- (void)ba_web_reload
-{
+- (void)ba_web_reload {
     [self reload];
 }
 
@@ -417,8 +363,7 @@
  *
  *  @param request 请求的 NSURL URLRequest
  */
-- (void)ba_web_loadRequest:(NSURLRequest *)request
-{
+- (void)ba_web_loadRequest:(NSURLRequest *)request {
     [self loadRequest:request];
 //    [self ba_web_addNoti];
 }
@@ -428,8 +373,7 @@
  *
  *  @param URL 请求的 URL
  */
-- (void)ba_web_loadURL:(NSURL *)URL
-{
+- (void)ba_web_loadURL:(NSURL *)URL {
     [self ba_web_loadRequest:[NSURLRequest requestWithURL:URL]];
 }
 
@@ -438,8 +382,7 @@
  *
  *  @param URLString 请求的 URLString
  */
-- (void)ba_web_loadURLString:(NSString *)URLString
-{
+- (void)ba_web_loadURLString:(NSString *)URLString {
     [self ba_web_loadURL:[NSURL URLWithString:URLString]];
 }
 
@@ -448,8 +391,7 @@
  *
  *  @param htmlName 请求的本地 HTML 文件名
  */
-- (void)ba_web_loadHTMLFileName:(NSString *)htmlName
-{
+- (void)ba_web_loadHTMLFileName:(NSString *)htmlName {
     /*! 一定要记得这一步，要不然本地的图片加载不出来 */
 //    NSString *basePath = [[NSBundle mainBundle] bundlePath];
 //    NSURL *baseURL = [NSURL fileURLWithPath:basePath];
@@ -461,10 +403,8 @@
 //    NSString *HTMLString = [NSString stringWithContentsOfFile:htmlPath
 //                                                     encoding:NSUTF8StringEncoding
 //                                                        error:nil];
-    if (htmlPath)
-    {
-        if (BAKit_IOS_VERSION >= 9.0)
-        {
+    if (htmlPath) {
+        if (BAKit_IOS_VERSION >= 9.0) {
             NSURL *fileURL = [NSURL fileURLWithPath:htmlPath];
             [self loadFileURL:fileURL allowingReadAccessToURL:fileURL];
         } else {
@@ -482,8 +422,7 @@
  *
  *  @param htmlString 请求的本地 htmlString
  */
-- (void)ba_web_loadHTMLString:(NSString *)htmlString
-{
+- (void)ba_web_loadHTMLString:(NSString *)htmlString {
     /*! 一定要记得这一步，要不然本地的图片加载不出来 */
     NSString *basePath = [[NSBundle mainBundle] bundlePath];
     NSURL *baseURL = [NSURL fileURLWithPath:basePath];
@@ -497,8 +436,7 @@
  *
  *  @param javaScriptString js 字符串
  */
-- (void)ba_web_stringByEvaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^ _Nullable)(_Nullable id result, NSError * _Nullable error))completionHandler
-{
+- (void)ba_web_stringByEvaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^ _Nullable)(_Nullable id result, NSError * _Nullable error))completionHandler {
     [self evaluateJavaScript:javaScriptString completionHandler:completionHandler];
 }
 
@@ -507,10 +445,8 @@
  
  @param nameArray JS 里发送 postMessage 的对象数组，可同时添加多个对象
  */
-- (void)ba_web_addScriptMessageHandlerWithNameArray:(NSArray *)nameArray
-{
-    if ([nameArray isKindOfClass:[NSArray class]] && nameArray.count > 0)
-    {
+- (void)ba_web_addScriptMessageHandlerWithNameArray:(NSArray *)nameArray {
+    if ([nameArray isKindOfClass:[NSArray class]] && nameArray.count > 0) {
         [nameArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [self.configuration.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:obj];
         }];
@@ -518,8 +454,7 @@
 }
 
 // 将文件copy到tmp目录
-- (NSURL *)ba_fileURLForBuggyWKWebView8:(NSURL *)fileURL
-{
+- (NSURL *)ba_fileURLForBuggyWKWebView8:(NSURL *)fileURL {
     NSError *error = nil;
     if (!fileURL.fileURL || ![fileURL checkResourceIsReachableAndReturnError:&error]) {
         return nil;
@@ -541,8 +476,7 @@
 
 #pragma mark - setter / getter
 
-+ (void)load
-{
++ (void)load {
 //    BAKit_Objc_exchangeMethodAToB(NSSelectorFromString(@"init"), @selector(ba_web_init));
 //    BAKit_Objc_exchangeMethodAToB(NSSelectorFromString(@"initWithFrame"), @selector(ba_web_initWithFrame));
     BAKit_Objc_exchangeMethodAToB(NSSelectorFromString(@"dealloc"),
@@ -550,22 +484,18 @@
 
 }
 
-- (void)setWebViewHeigt:(CGFloat)webViewHeigt
-{
+- (void)setWebViewHeigt:(CGFloat)webViewHeigt {
     BAKit_Objc_setObj(@selector(webViewHeigt), @(webViewHeigt));
 }
 
-- (CGFloat)webViewHeigt
-{
+- (CGFloat)webViewHeigt {
     return [BAKit_Objc_getObj floatValue];
 }
 
-- (void)setBa_web_isAutoHeight:(BOOL)ba_web_isAutoHeight
-{
+- (void)setBa_web_isAutoHeight:(BOOL)ba_web_isAutoHeight {
     BAKit_Objc_setObj(@selector(ba_web_isAutoHeight), @(ba_web_isAutoHeight));
     
-    if ( ba_web_isAutoHeight )
-    {
+    if ( ba_web_isAutoHeight ) {
         // 监听高度变化
         [self.scrollView addObserver:self
                           forKeyPath:kBAKit_WK_contentSize
@@ -578,123 +508,99 @@
     return [BAKit_Objc_getObj boolValue];
 }
 
-- (BOOL)ba_web_canGoBack
-{
+- (BOOL)ba_web_canGoBack {
     return [self canGoBack];
 }
                       
-- (BOOL)ba_web_canGoForward
-{
+- (BOOL)ba_web_canGoForward {
     return [self canGoForward];
 }
 
-- (void)setBa_web_didStartBlock:(BAKit_webView_didStartProvisionalNavigationBlock)ba_web_didStartBlock
-{
+- (void)setBa_web_didStartBlock:(BAKit_webView_didStartProvisionalNavigationBlock)ba_web_didStartBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_didStartBlock), ba_web_didStartBlock);
 }
 
-- (BAKit_webView_didStartProvisionalNavigationBlock)ba_web_didStartBlock
-{
+- (BAKit_webView_didStartProvisionalNavigationBlock)ba_web_didStartBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_didCommitBlock:(BAKit_webView_didCommitNavigationBlock)ba_web_didCommitBlock
-{
+- (void)setBa_web_didCommitBlock:(BAKit_webView_didCommitNavigationBlock)ba_web_didCommitBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_didCommitBlock), ba_web_didCommitBlock);
 }
 
-- (BAKit_webView_didCommitNavigationBlock)ba_web_didCommitBlock
-{
+- (BAKit_webView_didCommitNavigationBlock)ba_web_didCommitBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_didFinishBlock:(BAKit_webView_didFinishNavigationBlock)ba_web_didFinishBlock
-{
+- (void)setBa_web_didFinishBlock:(BAKit_webView_didFinishNavigationBlock)ba_web_didFinishBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_didFinishBlock), ba_web_didFinishBlock);
 }
 
-- (BAKit_webView_didFinishNavigationBlock)ba_web_didFinishBlock
-{
+- (BAKit_webView_didFinishNavigationBlock)ba_web_didFinishBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_didFailBlock:(BAKit_webView_didFailProvisionalNavigationBlock)ba_web_didFailBlock
-{
+- (void)setBa_web_didFailBlock:(BAKit_webView_didFailProvisionalNavigationBlock)ba_web_didFailBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_didFailBlock), ba_web_didFailBlock);
 }
 
-- (BAKit_webView_didFailProvisionalNavigationBlock)ba_web_didFailBlock
-{
+- (BAKit_webView_didFailProvisionalNavigationBlock)ba_web_didFailBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_isLoadingBlock:(BAKit_webView_isLoadingBlock)ba_web_isLoadingBlock
-{
+- (void)setBa_web_isLoadingBlock:(BAKit_webView_isLoadingBlock)ba_web_isLoadingBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_isLoadingBlock), ba_web_isLoadingBlock);
 }
 
-- (BAKit_webView_isLoadingBlock)ba_web_isLoadingBlock
-{
+- (BAKit_webView_isLoadingBlock)ba_web_isLoadingBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_getTitleBlock:(BAKit_webView_getTitleBlock)ba_web_getTitleBlock
-{
+- (void)setBa_web_getTitleBlock:(BAKit_webView_getTitleBlock)ba_web_getTitleBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_getTitleBlock), ba_web_getTitleBlock);
 }
 
-- (BAKit_webView_getTitleBlock)ba_web_getTitleBlock
-{
+- (BAKit_webView_getTitleBlock)ba_web_getTitleBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_userContentControllerDidReceiveScriptMessageBlock:(BAKit_webView_userContentControllerDidReceiveScriptMessageBlock)ba_web_userContentControllerDidReceiveScriptMessageBlock
-{
+- (void)setBa_web_userContentControllerDidReceiveScriptMessageBlock:(BAKit_webView_userContentControllerDidReceiveScriptMessageBlock)ba_web_userContentControllerDidReceiveScriptMessageBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_userContentControllerDidReceiveScriptMessageBlock), ba_web_userContentControllerDidReceiveScriptMessageBlock);
 }
 
-- (BAKit_webView_userContentControllerDidReceiveScriptMessageBlock)ba_web_userContentControllerDidReceiveScriptMessageBlock
-{
+- (BAKit_webView_userContentControllerDidReceiveScriptMessageBlock)ba_web_userContentControllerDidReceiveScriptMessageBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_decidePolicyForNavigationActionBlock:(BAKit_webView_decidePolicyForNavigationActionBlock)ba_web_decidePolicyForNavigationActionBlock
-{
+- (void)setBa_web_decidePolicyForNavigationActionBlock:(BAKit_webView_decidePolicyForNavigationActionBlock)ba_web_decidePolicyForNavigationActionBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_decidePolicyForNavigationActionBlock), ba_web_decidePolicyForNavigationActionBlock);
 }
 
-- (BAKit_webView_decidePolicyForNavigationActionBlock)ba_web_decidePolicyForNavigationActionBlock
-{
+- (BAKit_webView_decidePolicyForNavigationActionBlock)ba_web_decidePolicyForNavigationActionBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_getCurrentUrlBlock:(BAKit_webView_getCurrentUrlBlock)ba_web_getCurrentUrlBlock
-{
+- (void)setBa_web_getCurrentUrlBlock:(BAKit_webView_getCurrentUrlBlock)ba_web_getCurrentUrlBlock {
     BAKit_Objc_setObjCOPY(@selector(ba_web_getCurrentUrlBlock), ba_web_getCurrentUrlBlock);
 }
 
-- (BAKit_webView_getCurrentUrlBlock)ba_web_getCurrentUrlBlock
-{
+- (BAKit_webView_getCurrentUrlBlock)ba_web_getCurrentUrlBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_getCurrentHeightBlock:(BAKit_webView_getCurrentHeightBlock)ba_web_getCurrentHeightBlock
-{
+- (void)setBa_web_getCurrentHeightBlock:(BAKit_webView_getCurrentHeightBlock)ba_web_getCurrentHeightBlock {
     BAKit_Objc_setObj(@selector(ba_web_getCurrentHeightBlock), ba_web_getCurrentHeightBlock);
 }
 
-- (BAKit_webView_getCurrentHeightBlock)ba_web_getCurrentHeightBlock
-{
+- (BAKit_webView_getCurrentHeightBlock)ba_web_getCurrentHeightBlock {
     return BAKit_Objc_getObj;
 }
 
-- (void)setBa_web_urlScheme:(NSString *)ba_web_urlScheme
-{
+- (void)setBa_web_urlScheme:(NSString *)ba_web_urlScheme {
     BAKit_Objc_setObj(@selector(ba_web_urlScheme), ba_web_urlScheme);
 }
 
-- (NSString *)ba_web_urlScheme
-{
+- (NSString *)ba_web_urlScheme {
     return BAKit_Objc_getObj;
 }
 

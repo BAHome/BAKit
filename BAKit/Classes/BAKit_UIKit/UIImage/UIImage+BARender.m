@@ -22,8 +22,7 @@
  @param imageName 图片名称
  @return 不被渲染的图片
  */
-+ (UIImage *)ba_imageNamedWithOriginal:(NSString *)imageName
-{
++ (UIImage *)ba_imageNamedWithOriginal:(NSString *)imageName {
     UIImage *image = [UIImage imageNamed:imageName] ;
     [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] ;
     return image ;
@@ -35,8 +34,7 @@
  @param image 传入需要裁剪成圆形的图片
  @return 返回裁剪好的圆形图片
  */
-+ (UIImage *)ba_imageToRoundImageWithImage:(UIImage *)image
-{
++ (UIImage *)ba_imageToRoundImageWithImage:(UIImage *)image {
     if (!image)return nil;
     
     /*! 1、开启位图上下文 */
@@ -71,8 +69,7 @@
  */
 + (UIImage *)ba_imageWithBorderW:(CGFloat)borderW
                      borderColor:(UIColor *)color
-                           image:(UIImage *)image
-{
+                           image:(UIImage *)image {
     if (!image) return nil;
     
     /*! 1.生成一张图片,开启一个位图上下文(大小,图片的宽高 + 2 * 边框宽度) */
@@ -112,8 +109,7 @@
  */
 + (UIImage *)ba_imageToChangeCellNormalImageViewSizeWithCell:(UITableViewCell *)cell
                                                        image:(UIImage *)image
-                                                   imageSize:(CGSize)imageSize
-{
+                                                   imageSize:(CGSize)imageSize {
     
     UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0.0);
     CGRect imageRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
@@ -134,15 +130,18 @@
  */
 + (UIImage *)ba_imageToChangeCellRoundImageViewSizeWithCell:(UITableViewCell *)cell
                                                       image:(UIImage *)image
-                                                  imageSize:(CGSize)imageSize
-{
+                                                  imageSize:(CGSize)imageSize {
+//    UIImage *roundImage = [UIImage ba_imageToRoundImageWithImage:image];
+//    UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0.0);
+//    CGRect imageRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
+//    [roundImage drawInRect:imageRect];
+//    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//
+//    BAKit_CFAbsoluteTime_start
     UIImage *roundImage = [UIImage ba_imageToRoundImageWithImage:image];
-    UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0.0);
-    CGRect imageRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
-    [roundImage drawInRect:imageRect];
-    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
+    cell.imageView.image = roundImage;
+//    BAKit_CFAbsoluteTime_end
     return cell.imageView.image;
 }
 
@@ -153,8 +152,7 @@
  *
  *  @return 根据图片url获取图片尺寸
  */
-+ (CGSize)ba_imageGetImageSizeWithURL:(id)imageURL
-{
++ (CGSize)ba_imageGetImageSizeWithURL:(id)imageURL {
     NSURL* URL = nil;
     if([imageURL isKindOfClass:[NSURL class]]){
         URL = imageURL;
@@ -169,28 +167,19 @@
     NSString* pathExtendsion = [URL.pathExtension lowercaseString];
     
     CGSize size = CGSizeZero;
-    if([pathExtendsion isEqualToString:@"png"])
-    {
+    if([pathExtendsion isEqualToString:@"png"]) {
         size = [self ba_imageGetPNGImageSizeWithRequest:request];
-    }
-    else if([pathExtendsion isEqual:@"gif"])
-    {
+    } else if([pathExtendsion isEqual:@"gif"]) {
         size = [self ba_imageGetGIFImageSizeWithRequest:request];
-    }
-    else if([pathExtendsion isEqual:@"jpeg"])
-    {
+    } else if([pathExtendsion isEqual:@"jpeg"]) {
         size = [self ba_imageGetJPEGImageSizeWithRequest:request];
-    }
-    else
-    {
+    } else {
         size = [self ba_imageGetJPGImageSizeWithRequest:request];
     }
-    if(CGSizeEqualToSize(CGSizeZero, size))                    // 如果获取文件头信息失败,发送异步请求请求原图
-    {
+    if(CGSizeEqualToSize(CGSizeZero, size)) { // 如果获取文件头信息失败,发送异步请求请求原图
         NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:URL] returningResponse:nil error:nil];
         UIImage *image = [UIImage imageWithData:data];
-        if(image)
-        {
+        if(image) {
             size = image.size;
         }
     }
@@ -204,12 +193,10 @@
  *
  *  @return 获取PNG图片的大小
  */
-+ (CGSize)ba_imageGetPNGImageSizeWithRequest:(NSMutableURLRequest*)request
-{
++ (CGSize)ba_imageGetPNGImageSizeWithRequest:(NSMutableURLRequest*)request {
     [request setValue:@"bytes=16-23" forHTTPHeaderField:@"Range"];
     NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    if(data.length == 8)
-    {
+    if(data.length == 8) {
         int w1 = 0, w2 = 0, w3 = 0, w4 = 0;
         [data getBytes:&w1 range:NSMakeRange(0, 1)];
         [data getBytes:&w2 range:NSMakeRange(1, 1)];
@@ -234,12 +221,10 @@
  *
  *  @return 获取gif图片的大小
  */
-+ (CGSize)ba_imageGetGIFImageSizeWithRequest:(NSMutableURLRequest*)request
-{
++ (CGSize)ba_imageGetGIFImageSizeWithRequest:(NSMutableURLRequest*)request {
     [request setValue:@"bytes=6-9" forHTTPHeaderField:@"Range"];
     NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    if(data.length == 4)
-    {
+    if(data.length == 4) {
         short w1 = 0, w2 = 0;
         [data getBytes:&w1 range:NSMakeRange(0, 1)];
         [data getBytes:&w2 range:NSMakeRange(1, 1)];
@@ -260,13 +245,11 @@
  *
  *  @return 获取jpg图片的大小
  */
-+ (CGSize)ba_imageGetJPGImageSizeWithRequest:(NSMutableURLRequest*)request
-{
++ (CGSize)ba_imageGetJPGImageSizeWithRequest:(NSMutableURLRequest*)request {
     [request setValue:@"bytes=0-209" forHTTPHeaderField:@"Range"];
     NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     
-    if ([data length] <= 0x58)
-    {
+    if ([data length] <= 0x58) {
       return CGSizeZero;
     }
     
@@ -324,8 +307,7 @@
     NSURL *URL = nil;
     NSString *imgUrl = request.URL.relativeString;
     
-    if (![imgUrl containsString:@"@"])
-    {
+    if (![imgUrl containsString:@"@"]) {
         imgUrl = [imgUrl stringByAppendingString:@"@100p"];
     }
     URL = [NSURL URLWithString:imgUrl];
@@ -344,8 +326,7 @@
  *
  *  @return return value description
  */
-- (UIImage *)ba_imageScaleToWidth:(CGFloat)width
-{
+- (UIImage *)ba_imageScaleToWidth:(CGFloat)width {
 //    // 如果传入的宽度比当前宽度还要大,就直接返回
 //    if (width > self.size.width)
 //    {
@@ -385,26 +366,19 @@
     CGFloat scaledHeight = targetHeight;
     CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
     
-    if (CGSizeEqualToSize(imageSize, size) == NO)
-    {
+    if (CGSizeEqualToSize(imageSize, size) == NO) {
         CGFloat widthFactor = targetWidth / old_width;
         CGFloat heightFactor = targetHeight / old_height;
-        if(widthFactor > heightFactor)
-        {
+        if(widthFactor > heightFactor) {
             scaleFactor = widthFactor;
-        }
-        else
-        {
+        } else {
             scaleFactor = heightFactor;
         }
         scaledWidth = old_width * scaleFactor;
         scaledHeight = old_height * scaleFactor;
-        if(widthFactor > heightFactor)
-        {
+        if(widthFactor > heightFactor) {
             thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
-        }
-        else if (widthFactor < heightFactor)
-        {
+        } else if (widthFactor < heightFactor) {
             thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
         }
     }
@@ -425,140 +399,163 @@
     return newImage;
 }
 
-/*!
- *  通过图片Data数据第一个字节 来获取图片扩展名
- *
- *  @param imageURL description
- *
- *  @return 通过图片Data数据第一个字节 来获取图片扩展名
- */
-//+ (BAKit_BAKit_ImageType)ba_imageGetContentTypeWihtImageURL:(id)imageURL
-//{
-//    NSURL *URL = nil;
-//    if([imageURL isKindOfClass:[NSURL class]])
-//    {
-//        URL = imageURL;
-//    }
-//    if([imageURL isKindOfClass:[NSString class]])
-//    {
-//        URL = [NSURL URLWithString:imageURL];
-//    }
-//    if(URL == nil) BAKit_ShowAlertWithMsg(@"url 为空！");
-//
-//    if ([BAKit_Helper ba_helperURLIsMp4WithUrl:imageURL])
-//    {
-//        return BAKit_BAKit_ImageTypeMp4;
-//    }
-//    NSData *data = [NSData dataWithContentsOfURL:URL];
-//    uint8_t c;
-//    [data getBytes:&c length:1];
-//    switch (c) {
-//        case 0xFF:
-//            return BAKit_BAKit_ImageTypeJpeg;
-////            return @"jpeg";
-//        case 0x89:
-//            return BAKit_BAKit_ImageTypePng;
-////            return @"png";
-//        case 0x47:
-//            return BAKit_BAKit_ImageTypeGif;
-////            return @"gif";
-//        case 0x49:
-//        case 0x4D:
-//            return BAKit_BAKit_ImageTypeTiff;
-////            return @"tiff";
-//        case 0x52:
-//            if ([data length] < 12) {
-//                return nil;
-//            }
-//            NSString *testString = [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(0, 12)] encoding:NSASCIIStringEncoding];
-//            if ([testString hasPrefix:@"RIFF"] && [testString hasSuffix:@"WEBP"]) {
-//                return BAKit_BAKit_ImageTypeWebp;
-////                return @"webp";
-//            }
-//            return nil;
-//    }
-//    return nil;
-//}
+#pragma mark - 图片压缩
++ (NSData *)ba_resetSizeOfSourceImage:(UIImage *)sourceImage maxSize:(NSInteger)maxSize {
+    //先判断当前质量是否满足要求，不满足再进行压缩
+    __block NSData *finallImageData = UIImageJPEGRepresentation(sourceImage,1.0);
+    NSUInteger sizeOrigin   = finallImageData.length;
+    NSUInteger sizeOriginKB = sizeOrigin / 1024;
+    
+    if (sizeOriginKB <= maxSize) {
+        return finallImageData;
+    }
+    
+    //获取原图片宽高比
+    CGFloat sourceImageAspectRatio = sourceImage.size.width/sourceImage.size.height;
+    //先调整分辨率
+    CGSize defaultSize = CGSizeMake(1024, 1024/sourceImageAspectRatio);
+    UIImage *newImage = [self ba_newSizeImage:defaultSize image:sourceImage];
+    
+    finallImageData = UIImageJPEGRepresentation(newImage,1.0);
+    
+    //保存压缩系数
+    NSMutableArray *compressionQualityArr = [NSMutableArray array];
+    CGFloat avg   = 1.0/250;
+    CGFloat value = avg;
+    for (int i = 250; i >= 1; i--) {
+        value = i*avg;
+        [compressionQualityArr addObject:@(value)];
+    }
+    
+    /*
+     调整大小
+     说明：压缩系数数组compressionQualityArr是从大到小存储。
+     */
+    //思路：使用二分法搜索
+    finallImageData = [self halfFuntion:compressionQualityArr image:newImage sourceData:finallImageData maxSize:maxSize];
+    //如果还是未能压缩到指定大小，则进行降分辨率
+    while (finallImageData.length == 0) {
+        //每次降100分辨率
+        CGFloat reduceWidth = 100.0;
+        CGFloat reduceHeight = 100.0/sourceImageAspectRatio;
+        if (defaultSize.width-reduceWidth <= 0 || defaultSize.height-reduceHeight <= 0) {
+            break;
+        }
+        defaultSize = CGSizeMake(defaultSize.width-reduceWidth, defaultSize.height-reduceHeight);
+        UIImage *image = [self ba_newSizeImage:defaultSize
+                                         image:[UIImage imageWithData:UIImageJPEGRepresentation(newImage,[[compressionQualityArr lastObject] floatValue])]];
+        finallImageData = [self halfFuntion:compressionQualityArr image:image sourceData:UIImageJPEGRepresentation(image,1.0) maxSize:maxSize];
+    }
+    return finallImageData;
+}
 
-BAKit_ImageType ImageDetectType(id imageURL) {
+#pragma mark 调整图片分辨率/尺寸（等比例缩放）
++ (UIImage *)ba_newSizeImage:(CGSize)size image:(UIImage *)sourceImage {
+    CGSize newSize = CGSizeMake(sourceImage.size.width, sourceImage.size.height);
     
-    NSURL *URL = nil;
-    if([imageURL isKindOfClass:[NSURL class]])
-    {
-        URL = imageURL;
-    }
-    if([imageURL isKindOfClass:[NSString class]])
-    {
-        URL = [NSURL URLWithString:imageURL];
-        if ([BAKit_Helper ba_helperURLIsMp4WithUrl:imageURL])
-        {
-            return BAKit_ImageTypeMp4;
-        }
+    CGFloat tempHeight = newSize.height / size.height;
+    CGFloat tempWidth = newSize.width / size.width;
+    
+    if (tempWidth > 1.0 && tempWidth > tempHeight) {
+        newSize = CGSizeMake(sourceImage.size.width / tempWidth, sourceImage.size.height / tempWidth);
+    } else if (tempHeight > 1.0 && tempWidth < tempHeight) {
+        newSize = CGSizeMake(sourceImage.size.width / tempHeight, sourceImage.size.height / tempHeight);
     }
     
-    NSData *data2 = [NSData dataWithContentsOfURL:URL];
-    CFDataRef data = (__bridge CFDataRef)(data2);
+    UIGraphicsBeginImageContext(newSize);
+    [sourceImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+#pragma mark 二分法
++ (NSData *)halfFuntion:(NSArray *)arr image:(UIImage *)image sourceData:(NSData *)finallImageData maxSize:(NSInteger)maxSize {
+    NSData *tempData = [NSData data];
+    NSUInteger start = 0;
+    NSUInteger end = arr.count - 1;
+    NSUInteger index = 0;
     
-    if (!data) return BAKit_ImageTypeUnknow;
-    uint64_t length = CFDataGetLength(data);
-    if (length < 16) return BAKit_ImageTypeUnknow;
-    
-    const char *bytes = (char *)CFDataGetBytePtr(data);
-    
-    uint32_t magic4 = *((uint32_t *)bytes);
-    switch (magic4) {
-        case _FOUR_CC(0x4D, 0x4D, 0x00, 0x2A): { // big endian TIFF
-            return BAKit_ImageTypeTIFF;
-        } break;
-            
-        case _FOUR_CC(0x49, 0x49, 0x2A, 0x00): { // little endian TIFF
-            return BAKit_ImageTypeTIFF;
-        } break;
-            
-        case _FOUR_CC(0x00, 0x00, 0x01, 0x00): { // ICO
-            return BAKit_ImageTypeICO;
-        } break;
-            
-        case _FOUR_CC('i', 'c', 'n', 's'): { // ICNS
-            return BAKit_ImageTypeICNS;
-        } break;
-            
-        case _FOUR_CC('G', 'I', 'F', '8'): { // GIF
-            return BAKit_ImageTypeGIF;
-        } break;
-            
-        case _FOUR_CC(0x89, 'P', 'N', 'G'): {  // PNG
-            uint32_t tmp = *((uint32_t *)(bytes + 4));
-            if (tmp == _FOUR_CC('\r', '\n', 0x1A, '\n')) {
-                return BAKit_ImageTypePNG;
+    NSUInteger difference = NSIntegerMax;
+    while(start <= end) {
+        index = start + (end - start)/2;
+        
+        finallImageData = UIImageJPEGRepresentation(image,[arr[index] floatValue]);
+        
+        NSUInteger sizeOrigin = finallImageData.length;
+        NSUInteger sizeOriginKB = sizeOrigin / 1024;
+        NSLog(@"\n\n当前压缩的质量：%ld KB", (unsigned long)sizeOriginKB);
+        NSLog(@"\nstart：%zd\nend：%zd\nindex：%zd\n压缩系数：%lf\n\n", start, end, (unsigned long)index, [arr[index] floatValue]);
+        
+        if (sizeOriginKB > maxSize) {
+            start = index + 1;
+        } else if (sizeOriginKB < maxSize) {
+            if (maxSize-sizeOriginKB < difference) {
+                difference = maxSize-sizeOriginKB;
+                tempData = finallImageData;
             }
-        } break;
-            
-        case _FOUR_CC('R', 'I', 'F', 'F'): { // WebP
-            uint32_t tmp = *((uint32_t *)(bytes + 8));
-            if (tmp == _FOUR_CC('W', 'E', 'B', 'P')) {
-                return BAKit_ImageTypeWebP;
+            if (index<=0) {
+                break;
             }
-        } break;
+            end = index - 1;
+        } else {
+            break;
+        }
+    }
+    return tempData;
+}
+
+/**
+ *  截屏功能。via：http://stackoverflow.com/a/8017292/3825920
+ *
+ *  @return 对当前窗口截屏。（支付宝可能需要）
+ */
++ (UIImage *)ba_getCurrentScreenShot {
+    CGSize imageSize = CGSizeZero;
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
+        imageSize = [UIScreen mainScreen].bounds.size;
+    } else {
+        imageSize = CGSizeMake([UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
     }
     
-    uint16_t magic2 = *((uint16_t *)bytes);
-    switch (magic2) {
-        case _TWO_CC('B', 'A'):
-        case _TWO_CC('B', 'M'):
-        case _TWO_CC('I', 'C'):
-        case _TWO_CC('P', 'I'):
-        case _TWO_CC('C', 'I'):
-        case _TWO_CC('C', 'P'): { // BMP
-            return BAKit_ImageTypeBMP;
+    UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
+        CGContextSaveGState(context);
+        CGContextTranslateCTM(context, window.center.x, window.center.y);
+        CGContextConcatCTM(context, window.transform);
+        CGContextTranslateCTM(context, -window.bounds.size.width * window.layer.anchorPoint.x, -window.bounds.size.height * window.layer.anchorPoint.y);
+        if (orientation == UIInterfaceOrientationLandscapeLeft) {
+            CGContextRotateCTM(context, M_PI_2);
+            CGContextTranslateCTM(context, 0, -imageSize.width);
+        } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+            CGContextRotateCTM(context, -M_PI_2);
+            CGContextTranslateCTM(context, -imageSize.height, 0);
+        } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+            CGContextRotateCTM(context, M_PI);
+            CGContextTranslateCTM(context, -imageSize.width, -imageSize.height);
         }
-        case _TWO_CC(0xFF, 0x4F): { // JPEG2000
-            return BAKit_ImageTypeJPEG2000;
+        if ([window respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
+            [window drawViewHierarchyInRect:window.bounds afterScreenUpdates:YES];
+        } else {
+            [window.layer renderInContext:context];
         }
+        CGContextRestoreGState(context);
     }
-    if (memcmp(bytes,"\377\330\377",3) == 0) return BAKit_ImageTypeJPEG;
-    if (memcmp(bytes + 4, "\152\120\040\040\015", 5) == 0) return BAKit_ImageTypeJPEG2000;
-    return BAKit_ImageTypeUnknow;
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (UIImage *)ba_modifyImageToTargetSize:(CGSize)size {
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 

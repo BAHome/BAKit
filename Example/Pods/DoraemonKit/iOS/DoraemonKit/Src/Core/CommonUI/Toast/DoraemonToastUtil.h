@@ -7,10 +7,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DoraemonToastUtil : NSObject
 
-+ (void)showToast:(NSString *)text;
+typedef void (^DoraemonHandleRestartActionBlock)(void);
+typedef void (^DoraemonHandleRestartCancleActionBlock)(void);
+
+@interface DoraemonToastUtil : NSObject
 
 + (void)showToast:(NSString *)text inView:(UIView *)superView;
 
++ (void)handleRestartActionWithVC:(UIViewController *)vc
+                     restartBlock:(DoraemonHandleRestartActionBlock)restartBlock
+                      cancleBlock:(DoraemonHandleRestartCancleActionBlock)cancleBlock;
 @end

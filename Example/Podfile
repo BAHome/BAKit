@@ -8,6 +8,8 @@ inhibit_all_warnings!
 
 use_frameworks!
 
+source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
+
 target 'BAKit_Example' do
   pod 'BAKit', :path => '../'
 
@@ -17,8 +19,10 @@ target 'BAKit_Example' do
   pod 'MJRefresh'
   pod 'YYImage'
   
-  pod 'lottie-ios'
-  
+  pod 'Masonry'
+  pod 'ReactiveObjC'
+  pod 'lottie-ios', '2.5.3'
+
   pod 'AvoidCrash'
   pod 'Bugly'
   

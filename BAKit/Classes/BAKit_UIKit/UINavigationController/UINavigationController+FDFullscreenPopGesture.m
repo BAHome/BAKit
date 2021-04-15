@@ -31,8 +31,7 @@
 
 @implementation _FDFullscreenPopGestureRecognizerDelegate
 
-- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
-{
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     // Ignore when no view controller is pushed into the navigation stack.
     if (self.navigationController.viewControllers.count <= 1) {
         return NO;
@@ -70,15 +69,13 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 
 @implementation UIViewController (FDFullscreenPopGesturePrivate)
 
-+ (void)load
-{
++ (void)load {
     Method originalMethod = class_getInstanceMethod(self, @selector(viewWillAppear:));
     Method swizzledMethod = class_getInstanceMethod(self, @selector(fd_viewWillAppear:));
     method_exchangeImplementations(originalMethod, swizzledMethod);
 }
 
-- (void)fd_viewWillAppear:(BOOL)animated
-{
+- (void)fd_viewWillAppear:(BOOL)animated {
     // Forward to primary implementation.
     [self fd_viewWillAppear:animated];
     
@@ -87,13 +84,11 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     }
 }
 
-- (_FDViewControllerWillAppearInjectBlock)fd_willAppearInjectBlock
-{
+- (_FDViewControllerWillAppearInjectBlock)fd_willAppearInjectBlock {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setFd_willAppearInjectBlock:(_FDViewControllerWillAppearInjectBlock)block
-{
+- (void)setFd_willAppearInjectBlock:(_FDViewControllerWillAppearInjectBlock)block {
     objc_setAssociatedObject(self, @selector(fd_willAppearInjectBlock), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
@@ -101,16 +96,14 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 
 @implementation UINavigationController (FDFullscreenPopGesture)
 
-+ (void)load
-{
++ (void)load {
     // Inject "-pushViewController:animated:"
     Method originalMethod = class_getInstanceMethod(self, @selector(pushViewController:animated:));
     Method swizzledMethod = class_getInstanceMethod(self, @selector(fd_pushViewController:animated:));
     method_exchangeImplementations(originalMethod, swizzledMethod);
 }
 
-- (void)fd_pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
+- (void)fd_pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if (![self.interactivePopGestureRecognizer.view.gestureRecognizers containsObject:self.fd_fullscreenPopGestureRecognizer]) {
         
         // Add our own gesture recognizer to where the onboard screen edge pan gesture recognizer is attached to.
@@ -134,8 +127,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     [self fd_pushViewController:viewController animated:animated];
 }
 
-- (void)fd_setupViewControllerBasedNavigationBarAppearanceIfNeeded:(UIViewController *)appearingViewController
-{
+- (void)fd_setupViewControllerBasedNavigationBarAppearanceIfNeeded:(UIViewController *)appearingViewController {
     if (!self.fd_viewControllerBasedNavigationBarAppearanceEnabled) {
         return;
     }
@@ -158,8 +150,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     }
 }
 
-- (_FDFullscreenPopGestureRecognizerDelegate *)fd_popGestureRecognizerDelegate
-{
+- (_FDFullscreenPopGestureRecognizerDelegate *)fd_popGestureRecognizerDelegate {
     _FDFullscreenPopGestureRecognizerDelegate *delegate = objc_getAssociatedObject(self, _cmd);
 
     if (!delegate) {
@@ -171,8 +162,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     return delegate;
 }
 
-- (UIPanGestureRecognizer *)fd_fullscreenPopGestureRecognizer
-{
+- (UIPanGestureRecognizer *)fd_fullscreenPopGestureRecognizer {
     UIPanGestureRecognizer *panGestureRecognizer = objc_getAssociatedObject(self, _cmd);
 
     if (!panGestureRecognizer) {
@@ -184,8 +174,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     return panGestureRecognizer;
 }
 
-- (BOOL)fd_viewControllerBasedNavigationBarAppearanceEnabled
-{
+- (BOOL)fd_viewControllerBasedNavigationBarAppearanceEnabled {
     NSNumber *number = objc_getAssociatedObject(self, _cmd);
     if (number) {
         return number.boolValue;
@@ -194,8 +183,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     return YES;
 }
 
-- (void)setFd_viewControllerBasedNavigationBarAppearanceEnabled:(BOOL)enabled
-{
+- (void)setFd_viewControllerBasedNavigationBarAppearanceEnabled:(BOOL)enabled {
     SEL key = @selector(fd_viewControllerBasedNavigationBarAppearanceEnabled);
     objc_setAssociatedObject(self, key, @(enabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -204,23 +192,19 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 
 @implementation UIViewController (FDFullscreenPopGesture)
 
-- (BOOL)fd_interactivePopDisabled
-{
+- (BOOL)fd_interactivePopDisabled {
     return [objc_getAssociatedObject(self, _cmd) boolValue];
 }
 
-- (void)setFd_interactivePopDisabled:(BOOL)disabled
-{
+- (void)setFd_interactivePopDisabled:(BOOL)disabled {
     objc_setAssociatedObject(self, @selector(fd_interactivePopDisabled), @(disabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)fd_prefersNavigationBarHidden
-{
+- (BOOL)fd_prefersNavigationBarHidden {
     return [objc_getAssociatedObject(self, _cmd) boolValue];
 }
 
-- (void)setFd_prefersNavigationBarHidden:(BOOL)hidden
-{
+- (void)setFd_prefersNavigationBarHidden:(BOOL)hidden {
     objc_setAssociatedObject(self, @selector(fd_prefersNavigationBarHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 

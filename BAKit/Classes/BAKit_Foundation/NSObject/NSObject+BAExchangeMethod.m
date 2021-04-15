@@ -62,20 +62,16 @@
 #import <objc/runtime.h>
 
 @implementation NSObject (BAExchangeMethod)
-+(void )ba_exchangeMethod:(SEL)method1 method:(SEL)method2
-{
++(void )ba_exchangeMethod:(SEL)method1 method:(SEL)method2 {
     Class class = [self class];
     Method originalMethod = class_getInstanceMethod(class, method1);
     Method swizzledMethod = class_getInstanceMethod(class, method2);
     
     BOOL didAddMethod = class_addMethod(class,method1,method_getImplementation(swizzledMethod),method_getTypeEncoding(swizzledMethod));
     
-    if (didAddMethod)
-    {
+    if (didAddMethod) {
         class_replaceMethod(class,method2,method_getImplementation(originalMethod),method_getTypeEncoding(originalMethod));
-    }
-    else
-    {
+    } else {
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }
 }

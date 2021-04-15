@@ -11,6 +11,8 @@
 
 /*! 获取sharedApplication */
 #define BAKit_SharedApplication    [UIApplication sharedApplication]
+#define BAKit_APP_WINDOW    [[[UIApplication sharedApplication] delegate] window]
+#define BAKit_APP_ROOT_VC   [BAKit_APP_WINDOW rootViewController];
 
 /*! 用safari打开URL */
 #define BAKit_OpenUrl(urlStr)      [BAKit_SharedApplication openURL:[NSURL URLWithString:urlStr]]

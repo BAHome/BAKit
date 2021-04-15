@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BAContactCell" rowHeight="16" id="KGk-i7-Jjw" customClass="BAContactCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fql-v8-dQb">
+                        <rect key="frame" x="16" y="5.5" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Fql-v8-dQb" secondAttribute="height" multiplier="1:1" id="0An-5c-Fet"/>
+                            <constraint firstAttribute="width" constant="40" id="5vc-w9-A2Y"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPY-sp-cx1">
+                        <rect key="frame" x="66" y="23.5" width="234" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0v-nQ-3Rg">
+                        <rect key="frame" x="66" y="25.5" width="234" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="ic2-8D-s3K"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Fql-v8-dQb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="06C-Oz-pR7"/>
+                    <constraint firstAttribute="trailing" secondItem="f0v-nQ-3Rg" secondAttribute="trailing" constant="20" id="GKt-3o-Ou6"/>
+                    <constraint firstItem="f0v-nQ-3Rg" firstAttribute="leading" secondItem="FPY-sp-cx1" secondAttribute="leading" id="HS8-nN-w2u"/>
+                    <constraint firstItem="FPY-sp-cx1" firstAttribute="leading" secondItem="Fql-v8-dQb" secondAttribute="trailing" constant="10" id="ITh-po-m6e"/>
+                    <constraint firstAttribute="trailing" secondItem="FPY-sp-cx1" secondAttribute="trailing" constant="20" id="hqf-o9-9Np"/>
+                    <constraint firstItem="Fql-v8-dQb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hy0-VU-IRs"/>
+                    <constraint firstItem="FPY-sp-cx1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-2" id="iFF-7I-yCa"/>
+                    <constraint firstItem="f0v-nQ-3Rg" firstAttribute="top" secondItem="FPY-sp-cx1" secondAttribute="bottom" constant="2" id="zUb-68-JYH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="userImageView" destination="Fql-v8-dQb" id="wts-mV-zsq"/>
+                <outlet property="userNameLabel" destination="FPY-sp-cx1" id="nBT-Ew-Tv6"/>
+                <outlet property="userPhoneLabel" destination="f0v-nQ-3Rg" id="JRl-GG-bbb"/>
+            </connections>
+            <point key="canvasLocation" x="137.59999999999999" y="156.97151424287858"/>
+        </tableViewCell>
+    </objects>
+</document>

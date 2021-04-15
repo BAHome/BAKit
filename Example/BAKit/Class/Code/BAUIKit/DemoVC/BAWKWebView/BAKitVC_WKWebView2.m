@@ -35,8 +35,7 @@
 }
 
 #pragma mark - JS_OC
-- (void)ba_JS_OC
-{
+- (void)ba_JS_OC {
     // 1、先注册ID
     NSArray *messageNameArray = @[@"BA_Alert", @"BA_JumpVC", @"BA_SendMsg"];
     [self.webView ba_web_addScriptMessageHandlerWithNameArray:messageNameArray];
@@ -45,20 +44,17 @@
     BAKit_WeakSelf
     self.webView.ba_web_userContentControllerDidReceiveScriptMessageBlock = ^(WKUserContentController * _Nonnull userContentController, WKScriptMessage * _Nonnull message) {
         BAKit_StrongSelf
-        if ([message.name isEqualToString:messageNameArray[0]])
-        {
+        if ([message.name isEqualToString:messageNameArray[0]]) {
             NSString *msg = @"生命不息，折腾不止...来自 OC Alert！";
             BAKit_ShowAlertWithMsg_ios8(msg);
         }
-        else if ([message.name isEqualToString:messageNameArray[1]])
-        {
+        else if ([message.name isEqualToString:messageNameArray[1]]) {
             UIViewController *vc = [UIViewController new];
             vc.view.backgroundColor = BAKit_Color_Green;
             vc.title = @"这里是 JS 按钮跳转的 VC";
             [self.navigationController pushViewController:vc animated:YES];
         }
-        else if ([message.name isEqualToString:messageNameArray[2]])
-        {
+        else if ([message.name isEqualToString:messageNameArray[2]]) {
             NSArray *array = message.body;
             NSString *msg = [NSString stringWithFormat:@"这是博爱的手机号: %@, \n%@ !!",array[0], array[1]];
             BAKit_ShowAlertWithMsg_ios8(msg);
@@ -67,8 +63,7 @@
 }
 
 #pragma mark - OC 拦截 JS URL 处理
-- (void)ba_OC_JS_2
-{
+- (void)ba_OC_JS_2 {
     BAKit_WeakSelf
     // 必须要先设定 要拦截的 urlScheme，然后再处理 回调
     self.webView.ba_web_urlScheme = @"basharefunction";
@@ -76,30 +71,25 @@
         
         BAKit_StrongSelf
         // 判断 host 是否对应，然后做相应处理
-        if ([currentUrl.host isEqualToString:@"shareClick"])
-        {
+        if ([currentUrl.host isEqualToString:@"shareClick"]) {
             // 拦截到 URL 中的分享 内容
             [self ba_shareClickWithUrl:currentUrl];
         }
-        else if ([currentUrl.host isEqualToString:@"getLocation"])
-        {
+        else if ([currentUrl.host isEqualToString:@"getLocation"]) {
             [self ba_getLocationWithUrl:currentUrl];
         }
     };
 }
 
 #pragma mark OC 拦截 JS URL 处理：1、拦截 JS 提供的分享内容，用 OC 方法处理
-- (void)ba_shareClickWithUrl:(NSURL *)url
-{
+- (void)ba_shareClickWithUrl:(NSURL *)url {
     NSString *url_query = url.query;
     NSArray *paramArray = [url_query componentsSeparatedByString:@"&"];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    for (NSString *dict_key in paramArray)
-    {
+    for (NSString *dict_key in paramArray) {
         NSArray *dataArray = [dict_key componentsSeparatedByString:@"="];
-        if (dataArray.count > 1)
-        {
+        if (dataArray.count > 1) {
             NSString *decode_value = [dataArray[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             [dict setObject:decode_value forKey:dataArray[0]];
         }
@@ -124,17 +114,14 @@
 }
 
 #pragma mark OC 拦截 JS URL 处理：2、拦截 JS 获取的定位信息，用 OC 方法处理
-- (void)ba_getLocationWithUrl:(NSURL *)url
-{
+- (void)ba_getLocationWithUrl:(NSURL *)url {
     NSString *url_query = url.query;
     NSArray *paramArray = [url_query componentsSeparatedByString:@"&"];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    for (NSString *dict_key in paramArray)
-    {
+    for (NSString *dict_key in paramArray) {
         NSArray *dataArray = [dict_key componentsSeparatedByString:@"="];
-        if (dataArray.count > 1)
-        {
+        if (dataArray.count > 1) {
             NSString *decode_value = [dataArray[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             [dict setObject:decode_value forKey:dataArray[0]];
         }
@@ -153,8 +140,7 @@
 }
 
 #pragma mark - OC_JS
-- (void)ba_OC_JS
-{
+- (void)ba_OC_JS {
     // 3、OC 调用 JS
     NSString *jsMethod = [NSString stringWithFormat:@"ba_insert('18566668888', '生命不息，折腾不止...这里是 OC 插入 JS 的语句！')"];
     [self.webView ba_web_stringByEvaluateJavaScript:jsMethod completionHandler:^(id  _Nullable result, NSError * _Nullable error) {
@@ -163,11 +149,9 @@
 }
 
 #pragma mark - OC 按钮调用 JS 方法：【JavaScriptCore 库】！
-- (IBAction)clickShareBtn:(UIButton *)sender
-{
+- (IBAction)clickShareBtn:(UIButton *)sender {
     BAKit_WeakSelf
-    if (!self.webView.loading)
-    {
+    if (!self.webView.loading) {
         BAKit_StrongSelf
         [self ba_OC_JS];
     }
@@ -175,10 +159,8 @@
 
 #pragma mark - JS 调用 OC
 
-- (void)ba_js_OCWithDictionary:(NSDictionary *)dict
-{
-    if (![dict isKindOfClass:[NSDictionary class]])
-    {
+- (void)ba_js_OCWithDictionary:(NSDictionary *)dict {
+    if (![dict isKindOfClass:[NSDictionary class]]) {
         return;
     }
     
@@ -205,10 +187,8 @@
 
 #pragma mark - setter / getter
 
-- (WKWebView *)webView
-{
-    if (!_webView)
-    {
+- (WKWebView *)webView {
+    if (!_webView) {
         _webView = [WKWebView new];
         _webView.backgroundColor = BAKit_Color_Yellow;
         
@@ -217,10 +197,8 @@
     return _webView;
 }
 
-- (UIButton *)shareBtn
-{
-    if (!_shareBtn)
-    {
+- (UIButton *)shareBtn {
+    if (!_shareBtn) {
         _shareBtn = [UIButton new];
         [_shareBtn setTitle:@"OC 按钮调用 JS 方法" forState:UIControlStateNormal];
         [_shareBtn setTitleColor:BAKit_Color_Black forState:UIControlStateNormal];

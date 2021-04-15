@@ -16,25 +16,20 @@
  @param akey akey
  @return YES，NO
  */
-- (BOOL)ba_dictionaryIsHasObjectWithKey:(NSString *)akey
-{
-    if (self.allKeys.count == 0 || ![self.allKeys containsObject:akey])
-    {
+- (BOOL)ba_dictionaryIsHasObjectWithKey:(NSString *)akey {
+    if (self.allKeys.count == 0 || ![self.allKeys containsObject:akey]) {
         return NO;
     }
     
-    if ([self[akey] isEqual:[NSNull null]])
-    {
+    if ([self[akey] isEqual:[NSNull null]]) {
         return NO;
     }
     
-    if ([self[akey] isKindOfClass:[NSString class]] && [self[akey] isEqualToString:@""])
-    {
+    if ([self[akey] isKindOfClass:[NSString class]] && [self[akey] isEqualToString:@""]) {
         return NO;
     }
     
-    if ([self[akey] isEqual:[NSNull null]])
-    {
+    if ([self[akey] isEqual:[NSNull null]]) {
         return NO;
     }
     

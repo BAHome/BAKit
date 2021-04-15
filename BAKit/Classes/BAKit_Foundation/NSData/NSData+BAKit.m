@@ -17,31 +17,26 @@
  @param data 要校验的数据
  @return 返回校验结果
  */
-+ (unsigned short)ba_dataCrc8:(NSData *)data
-{
++ (unsigned short)ba_dataCrc8:(NSData *)data {
     const uint8_t *bytes = (const uint8_t *)[data bytes];
     uint16_t length = (uint16_t)[data length];
     return (unsigned short)ba_dataGen_crc8(bytes, length);
 }
 
-uint16_t ba_dataGen_crc8(const uint8_t *data, uint16_t size)
-{
+uint16_t ba_dataGen_crc8(const uint8_t *data, uint16_t size) {
     uint16_t out = 0;
     return ba_dataF_crc8(out, data, size);
 }
 
-uint8_t ba_dataF_crc8(uint8_t  crc_val,const uint8_t *buf,uint32_t len)
-{
+uint8_t ba_dataF_crc8(uint8_t  crc_val,const uint8_t *buf,uint32_t len) {
     uint32_t l=0;
     uint8_t i, crc;
     uint16_t init=0;
     
     init=crc_val*0x100;
-    for(l=0;l<len;l++)
-    {
+    for(l=0;l<len;l++) {
         init^=(buf[l]*0x100);
-        for(i=0;i<8;i++)
-        {
+        for(i=0;i<8;i++) {
             if(init&0x8000)
                 init^=0x8380;
             init*=2;
@@ -57,8 +52,7 @@ uint8_t ba_dataF_crc8(uint8_t  crc_val,const uint8_t *buf,uint32_t len)
  @param data 要校验的数据
  @return 返回校验结果
  */
-+ (unsigned short)ba_dataCrc16:(NSData *)data
-{
++ (unsigned short)ba_dataCrc16:(NSData *)data {
     const uint8_t *byte = (const uint8_t *)data.bytes;
     uint16_t length = (uint16_t)data.length;
     uint16_t crc = 0xffff;
@@ -66,8 +60,7 @@ uint8_t ba_dataF_crc8(uint8_t  crc_val,const uint8_t *buf,uint32_t len)
 }
 
 #define PLOY 0X1021
-uint16_t ba_dataGen_crc16(const uint8_t *data, uint16_t size)
-{
+uint16_t ba_dataGen_crc16(const uint8_t *data, uint16_t size) {
     uint16_t crc = 0;
     uint8_t i;
     for (; size > 0; size--) {
@@ -93,8 +86,7 @@ uint16_t ba_dataGen_crc16(const uint8_t *data, uint16_t size)
  @param len len description
  @return 返回校验结果
  */
-uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
-{
+uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len) {
     uint8_t tmpDat;
     uint16_t tmpCrc = crc;
     static uint16_t crc16Tbl[] =  {
@@ -143,8 +135,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  需要进行转义的个数
  @return 转义的个数
  */
-+ (UInt16)ba_dataNeedTranlate:(NSData *)data
-{
++ (UInt16)ba_dataNeedTranlate:(NSData *)data {
     Byte *bytes = (Byte*)[data bytes];
     UInt16 count = 0;
     for (int i = 0; i < data.length; i++) {
@@ -160,8 +151,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param data 反转义的数据
  @return 反转义的个数
  */
-+ (UInt16)ba_dataNeeUnTranlate:(NSData *)data
-{
++ (UInt16)ba_dataNeeUnTranlate:(NSData *)data {
     Byte *bytes = (Byte*)[data bytes];
     UInt16 count = 0;
     for (int i = 0; i < data.length; i++) {
@@ -180,19 +170,15 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param len 数据长度
  @return 转义后的数据长度
  */
-+ (UInt16)ba_dataCMEscape:(UInt8 *)pOut and:(UInt8 *)pIn and:(UInt16)len
-{
++ (UInt16)ba_dataCMEscape:(UInt8 *)pOut and:(UInt8 *)pIn and:(UInt16)len {
     UInt16 i;
     UInt16 tmpLen = 0;
-    for (i=0; i<len; i++)
-    {
+    for (i=0; i<len; i++) {
         if ((i == 0) || (i == len-1)) {
             pOut[tmpLen++] = pIn[i];
-        }
-        else {
+        } else {
             // 把帧头和帧尾之家出现的 0x7D\0x7E\0x7F 转换成 0x5D\0x5E\0x5F，并在前面加上 0x7D
-            if ((pIn[i]==0x7D) || (pIn[i]==0x7E) || (pIn[i]==0x7F))
-            {
+            if ((pIn[i]==0x7D) || (pIn[i]==0x7E) || (pIn[i]==0x7F)) {
                 pOut[tmpLen++] = 0x7D;
                 pOut[tmpLen++] = pIn[i] - 0x20;
             } else {
@@ -211,8 +197,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param len 数据长度
  @return 转义后的数据长度 CMUnEscape
  */
-+ (UInt16)ba_dataCMUnEscape:(UInt8 *)pOut and:(UInt8 *)pIn and:(UInt16)len
-{
++ (UInt16)ba_dataCMUnEscape:(UInt8 *)pOut and:(UInt8 *)pIn and:(UInt16)len {
     UInt16 i;
     UInt16 tmpLen = 0;
     for (i=0; i<len; i++){
@@ -228,8 +213,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param data 要转的数据
  @return 转后的数据
  */
-+ (NSData *)ba_dataTranlateData:(NSData *)data
-{
++ (NSData *)ba_dataTranlateData:(NSData *)data {
     Byte pout[data.length + [self ba_dataNeedTranlate:data]];
     Byte *byte = (Byte*)[data bytes];
     UInt16 len = [NSData ba_dataCMEscape:pout and:byte and:data.length];
@@ -243,8 +227,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param data 要转的数据
  @return 反转义的数据
  */
-+ (NSData *)ba_dataUnTranlateData:(NSData *)data
-{
++ (NSData *)ba_dataUnTranlateData:(NSData *)data {
     Byte pout[data.length];
     Byte *byte = (Byte*)[data bytes];
     UInt16 len = [NSData ba_dataCMUnEscape:pout and:byte and:data.length];
@@ -258,8 +241,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param len 10进制数
  @return 1字节的 NSData
  */
-+ (NSData *)ba_dataGet1BDataFromInt:(int)len
-{
++ (NSData *)ba_dataGet1BDataFromInt:(int)len {
     Byte  bytes[1];
     bytes[0] = (Byte)len;//强制转型转成1字节，多余的去掉
     NSData * data = [NSData dataWithBytes:bytes length:1];
@@ -271,8 +253,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  
  @param len 10进制数 可传递 0xffff 或345632这样的指令
  */
-+ (NSData *)ba_dataGet2BDataFromInt:(int)len
-{
++ (NSData *)ba_dataGet2BDataFromInt:(int)len {
     //用2个字节接收
     Byte bytes[2];
     bytes[0] = (Byte)(len>>8);
@@ -284,8 +265,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
 /**
  1字节转 int
  */
-+ (int)ba_dataTht1BDataToInt:(NSData *)data
-{
++ (int)ba_dataTht1BDataToInt:(NSData *)data {
     int value = *(int*)[data bytes];
     NSLog(@"%d",value);
     return value;
@@ -297,8 +277,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param data 大端字节序
  @return int 型数据
  */
-+ (int)ba_dataThe2BDataToInt:(NSData *)data
-{
++ (int)ba_dataThe2BDataToInt:(NSData *)data {
     int value = CFSwapInt16BigToHost(*(int*)([data bytes]));//290
     NSLog(@"%d",value);
     return value;
@@ -310,8 +289,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param data 大端字节序列
  @return int 型数据
  */
-+ (int)ba_dataThe4BDataToInt:(NSData *)data
-{
++ (int)ba_dataThe4BDataToInt:(NSData *)data {
     int value = CFSwapInt32BigToHost(*(int*)([data bytes]));//655650
     NSLog(@"%d",value);
     return value;
@@ -320,8 +298,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
 /**
  通用型字节转 int，补充内容，因为没有三个字节转 int 的方法，这里补充一个通用方法
  */
-+ (unsigned)ba_dataParseIntFromData:(NSData *)data
-{
++ (unsigned)ba_dataParseIntFromData:(NSData *)data {
     NSString *dataDescription = [data description];
     NSString *dataAsString = [dataDescription substringWithRange:NSMakeRange(1, [dataDescription length]-2)];
     unsigned intData = 0;
@@ -336,8 +313,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param binary 二进制字符串
  @return 10进制数据
  */
-+ (NSString *)ba_dataToDecimalWithBinary:(NSString *)binary
-{
++ (NSString *)ba_dataToDecimalWithBinary:(NSString *)binary {
     int ll = 0 ;
     int  temp = 0 ;
     for (int i = 0; i < binary.length; i ++){
@@ -354,16 +330,14 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param intData 10进制数
  @return 返回16进制字符串
  */
-+ (NSString *)ba_dataToHex:(int)intData
-{
++ (NSString *)ba_dataToHex:(int)intData {
     NSString *nLetterValue;
     NSString *str =@"";
     int ttmpig;
     for (int i = 0; i<9; i++) {
         ttmpig =intData%16;
         intData=intData/16;
-        switch (ttmpig)
-        {
+        switch (ttmpig) {
             case 10:
                 nLetterValue =@"A";break;
             case 11:
@@ -399,8 +373,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param hexString 16 进制字符串
  @return NSdata
  */
-+ (NSData *)ba_dataHexStringToData:(NSString *)hexString
-{
++ (NSData *)ba_dataHexStringToData:(NSString *)hexString {
     @try {
         NSLog(@"Device Code:::>>> %@", hexString);
         NSInteger hexStringLen = [hexString length];
@@ -426,8 +399,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param data 0011223344556677
  @return  0011223344556677
  */
-+ (NSString *)ba_dataHexDataToString:(NSData *)data
-{
++ (NSString *)ba_dataHexDataToString:(NSData *)data {
     
     NSMutableString * hexString = [NSMutableString string];
     Byte * byte = (Byte*)[data bytes];
@@ -448,8 +420,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param string 字符串
  @return 6字节nsdata
  */
-+ (NSData *)ba_dataStringTo6BData:(NSString *)string
-{
++ (NSData *)ba_dataStringTo6BData:(NSString *)string {
     Byte dataArr[6];
     char * cString = (char*)[string UTF8String];
     memcpy(dataArr, cString, strlen(cString));
@@ -464,8 +435,7 @@ uint16_t ba_dataMthCrc16(uint16_t crc, const uint8_t *pDat, uint16_t len)
  @param num 整形数据
  @return 2字节的NSData
  */
-+ (NSData *)ba_dataIntToBigEndianData:(uint16_t)num
-{
++ (NSData *)ba_dataIntToBigEndianData:(uint16_t)num {
     uint16_t theNum = HTONS(num);
     NSData * bigData = [NSData dataWithBytes:&theNum length:2];
     NSLog(@"%@",bigData);

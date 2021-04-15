@@ -21,8 +21,7 @@
  *
  *  @return 系统当前日期和时间
  */
-+ (NSString *)ba_time_getSystermCurrentDateYMDHMS
-{
++ (NSString *)ba_time_getSystermCurrentDateYMDHMS {
     NSString *resultString = [NSString ba_time_getSystermCurrentDateWithFormatString:BAKit_FormatString_YMDHMS];
     return resultString;
 }
@@ -33,8 +32,7 @@
  @param formatString formatString
  @return 系统当前日期和时间
  */
-+ (NSString *)ba_time_getSystermCurrentDateWithFormatString:(NSString *)formatString
-{
++ (NSString *)ba_time_getSystermCurrentDateWithFormatString:(NSString *)formatString {
     //获得系统日期
     NSDate *senddate = [NSDate date];
     NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
@@ -54,8 +52,7 @@
  *
  *  @return 时间戳转换【YYYY-MM-dd HH:mm:ss】
  */
-+ (NSString *)ba_time_getDateWithTimeStampYMDHMS:(NSString *)timeStamp
-{
++ (NSString *)ba_time_getDateWithTimeStampYMDHMS:(NSString *)timeStamp {
     return [NSString ba_time_getDateWithTimeStamp:timeStamp formatString:BAKit_FormatString_YMDHMS];
 }
 
@@ -67,8 +64,7 @@
  *
  *  @return 时间戳转换【YYYY-MM-dd】
  */
-+ (NSString *)ba_time_getDateWithTimeStampYMD:(NSString *)timeStamp
-{
++ (NSString *)ba_time_getDateWithTimeStampYMD:(NSString *)timeStamp {
     return [NSString ba_time_getDateWithTimeStamp:timeStamp formatString:BAKit_FormatString_YMD];
 }
 
@@ -80,8 +76,7 @@
  *
  *  @return 时间戳转换【HH:mm】
  */
-+ (NSString *)ba_time_getDateWithTimeStampHM:(NSString *)timeStamp
-{
++ (NSString *)ba_time_getDateWithTimeStampHM:(NSString *)timeStamp {
     return [NSString ba_time_getDateWithTimeStamp:timeStamp formatString:BAKit_FormatString_HM];
 }
 
@@ -93,17 +88,24 @@
  @return 时间
  */
 + (NSString *)ba_time_getDateWithTimeStamp:(NSString *)timeStamp
-                              formatString:(NSString *)formatString
-{
+                              formatString:(NSString *)formatString {
+    NSString *confromTimespStr = [NSString ba_time_getDateWithLongTimeStamp:timeStamp.longLongValue formatString:formatString];
+    return confromTimespStr;
+}
+
++ (NSString *)ba_time_getDateWithLongTimeStamp:(long long)timeStamp
+                                  formatString:(NSString *)formatString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
     [formatter setDateFormat:formatString];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"Asia/Beijing"];
+    [formatter setTimeZone:timeZone];
     // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
     // 时间戳转换
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[timeStamp intValue]];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:(@(timeStamp).stringValue.length == 13)?(timeStamp / 1000):timeStamp];
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
-    
+
     return confromTimespStr;
 }
 
@@ -113,13 +115,32 @@
  *
  *  @return 时间戳【10位数，如：1492672164】
  */
-+ (NSString *)ba_time_getCurrentDateTransformTimeStampYMDHMS
-{
++ (NSString *)ba_time_getCurrentDateTransformTimeStampYMDHMS {
     NSDate *datenow = [NSDate date];
     // 时间转时间戳的方法:
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
     
     return timeSp;
+}
+
+/**
+*  当前时间【YYYY-MM-dd HH:mm:ss.ss】转换成时间戳【13位数，如：1492672164000】
+*
+*  @return 时间戳【13位数，如：1492672164000】
+*/
++ (NSString *)ba_time_getCurrentDateTransformTimeStampYMDHMSS {
+    // 设置日期格式
+    NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
+    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss.SSS"];
+    
+    NSString *dateStr =  [formatter stringFromDate:[NSDate date]];
+    NSDate *date = [formatter dateFromString:dateStr];
+    
+    // 时间转时间戳的方法:
+    NSTimeInterval time = [date timeIntervalSince1970]*1000;
+    NSString *timeStamp = [NSString stringWithFormat:@"%ld", time];
+    
+    return timeStamp;
 }
 
 /**
@@ -130,8 +151,7 @@
  @return return value description
  */
 + (NSString *)ba_time_dateTransformTimeStampWithDate:(NSString *)dateString
-                                        formatString:(NSString *)formatString
-{
+                                        formatString:(NSString *)formatString {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = formatString;
     
@@ -150,8 +170,7 @@
  *
  *  @return 返回 周一...周日
  */
-+ (NSString *)ba_time_getWeekdayWithDate:(NSDate *)date
-{
++ (NSString *)ba_time_getWeekdayWithDate:(NSDate *)date {
     NSArray *weekdays = [NSArray arrayWithObjects: [NSNull null], @"周天", @"周一", @"周二", @"周三", @"周四", @"周五", @"周六", nil];
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -170,8 +189,7 @@
  @param date 指定日期
  @return 时间差
  */
-+ (NSString *)ba_time_getIntervalSinceNowWithDate:(NSDate *)date
-{
++ (NSString *)ba_time_getIntervalSinceNowWithDate:(NSDate *)date {
     NSTimeInterval late = [date timeIntervalSince1970]*1;
     
     NSDate *dat = [NSDate date];
@@ -191,15 +209,13 @@
  @return YES，NO
  */
 - (BOOL)ba_time_isBetweenFromHour:(NSInteger)fromHour
-                           toHour:(NSInteger)toHour
-{
+                           toHour:(NSInteger)toHour {
     NSDate *date8 = [self ba_time_getCustomDateWithHour:8];
     NSDate *date23 = [self ba_time_getCustomDateWithHour:23];
     
     NSDate *currentDate = [NSDate date];
     
-    if ([currentDate compare:date8]==NSOrderedDescending && [currentDate compare:date23]==NSOrderedAscending)
-    {
+    if ([currentDate compare:date8]==NSOrderedDescending && [currentDate compare:date23]==NSOrderedAscending) {
         NSLog(@"该时间在 %ld:00-%ld:00 之间！", (long)fromHour, (long)toHour);
         return YES;
     }
@@ -210,8 +226,7 @@
  * @brief 生成当天的某个点（返回的是伦敦时间，可直接与当前时间[NSDate date]比較）
  * @param hour 如hour为“8”。就是上午8:00（本地时间）
  */
-- (NSDate *)ba_time_getCustomDateWithHour:(NSInteger)hour
-{
+- (NSDate *)ba_time_getCustomDateWithHour:(NSInteger)hour {
     // 获取当前时间
     NSDate *currentDate = [NSDate date];
     NSCalendar *currentCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -237,8 +252,7 @@
  *
  *  @return 计算上报时间差: 几分钟前，几天前
  */
-+ (NSString *)ba_time_formatWithTimeStamp:(NSString *)timeStamp
-{
++ (NSString *)ba_time_formatWithTimeStamp:(NSString *)timeStamp {
     NSString *theDay = [NSString ba_time_getDateWithTimeStampYMDHMS:timeStamp];
     return [NSString ba_time_formatWithDateString:theDay];
 }
@@ -249,8 +263,7 @@
  @param dateString dateString
  @return 今天，昨天还是明天
  */
-+ (NSString *)ba_time_formatWithDateString:(NSString *)dateString
-{
++ (NSString *)ba_time_formatWithDateString:(NSString *)dateString {
     // 日期格式字符串
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     format.dateFormat = @"EEE MMM d HH:mm:ss Z yyyy";
@@ -260,40 +273,27 @@
     
     NSDate *created_at = [format dateFromString:dateString];
     
-    if (created_at.isThisYear)
-    { // 今年
-        if (created_at.isToday)
-        {
+    if (created_at.isThisYear) { // 今年
+        if (created_at.isToday) {
             // 今天
             // 计算跟当前时间差距
             NSDateComponents *cmp = [created_at ba_dateDeltaWithNow];
             
-            if (cmp.hour >= 1)
-            {
+            if (cmp.hour >= 1) {
                 return [NSString stringWithFormat:@"%ld小时之前",cmp.hour];
-            }
-            else if (cmp.minute > 1)
-            {
+            } else if (cmp.minute > 1) {
                 return [NSString stringWithFormat:@"%ld分钟之前",cmp.minute];
-            }
-            else
-            {
+            } else {
                 return @"刚刚";
             }
-        }
-        else if (created_at.isYesterday)
-        { // 昨天
+        } else if (created_at.isYesterday) { // 昨天
             format.dateFormat = @"昨天 HH:mm";
             return  [format stringFromDate:created_at];
-        }
-        else
-        { // 前天
+        } else { // 前天
             format.dateFormat = BAKit_FormatString_MDHM;
             return  [format stringFromDate:created_at];
         }
-    }
-    else
-    { // 不是今年
+    } else { // 不是今年
         format.dateFormat = BAKit_FormatString_YMDHM;
         return [format stringFromDate:created_at];
     }
@@ -307,10 +307,8 @@
  @param formatString 转换格式
  @return NSDate
  */
-- (NSDate *)ba_time_dateWithFormatString:(NSString *)formatString
-{
-    if (self == nil || [self isEqualToString:@""] || formatString == nil || [formatString isEqualToString:@""])
-    {
+- (NSDate *)ba_time_dateWithFormatString:(NSString *)formatString {
+    if (self == nil || [self isEqualToString:@""] || formatString == nil || [formatString isEqualToString:@""]) {
         return nil;
     }
     
@@ -328,10 +326,8 @@
  @return 时间对象结果
  */
 - (NSDate *)ba_time_dateWithFormat:(NSString *)formatString
-                      timezoneName:(NSString *)timezoneName
-{
-    if (self == nil || [self isEqualToString:@""] || formatString == nil || [formatString isEqualToString:@""])
-    {
+                      timezoneName:(NSString *)timezoneName {
+    if (self == nil || [self isEqualToString:@""] || formatString == nil || [formatString isEqualToString:@""]) {
         return nil;
     }
     NSDateFormatter *fmt = [NSDateFormatter ba_dateFormatterWithFormatString:formatString timezoneName:timezoneName];
@@ -342,10 +338,8 @@
 }
 
 - (NSDate *)ba_time_dateWithFormat:(NSString *)formatString
-                         dateStyle:(NSDateFormatterStyle)dateStyle
-{
-    if (self == nil || [self isEqualToString:@""] || formatString == nil || [formatString isEqualToString:@""])
-    {
+                         dateStyle:(NSDateFormatterStyle)dateStyle {
+    if (self == nil || [self isEqualToString:@""] || formatString == nil || [formatString isEqualToString:@""]) {
         return nil;
     }
     

@@ -28,8 +28,7 @@
     [self setupNavi];
 }
 
-- (void)setupNavi
-{
+- (void)setupNavi {
     CGRect frame = CGRectMake(0, 0, 80, 40);
     UIButton *navi_rightButton = [UIButton ba_creatButtonWithFrame:frame title:@"xib" selTitle:nil titleColor:BAKit_Color_Red titleFont:nil image:[UIImage imageNamed:@"tabbar_mainframeHL"] selImage:nil padding:2 buttonPositionStyle:BAKit_ButtonLayoutTypeCenterImageRight viewRectCornerType:BAKit_ViewRectCornerTypeAllCorners viewCornerRadius:20 target:self selector:@selector(handleRightNaviButtonAction)];
     navi_rightButton.backgroundColor = BAKit_Color_RandomRGBA();
@@ -43,18 +42,15 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navi_leftButton];
 }
 
-- (void)handleLeftNaviButtonAction
-{
+- (void)handleLeftNaviButtonAction {
     [self.navigationController pushViewController:[BAKitVC_BAButton3 new] animated:YES];
 }
 
-- (void)handleRightNaviButtonAction
-{
+- (void)handleRightNaviButtonAction {
     [self.navigationController pushViewController:[BAKitVC_BAButton2 new] animated:YES];
 }
 
-- (void)test
-{
+- (void)test {
     CGFloat min_x = 20;
     CGFloat min_y = 80;
     CGFloat min_w = CGRectGetWidth(self.view.frame) - min_x * 2;
@@ -63,11 +59,9 @@
     CGFloat min_h = 0;
     CGFloat min_space = 5;
     
-    for (NSInteger i = 0; i < 8; i ++)
-    {
+    for (NSInteger i = 0; i < 8; i ++) {
         min_h = 30;
-        if (i == 2 || i == 3)
-        {
+        if (i == 2 || i == 3) {
             min_h = 80;
         }
         

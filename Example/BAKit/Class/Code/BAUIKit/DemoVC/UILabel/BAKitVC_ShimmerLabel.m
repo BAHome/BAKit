@@ -23,13 +23,11 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     [self test];
 }
 
-- (void)test
-{
+- (void)test {
     CGRect frame = CGRectMake(40, 100, BAKit_SCREEN_WIDTH - 40 * 2, 80);
     FBShimmeringView *shimmeringView = [[FBShimmeringView alloc] initWithFrame:frame];
     [self.view addSubview:shimmeringView];
@@ -48,8 +46,7 @@
     
 }
 
-- (void)ba_base_setupNavi
-{
+- (void)ba_base_setupNavi {
     // Title label.
     UILabel *headlinelabel      = [UILabel new];
     headlinelabel.font          = BAKit_Font_systemFontOfSize_18;

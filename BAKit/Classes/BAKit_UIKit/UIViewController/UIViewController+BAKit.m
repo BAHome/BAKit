@@ -11,30 +11,23 @@
 @implementation UIViewController (BAKit)
 
 
-- (UIViewController *)ba_visibleViewControllerIfExist
-{
+- (UIViewController *)ba_visibleViewControllerIfExist {
     
-    if (self.presentedViewController)
-    {
+    if (self.presentedViewController) {
         return [self.presentedViewController ba_visibleViewControllerIfExist];
     }
     
-    if ([self isKindOfClass:[UINavigationController class]])
-    {
+    if ([self isKindOfClass:[UINavigationController class]]) {
         return [((UINavigationController *)self).visibleViewController ba_visibleViewControllerIfExist];
     }
     
-    if ([self isKindOfClass:[UITabBarController class]])
-    {
+    if ([self isKindOfClass:[UITabBarController class]]) {
         return [((UITabBarController *)self).selectedViewController ba_visibleViewControllerIfExist];
     }
     
-    if ([self isViewLoaded] && self.view.window)
-    {
+    if ([self isViewLoaded] && self.view.window) {
         return self;
-    }
-    else
-    {
+    } else {
         NSLog(@"ba_visibleViewControllerIfExist:，找不到可见的viewController。self = %@, self.view.window = %@", self, self.view.window);
         return nil;
     }

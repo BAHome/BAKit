@@ -13,8 +13,7 @@
 
 @end
 
-@implementation BAKitVC_UIFontDetailViewController
-{
+@implementation BAKitVC_UIFontDetailViewController {
     NSArray *_titleArray;
 }
 
@@ -23,8 +22,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.view.backgroundColor = [UIColor colorWithRed:1.00 green:0.99 blue:0.92 alpha:1.00];
 
     self.navigationItem.title = self.font;
@@ -40,8 +38,7 @@
     [self createLabel];
 }
 
-- (void)createLabel
-{
+- (void)createLabel {
     _titleArray = [NSArray array];
     _titleArray = @[
                     @"0 1 2 3 4 5 6 7 8 9\n",
@@ -56,8 +53,7 @@
     
     CGFloat min_h = 0;
 
-    for (int i = 0; i < _titleArray.count; i++)
-    {
+    for (int i = 0; i < _titleArray.count; i++) {
         UIFont *font = [UIFont fontWithName:self.font size:15.0f];
 
         min_h = BAKit_LabelSizeWithTextAndWidthAndFont(_titleArray[i], min_w, font).height;

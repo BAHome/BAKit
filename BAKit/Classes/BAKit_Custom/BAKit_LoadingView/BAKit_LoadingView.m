@@ -45,17 +45,14 @@
 
 @implementation BAKit_LoadingView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame])
-    {
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
         [self setupUI];
     }
     return self;
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     self.loadingType = BALoadingViewTypeBall;
 //    self.themColor = [UIColor colorWithRed:0 green:165 blue:255 alpha:1.0f];
     self.ballSize = 20;
@@ -65,96 +62,78 @@
     [self setupAnimateView];
 }
 
-- (BOOL)willDealloc
-{
+- (BOOL)willDealloc {
     return NO;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [BAKit_NotiCenter removeObserver:self];
     
-    if (self.shapeView1)
-    {
+    if (self.shapeView1) {
         [self.shapeView1 removeFromSuperview];
         self.shapeView1 = nil;
     }
-    if (self.shapeView2)
-    {
+    if (self.shapeView2) {
         [self.shapeView2 removeFromSuperview];
         self.shapeView2 = nil;
     }
-    if (self.shapeView3)
-    {
+    if (self.shapeView3) {
         [self.shapeView3 removeFromSuperview];
         self.shapeView3 = nil;
     }
-    if (self.shapeView4)
-    {
+    if (self.shapeView4) {
         [self.shapeView4 removeFromSuperview];
         self.shapeView4 = nil;
     }
-    if (self.shapeView5)
-    {
+    if (self.shapeView5) {
         [self.shapeView5 removeFromSuperview];
         self.shapeView5 = nil;
     }
-    if (self.shapeView6)
-    {
+    if (self.shapeView6) {
         [self.shapeView6 removeFromSuperview];
         self.shapeView6 = nil;
     }
-    if (self.shapeView7)
-    {
+    if (self.shapeView7) {
         [self.shapeView7 removeFromSuperview];
         self.shapeView7 = nil;
     }
-    if (self.shapeView8)
-    {
+    if (self.shapeView8) {
         [self.shapeView8 removeFromSuperview];
         self.shapeView8 = nil;
     }
-    if (self.shapeView9)
-    {
+    if (self.shapeView9) {
         [self.shapeView9 removeFromSuperview];
         self.shapeView9 = nil;
     }
-    if (self.shapeView10)
-    {
+    if (self.shapeView10) {
         [self.shapeView10 removeFromSuperview];
         self.shapeView10 = nil;
     }
-    if (self.shapeView11)
-    {
+    if (self.shapeView11) {
         [self.shapeView11 removeFromSuperview];
         self.shapeView11 = nil;
     }
     
-    if (self.loadingView1)
-    {
+    if (self.loadingView1) {
         [self.loadingView1 removeFromSuperview];
         self.loadingView1 = nil;
     }
-    if (self.loadingView2)
-    {
+    if (self.loadingView2) {
         [self.loadingView2 removeFromSuperview];
         self.loadingView2 = nil;
     }
     
-    if (self.loadingView4)
-    {
+    if (self.loadingView4) {
         [self.loadingView4 removeFromSuperview];
         self.loadingView4 = nil;
     }
 }
 
-- (void)handleWillEnterForeground:(NSNotification *)notification
-{
+- (void)handleWillEnterForeground:(NSNotification *)notification {
     [self beginAnimation];
 }
 
-- (void)setupAnimateView
-{
+- (void)setupAnimateView {
     self.shapeView1 = [[UIView alloc] init];
     self.shapeView2 = [[UIView alloc] init];
     self.shapeView3 = [[UIView alloc] init];
@@ -191,8 +170,7 @@
     [self beginAnimation];
 }
 
-- (void)beginAnimation
-{
+- (void)beginAnimation {
     [self updateWithType];
 
     CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animation];
@@ -264,8 +242,7 @@
     [self.shapeView8.layer addAnimation:group2 forKey:nil];
 }
 
-- (void)ba_beginBallRotationAnimation
-{
+- (void)ba_beginBallRotationAnimation {
     /*! 三个小球旋转动画 */
     /*! 1.1 取得围绕中心轴的点 */
     CGPoint centerPoint = CGPointMake(CGRectGetWidth(self.bounds) / 2 , CGRectGetHeight(self.bounds) / 2);
@@ -321,19 +298,15 @@
     [self.shapeView11.layer addAnimation:animation_ball_3 forKey:nil];
 }
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
-{
-    if (_loadingType == BALoadingViewTypeBallRotation)
-    {
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    if (_loadingType == BALoadingViewTypeBallRotation) {
         [self ba_beginBallRotationAnimation];
     }
 }
 
-- (void)animationDidStart:(CAAnimation *)anim
-{
+- (void)animationDidStart:(CAAnimation *)anim {
     BAKit_WeakSelf
-    if (_loadingType == BALoadingViewTypeBallRotation)
-    {
+    if (_loadingType == BALoadingViewTypeBallRotation) {
         [UIView animateWithDuration:0.3f delay:0.1f options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionBeginFromCurrentState animations:^{
             
             weak_self.shapeView9.transform = CGAffineTransformMakeTranslation(-_ballSize, 0);
@@ -354,8 +327,7 @@
     }
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
 
     CGFloat minY = (CGRectGetHeight(self.bounds) - _ballSize) / 2;
@@ -390,14 +362,12 @@
     [self ba_beginBallRotationAnimation];
 }
 
-- (void)setLoadingType:(BALoadingViewType)loadingType
-{
+- (void)setLoadingType:(BALoadingViewType)loadingType {
     _loadingType = loadingType;
     [self updateWithType];
 }
 
-- (void)updateWithType
-{
+- (void)updateWithType {
     switch (_loadingType) {
         case BALoadingViewTypeBall:
             self.loadingView1.hidden = NO;
@@ -424,23 +394,19 @@
     }
 }
 
-- (void)setThemColor:(UIColor *)themColor
-{
+- (void)setThemColor:(UIColor *)themColor {
     _themColor = themColor;
     
     [self ba_setBallColor];
 }
 
-- (void)setBallColorsArray:(NSArray<UIColor *> *)ballColorsArray
-{
+- (void)setBallColorsArray:(NSArray<UIColor *> *)ballColorsArray {
     _ballColorsArray = ballColorsArray;
     [self ba_setBallColor];
 }
 
-- (void)ba_setBallColor
-{
-    if (_ballColorsArray.count < 3)
-    {
+- (void)ba_setBallColor {
+    if (_ballColorsArray.count < 3) {
         _ballColorsArray = @[[UIColor greenColor], [UIColor redColor], [UIColor blueColor]];
     }
     self.shapeView1.backgroundColor  = _ballColorsArray[0];
@@ -458,8 +424,7 @@
     self.shapeView11.backgroundColor = _themColor;
 }
 
-- (void)ba_setBallCornerRadius
-{
+- (void)ba_setBallCornerRadius {
     self.shapeView1.layer.cornerRadius   = _ballSize / 2;
     self.shapeView2.layer.cornerRadius   = _ballSize / 2;
     self.shapeView3.layer.cornerRadius   = _ballSize / 2;
@@ -491,16 +456,13 @@
     [self ba_setBallColor];
 }
 
-- (void)setBallSize:(CGFloat)ballSize
-{
+- (void)setBallSize:(CGFloat)ballSize {
     _ballSize = ballSize;
     [self ba_setBallCornerRadius];
 }
 
-- (UIView *)loadingView1
-{
-    if (!_loadingView1)
-    {
+- (UIView *)loadingView1 {
+    if (!_loadingView1) {
         _loadingView1 = [UIView new];
         
         [self addSubview:_loadingView1];
@@ -508,10 +470,8 @@
     return _loadingView1;
 }
 
-- (UIView *)loadingView2
-{
-    if (!_loadingView2)
-    {
+- (UIView *)loadingView2 {
+    if (!_loadingView2) {
         _loadingView2 = [UIView new];
         
         [self addSubview:_loadingView2];
@@ -519,10 +479,8 @@
     return _loadingView2;
 }
 
-- (UIView *)loadingView4
-{
-    if (!_loadingView4)
-    {
+- (UIView *)loadingView4 {
+    if (!_loadingView4) {
         _loadingView4 = [UIView new];
         
         [self addSubview:_loadingView4];

@@ -17,13 +17,11 @@ static CGRect _ba_keyboardFrame = (CGRect){ (CGPoint){ 0.0f, 0.0f }, (CGSize){ 0
  
  @return frame
  */
-- (CGRect)ba_applicationGetKeyboardFrame
-{
+- (CGRect)ba_applicationGetKeyboardFrame {
     return _ba_keyboardFrame;
 }
 
-+ (void)load
-{
++ (void)load {
     [NSNotificationCenter.defaultCenter addObserverForName:UIKeyboardDidShowNotification object:nil queue:nil usingBlock:^(NSNotification *note)
      {
          _ba_keyboardFrame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];

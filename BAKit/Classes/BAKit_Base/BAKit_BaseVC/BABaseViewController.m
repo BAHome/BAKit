@@ -20,29 +20,25 @@
 @implementation BABaseViewController
 
 #pragma mark - life
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self ba_base_viewWillAppear];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self ba_base_viewDidDAppear];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [self ba_base_viewWillDisappear];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
     [self.view endEditing:YES];
@@ -60,33 +56,27 @@
 
 #pragma mark - custome method
 
-- (void)ba_base_viewWillAppear
-{
+- (void)ba_base_viewWillAppear {
     
 }
 
-- (void)ba_base_viewDidDAppear
-{
+- (void)ba_base_viewDidDAppear {
     
 }
 
-- (void)ba_base_viewWillDisappear
-{
+- (void)ba_base_viewWillDisappear {
 
 }
 
-- (void)ba_base_viewDidDisappear
-{
+- (void)ba_base_viewDidDisappear {
 
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     
 }
 
-- (void)ba_base_setupNavi
-{
+- (void)ba_base_setupNavi {
     
 }
 
@@ -98,8 +88,7 @@
  @param animationView 需要动画的 View
  */
 - (void)ba_animationWithBATransitionType:(BAKit_ViewTransitionType)type
-                           animationView:(UIView *)animationView
-{
+                           animationView:(UIView *)animationView {
     switch (type) {
         case 0:
             [self ba_transitonWithType:BAKit_ViewTransitionTypeFade view:animationView];
@@ -179,8 +168,7 @@
     
 }
 
-- (void)ba_transitonWithType:(BAKit_ViewTransitionType)type view:(UIView *)animationView
-{
+- (void)ba_transitonWithType:(BAKit_ViewTransitionType)type view:(UIView *)animationView {
     [animationView ba_transitionWithType:type
                                  subType:BAKit_ViewTransitionSubtypeFromLeft
                                 duration:1.0f
@@ -190,8 +178,7 @@
 }
     
 #pragma mark - 清理缓存
-- (void)ba_clearCacheWithBlock:(void (^)(NSInteger buttonIndex, BAKit_ClearCacheManager *clearCacheManager, CGFloat cacheSize))block
-{
+- (void)ba_clearCacheWithBlock:(void (^)(NSInteger buttonIndex, BAKit_ClearCacheManager *clearCacheManager, CGFloat cacheSize))block {
     BAKit_ClearCacheManager *clearCacheManager = [BAKit_ClearCacheManager ba_sharedCache];
     CGFloat cacheSize = [clearCacheManager ba_loadCacheSize];
     
@@ -200,15 +187,13 @@
     NSArray *buttonTitleArray = @[BAKit_DefineTip_Cancle, BAKit_DefineTip_Sure];
     NSArray *buttonTitleColorArray = @[BAKit_Color_Green, BAKit_Color_Red];
     [UIAlertController ba_alertShowInViewController:self title:BAKit_DefineTip_AlertTitle message:clearMessage buttonTitleArray:buttonTitleArray buttonTitleColorArray:buttonTitleColorArray block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-        if (block)
-        {
+        if (block) {
             block(buttonIndex, clearCacheManager, cacheSize);
         }
     }];
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [self ba_base_viewDidDisappear];
 }
 

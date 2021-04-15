@@ -22,8 +22,7 @@
  
  @return BAKit_PhotoKitAuthorizationStatus
  */
-+ (BAKit_PhotoKitAuthorizationStatus)ba_photoKitManagerGetPHAuthorizationStatus
-{
++ (BAKit_PhotoKitAuthorizationStatus)ba_photoKitManagerGetPHAuthorizationStatus {
     BAKit_PhotoKitAuthorizationStatus status;
     // 获取当前应用对照片的访问授权状态
     PHAuthorizationStatus authorizationStatus = [PHPhotoLibrary authorizationStatus];
@@ -42,8 +41,7 @@
  
  @param handler 授权结束后调用的 block，默认不在主线程上执行，如果需要在 block 中修改 UI，记得dispatch到mainqueue
  */
-+ (void)ba_photoKitManagerRequestAuthorization:(void(^)(BAKit_PhotoKitAuthorizationStatus status))handler
-{
++ (void)ba_photoKitManagerRequestAuthorization:(void(^)(BAKit_PhotoKitAuthorizationStatus status))handler {
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus phStatus) {
         BAKit_PhotoKitAuthorizationStatus status;
         if (phStatus == PHAuthorizationStatusRestricted || phStatus == PHAuthorizationStatusDenied) {
@@ -65,46 +63,34 @@
  @param image image
  @param viewController viewController
  */
-+ (void)ba_photoKitManagerSaveImageToLocalWithImage:(UIImage *)image viewController:(UIViewController *)viewController
-{
-    if ([self ba_photoKitManagerGetPHAuthorizationStatus] == BAKit_PhotoKitAuthorizationStatusNotDetermined)
-    {
++ (void)ba_photoKitManagerSaveImageToLocalWithImage:(UIImage *)image viewController:(UIViewController *)viewController {
+    if ([self ba_photoKitManagerGetPHAuthorizationStatus] == BAKit_PhotoKitAuthorizationStatusNotDetermined) {
         [self ba_photoKitManagerRequestAuthorization:^(BAKit_PhotoKitAuthorizationStatus status) {
             // requestAuthorization:(void(^)(BAKit_PhotoKitAuthorizationStatus status))handler 不在主线程执行，因此涉及 UI 相关的操作需要手工放置到主流程执行。
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (status == BAKit_PhotoKitAuthorizationStatusAuthorized || status == BAKit_PhotoKitAuthorizationStatusNotUsingPhotoKit)
-                {
+                if (status == BAKit_PhotoKitAuthorizationStatusAuthorized || status == BAKit_PhotoKitAuthorizationStatusNotUsingPhotoKit) {
                     [self ba_photoKitManagerSaveImageToAlbumWithImage:image viewController:viewController];
-                }
-                else
-                {
+                } else {
                     [self ba_showAlertWhenSavedPhotoFailuredByPermissionDeniedWithViewController:viewController];
                 }
             });
         }];
-    }
-    else if ([self ba_photoKitManagerGetPHAuthorizationStatus] == BAKit_PhotoKitAuthorizationStatusNotAuthorized)
-    {
+    } else if ([self ba_photoKitManagerGetPHAuthorizationStatus] == BAKit_PhotoKitAuthorizationStatusNotAuthorized) {
         [self ba_showAlertWhenSavedPhotoFailuredByPermissionDeniedWithViewController:viewController];
-    }
-    else
-    {
+    } else {
         [self ba_photoKitManagerSaveImageToAlbumWithImage:image viewController:viewController];
     }
 }
 
-+ (void)ba_photoKitManagerSaveImageToAlbumWithImage:(UIImage *)image viewController:(UIViewController *)viewController
-{
++ (void)ba_photoKitManagerSaveImageToAlbumWithImage:(UIImage *)image viewController:(UIViewController *)viewController {
     [UIAlertController ba_alertShowInViewController:viewController title:@"保存图片到相册" message:@"" buttonTitleArray:@[@"取消", @"确定"] buttonTitleColorArray:nil block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-        if (buttonIndex == 1)
-        {
+        if (buttonIndex == 1) {
             [self ba_photoKitManagerSaveWithImage:image];
         }
     }];
 }
 
-+ (void)ba_photoKitManagerSaveWithImage:(UIImage *)image
-{
++ (void)ba_photoKitManagerSaveWithImage:(UIImage *)image {
     //    // 把图片加入到指定的相册对应的 PHAssetCollection
     //    [[PHPhotoLibrary sharedPhotoLibrary] addImageToAlbum:image.CGImage
     //                                    albumAssetCollection:nil
@@ -124,8 +110,7 @@
     //                                       }];
     
     [self ba_addImageToAlbum:image.CGImage albumAssetCollection:nil orientation:image.imageOrientation completionHandler:^(BOOL success, NSDate *creationDate, NSError *error) {
-        if (success)
-        {
+        if (success) {
             PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
             fetchOptions.predicate = [NSPredicate predicateWithFormat:@"creationDate = %@", creationDate];
 //            PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:nil options:fetchOptions];
@@ -179,13 +164,11 @@
 }
 
 
-+ (void)ba_showAlertWhenSavedPhotoFailuredByPermissionDeniedWithViewController:(UIViewController *)viewController
-{
++ (void)ba_showAlertWhenSavedPhotoFailuredByPermissionDeniedWithViewController:(UIViewController *)viewController {
     NSArray *buttonTitleArray = @[@"知道了", @"去设置"];
     NSArray *buttonTitleColorArray = @[BAKit_Color_Green, BAKit_Color_Red];
     [UIAlertController ba_alertShowInViewController:viewController title:@"无法保存" message:@"你未开启“允许 BAKit 访问照片”选项" buttonTitleArray:buttonTitleArray buttonTitleColorArray:buttonTitleColorArray block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-        if (buttonIndex == 1)
-        {
+        if (buttonIndex == 1) {
             NSURL *url = [[NSURL alloc] initWithString:@"prefs:root=Privacy&path=PHOTOS"];
             [[UIApplication sharedApplication] openURL:url];
         }

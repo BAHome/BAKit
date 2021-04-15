@@ -85,18 +85,15 @@
 
  @return NSArray
  */
-+ (NSArray *)ba_fontGetAllFamilyFontNames
-{
++ (NSArray *)ba_fontGetAllFamilyFontNames {
     // 返回所有已安装字体系列名称的数组
     NSMutableArray *temp = [[NSMutableArray alloc]init];
     
     NSArray *familyNames = [UIFont familyNames];
     
-    for(NSString *familyName in familyNames )
-    {
+    for(NSString *familyName in familyNames ) {
         NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
-        for( NSString *fontName in fontNames )
-        {
+        for( NSString *fontName in fontNames ) {
             [temp addObject:fontName];
         }
     }

@@ -54,8 +54,7 @@
 
 
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.title = @"CABasicAnimation";
     self.animationView.hidden = NO;
     self.animationButton.hidden = NO;
@@ -64,8 +63,7 @@
     
 }
 
-- (void)creatLine
-{
+- (void)creatLine {
     // 创建一个 UIBezierPath 对象
     UIBezierPath *path = [UIBezierPath bezierPath];
     path.lineWidth = 5.0;//宽度
@@ -97,24 +95,19 @@
 
 #pragma mark - custom method
 
-- (void)handleButtonAction:(UIButton *)sender
-{
+- (void)handleButtonAction:(UIButton *)sender {
     sender.selected = !sender.selected;
     
-    if (sender.selected)
-    {
+    if (sender.selected) {
         // 变动的属性, keyPath后面跟的属性是CALayer的属性
         [self startAnimation2];
-    }
-    else
-    {
+    } else {
         [self startAnimation];
     }
 }
 
 #pragma mark - CAKeyframeAnimation 关键帧动画
-- (void)startAnimation2
-{
+- (void)startAnimation2 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     animation.path = _path.CGPath;
     /*
@@ -134,8 +127,7 @@
 }
 
 #pragma mark - CABasicAnimation
-- (void)startAnimation
-{
+- (void)startAnimation {
     // 原生写法
 //    CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"position"];
 //    animation1.fromValue = [NSValue valueWithCGPoint:kPoint_start];
@@ -184,10 +176,8 @@
 
 #pragma mark - setter getter
 
-- (UIView *)animationView
-{
-    if (!_animationView)
-    {
+- (UIView *)animationView {
+    if (!_animationView) {
         _animationView = [UIView new];
         _animationView.frame = CGRectMake(0, 0, 50, 50);
         _animationView.center = self.view.center;
@@ -200,10 +190,8 @@
     return _animationView;
 }
 
-- (UIButton *)animationButton
-{
-    if (!_animationButton)
-    {
+- (UIButton *)animationButton {
+    if (!_animationButton) {
         _animationButton = [UIButton ba_buttonWithFrame:CGRectZero title:@"点我试试" titleColor:BAKit_Color_Red titleFont:BAKit_Font_systemFontOfSize_15 backgroundColor:BAKit_Color_Gray_11];
         [_animationButton ba_buttonAddTarget:self tag:0 action:@selector(handleButtonAction:)];
         self.animationButton.frame = CGRectMake(0, BAKit_SCREEN_HEIGHT - 100 - 64, 100, 50);

@@ -31,24 +31,20 @@ static NSString * const test_timeStap1 = @"1492672164";
     
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.view.backgroundColor = BAKit_Color_White;
 }
 
 #pragma mark - UITableViewDataSource / UITableViewDelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataArray.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.dataArray[section] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [UITableViewCell ba_cellDequeueFromIdentify:kCellID cellStyle:UITableViewCellStyleValue1 tableView:tableView];
     NSString *msg = [@(indexPath.row + 1).stringValue stringByAppendingString:@"、"];
     
@@ -59,8 +55,7 @@ static NSString * const test_timeStap1 = @"1492672164";
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     self.selectIndexPath = indexPath;
@@ -68,8 +63,7 @@ static NSString * const test_timeStap1 = @"1492672164";
     
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
     headerView.backgroundColor = [BAKit_Color_Cyan colorWithAlphaComponent:0.3f];
     
@@ -85,20 +79,17 @@ static NSString * const test_timeStap1 = @"1492672164";
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return BAKit_Margin_30;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
 #pragma mark - custom method
 
-- (void)ba_selectRow:(NSIndexPath *)indexPath
-{
+- (void)ba_selectRow:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.selectIndexPath];
     ;
     
@@ -107,13 +98,11 @@ static NSString * const test_timeStap1 = @"1492672164";
     NSArray *textFieldPlaceholderArray;
     
     switch (indexPath.section) {
-        case 0:
-        {
+        case 0: {
             cell.textLabel.textColor = BAKit_Color_Hex([NSString ba_stringRandomColor]);
         }
             break;
-        case 1:
-        {
+        case 1: {
             switch (indexPath.row) {
                 case 0:
                 {
@@ -123,13 +112,11 @@ static NSString * const test_timeStap1 = @"1492672164";
                     } block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
                         
                         UITextField *textField1 = alertController.textFields[0];
-                        if ([textField1 ba_textField_isEmpty])
-                        {
+                        if ([textField1 ba_textField_isEmpty]) {
                             return;
                         }
                         NSString *result = [textField1.text ba_stringSentenceCapitalizedString];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         BAKit_ShowAlertWithMsg_ios8([@"转换结果：" stringByAppendingString:result]);
@@ -145,13 +132,11 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *url = textField1.text;
-                        if ([textField1 ba_textField_isEmpty])
-                        {
+                        if ([textField1 ba_textField_isEmpty]) {
                             return;
                         }
-                        NSString *result = [[url ba_stringUrlEncode] ba_stringSentenceCapitalizedString];
-                        if (!result)
-                        {
+                        NSString *result = [[url ba_stringByURLEncode] ba_stringSentenceCapitalizedString];
+                        if (!result) {
                             return ;
                         }
                         BAKit_ShowAlertWithMsg_ios8([@"编码结果：" stringByAppendingString:result]);
@@ -167,14 +152,12 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSData *stringData = [textField1.text ba_stringDataValue];
-                        if ([textField1 ba_textField_isEmpty])
-                        {
+                        if ([textField1 ba_textField_isEmpty]) {
                             return;
                         }
                         NSString *result = [NSString stringWithFormat:@"%@", stringData];
                         
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -188,8 +171,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                     textFieldPlaceholderArray = @[@"要搜索的内容", @"起始位置", @"结束位置"];
                     [UIAlertController ba_alertTextFieldShowInViewController:self title:nil message:cell.textLabel.text buttonTitleArray:buttonTitleArray buttonTitleColorArray:buttonTitleColorArray buttonEnabledNoWithTitleArray:nil textFieldPlaceholderArray:textFieldPlaceholderArray textFieldConfigurationActionBlock:^(UITextField * _Nullable textField, NSInteger index) {
                         
-                        if (index == 1 || index == 2)
-                        {
+                        if (index == 1 || index == 2) {
                             textField.keyboardType = UIKeyboardTypeWebSearch;
                         }
                         
@@ -199,13 +181,11 @@ static NSString * const test_timeStap1 = @"1492672164";
                         UITextField *textField2 = alertController.textFields[1];
                         UITextField *textField3 = alertController.textFields[2];
 
-                        if ([textField2 ba_textField_isEmpty] || [textField3 ba_textField_isEmpty])
-                        {
+                        if ([textField2 ba_textField_isEmpty] || [textField3 ba_textField_isEmpty]) {
                             return;
                         }
                         NSString *result = [NSString ba_stringSearchInString:textField1.text charStart:*(char *)[textField2.text UTF8String] charEnd:*(char *)[textField3.text UTF8String]];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         BAKit_ShowAlertWithMsg_ios8([@"搜索结果：" stringByAppendingString:result]);
@@ -238,8 +218,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         NSDateFormatter *format = [NSDateFormatter ba_setupDateFormatterWithYMD];
                         NSDate *result = [textField1.text ba_stringExtractBirthdayFromIDNumber];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -256,8 +235,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [textField1.text ba_stringExtractGenderFromIDNumber];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -274,8 +252,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = @([textField1.text ba_stringExtractAgeFromIDNumber]).stringValue;
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -296,8 +273,7 @@ static NSString * const test_timeStap1 = @"1492672164";
         }
             break;
            
-        case 2:
-        {
+        case 2: {
             switch (indexPath.row) {
                 case 0:
                 {
@@ -308,8 +284,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_phoneNumberFormatterSpace:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         BAKit_ShowAlertWithMsg_ios8([@"手机号码格式化为：" stringByAppendingString:result]);
@@ -325,8 +300,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_phoneNumberFormatterCenterStar:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         BAKit_ShowAlertWithMsg_ios8([@"手机号码格式化为：" stringByAppendingString:result]);
@@ -342,8 +316,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_stringFormatterWithStyle:NSNumberFormatterDecimalStyle numberString:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         BAKit_ShowAlertWithMsg_ios8([@"数字格式化为：" stringByAppendingString:result]);
@@ -359,8 +332,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_stringFormatterWithStyle:NSNumberFormatterCurrencyStyle numberString:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -377,8 +349,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_stringFormatterWithScientificStyleWithNumberString:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -395,8 +366,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_stringFormatterWithSpellOutStyleWithNumberString:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -413,8 +383,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_stringFormatterWithOrdinalStyleWithNumberString:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -431,8 +400,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_stringFormatterWithCurrencyISOCodeStyleWithNumberString:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -449,8 +417,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_stringFormatterWithCurrencyPluralStyleWithNumberString:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -467,8 +434,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [textField1.text ba_removeStringSaveNumber];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -485,8 +451,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         NSString *result = [NSString ba_stringTransformNumberWithString:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -505,8 +470,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         BOOL result = [NSString ba_stringIsInt:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -525,8 +489,7 @@ static NSString * const test_timeStap1 = @"1492672164";
                         
                         UITextField *textField1 = alertController.textFields[0];
                         BOOL result = [NSString ba_stringIsFloat:textField1.text];
-                        if (!result)
-                        {
+                        if (!result) {
                             return ;
                         }
                         
@@ -541,8 +504,7 @@ static NSString * const test_timeStap1 = @"1492672164";
         }
             break;
             
-        case 3:
-        {
+        case 3: {
             textFieldPlaceholderArray = @[@"请输入内容", @"搜索关键字"];
             [UIAlertController ba_alertTextFieldShowInViewController:self title:nil message:cell.textLabel.text buttonTitleArray:buttonTitleArray buttonTitleColorArray:buttonTitleColorArray buttonEnabledNoWithTitleArray:nil textFieldPlaceholderArray:textFieldPlaceholderArray textFieldConfigurationActionBlock:^(UITextField * _Nullable textField, NSInteger index) {
                 
@@ -556,8 +518,7 @@ static NSString * const test_timeStap1 = @"1492672164";
             }];
         }
             break;
-        case 4:
-        {
+        case 4: {
             switch (indexPath.row) {
                 case 0:
                 {
@@ -603,8 +564,7 @@ static NSString * const test_timeStap1 = @"1492672164";
             }
         }
             break;
-        case 5:
-        {
+        case 5: {
             NSString *result = @"";
             switch (indexPath.row) {
                 case 0:
@@ -659,8 +619,7 @@ static NSString * const test_timeStap1 = @"1492672164";
             BAKit_ShowAlertWithMsg_ios8(msg);
         }
             break;
-        case 8:
-        {
+        case 8: {
             cell.textLabel.text = nil;
             UIButton *button = (UIButton *)[cell viewWithTag:100];
             if (!button)
@@ -678,8 +637,7 @@ static NSString * const test_timeStap1 = @"1492672164";
             
         }
             break;
-        case 9:
-        {
+        case 9: {
             NSString *string3 = @"123456";
             NSString *result = @"";
             switch (indexPath.row) {
@@ -721,8 +679,7 @@ static NSString * const test_timeStap1 = @"1492672164";
             BAKit_ShowAlertWithMsg_ios8(msg);
         }
             break;
-        case 10:
-        {
+        case 10: {
             NSString *string4 = @"[微笑]";
             NSString *emotion1 = @"😃";
             NSString *result = @"";
@@ -745,8 +702,7 @@ static NSString * const test_timeStap1 = @"1492672164";
             BAKit_ShowAlertWithMsg_ios8(msg);
         }
             break;
-        case 11:
-        {
+        case 11: {
             [self.navigationController pushViewController:[BAKitVC_NSMutableAttributedString new] animated:YES];
         }
             break;
@@ -761,15 +717,13 @@ static NSString * const test_timeStap1 = @"1492672164";
     }
 }
 
-- (void)handleButtonAction:(UIButton *)sender
-{
+- (void)handleButtonAction:(UIButton *)sender {
     NSString *msg = @"你点击了按钮！";
     BAKit_ShowAlertWithMsg_ios8(msg);
 }
 
 #pragma mark - layout
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     self.tableView.frame = self.view.bounds;
@@ -778,10 +732,8 @@ static NSString * const test_timeStap1 = @"1492672164";
 }
 
 #pragma mark - setter / getter
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [[UITableView alloc] init];
         self.tableView.backgroundColor = BAKit_Color_Gray_11;
         self.tableView.delegate = self;
@@ -795,10 +747,8 @@ static NSString * const test_timeStap1 = @"1492672164";
     return _tableView;
 }
 
-- (NSArray *)dataArray
-{
-    if (!_dataArray)
-    {
+- (NSArray *)dataArray {
+    if (!_dataArray) {
         _dataArray = @[
                        @[
                            @"获取十六进制的随机颜色【点击测试】\ncell.textLabel.textColor = BAKit_Color_Hex([NSString ba_stringRandomColor]);",
@@ -873,10 +823,8 @@ static NSString * const test_timeStap1 = @"1492672164";
     return _dataArray;
 }
 
-- (NSArray *)sectionDataArray
-{
-    if (!_sectionDataArray)
-    {
+- (NSArray *)sectionDataArray {
+    if (!_sectionDataArray) {
         _sectionDataArray = @[
                               @"NSString+BAColor.h【颜色处理类】",
                               @"NSString+BAKit.h【常用方法处理类】",

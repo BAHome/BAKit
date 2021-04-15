@@ -12,8 +12,7 @@
 
 - (void)ba_shadowWithColor:(UIColor *)shadowColor
               shadowOffset:(CGSize)shadowSize
-          shadowBlurRadius:(CGFloat)shadowBlurRadius
-{
+          shadowBlurRadius:(CGFloat)shadowBlurRadius {
     self.shadowColor = shadowColor;
     self.shadowOffset = shadowSize;
     self.shadowBlurRadius = shadowBlurRadius;

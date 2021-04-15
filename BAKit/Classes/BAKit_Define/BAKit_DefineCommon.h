@@ -64,12 +64,6 @@
 #import "NSString+BATrims.h"
 
 
-#ifndef __OPTIMIZE__
-#define NSLog(...) NSLog(__VA_ARGS__)
-#else
-#define NSLog(...){}
-#endif
-
 #pragma mark - weak / strong
     #define BAKit_WeakSelf        @BAKit_Weakify(self);
     #define BAKit_StrongSelf      @BAKit_Strongify(self);
@@ -239,12 +233,9 @@ BAKit_getColumnCountWithArrayAndRowCount(NSArray *array, NSInteger rowCount){
     NSUInteger count = array.count;
     
     NSUInteger i = 0;
-    if (count % rowCount == 0)
-    {
+    if (count % rowCount == 0) {
         i = count / rowCount;
-    }
-    else
-    {
+    } else {
         i = count / rowCount + 1;
     }
     return i;
@@ -304,11 +295,19 @@ BAKit_stringIsBlank(NSString *string) {
  */
 #pragma mark - 判断 object 是否为空
 CG_INLINE BOOL
-BAKit_ObjectIsNull(id object) {
-    if (object == nil || [object isKindOfClass:[NSNull class]] || ([object respondsToSelector:@selector(length)] && [(NSData *)object length] == 0) || ([object respondsToSelector:@selector(count)] && [(NSArray *)object count] == 0))
-    {
+BAKit_IsNull(id object) {
+    if (!object || [object isSubclassOfClass:[NSNull class]]) {
         return YES;
     }
+    return NO;
+}
+
+CG_INLINE BOOL
+BAKit_ObjectIsEmpty(id object) {
+    if (BAKit_IsNull(object) || ([object respondsToSelector:@selector(length)] && [(NSData *)object length] == 0) || ([object respondsToSelector:@selector(count)] && [(NSArray *)object count] == 0)) {
+        return YES;
+    }
+
     return NO;
 }
 
@@ -344,14 +343,12 @@ BAKit_HexStrToRGBA(NSString *str, CGFloat *r, CGFloat *g, CGFloat *b, CGFloat *a
         *r = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(0, 1)]) / 255.0f;
         *g = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(1, 1)]) / 255.0f;
         *b = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(2, 1)]) / 255.0f;
-        if (length == 4)  *a = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(3, 1)]) / 255.0f;
-        else *a = 1;
+        if (length == 4)  *a = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(3, 1)]) / 255.0f; else *a = 1;
     } else {
         *r = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(0, 2)]) / 255.0f;
         *g = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(2, 2)]) / 255.0f;
         *b = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(4, 2)]) / 255.0f;
-        if (length == 8) *a = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(6, 2)]) / 255.0f;
-        else *a = 1;
+        if (length == 8) *a = BAKit_HexStrToInt([str substringWithRange:NSMakeRange(6, 2)]) / 255.0f; else *a = 1;
     }
     return YES;
 }
@@ -404,20 +401,41 @@ BAKit_GetDictionaryWithContentsOfFile(NSString *fileName, NSString *type){
  */
 CG_INLINE NSDictionary *
 BAKit_GetDictionaryWithJsonString(NSString *jsonString){
-    if (jsonString == nil)
-    {
+    if (jsonString == nil) {
         return nil;
     }
     
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError *err;
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-    if(err)
-    {
+    if(err) {
         NSLog(@"json 解析失败：%@",dict);
         return nil;
     }
     return dict;
+}
+
+/**
+ *根据数据条数与每页多少条数据计算页数
+ * totalnum 数据条数
+ * limit 每页多少条
+ * 搜索微信wu7zhi，每天知道一点点
+ */
+CG_INLINE NSInteger
+BAKit_GetCurrentPageCount(int totalnum, int limit){
+    return totalnum > 0 ? ((totalnum < limit) ? 1 : ((totalnum % limit) ? (ceil(totalnum / limit) + 1) : (totalnum / limit))) : 0;
+}
+
+
+CG_INLINE NSInteger
+BAKit_GetScrollViewCurrentPage(UIScrollView *scrollView) {
+    if (scrollView.frame.size.width == 0 || scrollView.frame.size.height == 0) {
+        return 0;
+    }
+    NSInteger index = 0;
+    index = roundf((scrollView.contentOffset.x) / scrollView.frame.size.width);
+
+    return MAX(0, index);
 }
 
 #endif /* BAKit_DefineCommon_h */

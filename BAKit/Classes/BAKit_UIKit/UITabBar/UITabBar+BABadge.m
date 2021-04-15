@@ -29,8 +29,7 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
  
  @param width TabBarItem 的 Width
  */
-- (void)ba_tabBarSetTabBarItemWidth:(CGFloat)width
-{
+- (void)ba_tabBarSetTabBarItemWidth:(CGFloat)width {
     [self setValue:@(width) forUndefinedKey:kTabBarItemWidthKey];
 }
 
@@ -39,8 +38,7 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
  
  @param top 顶部距离
  */
-- (void)ba_tabBarSetBadgeTop:(CGFloat)top
-{
+- (void)ba_tabBarSetBadgeTop:(CGFloat)top {
     [self setValue:@(top) forUndefinedKey:kBadgeTopKey];
 }
 
@@ -53,10 +51,8 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
  */
 - (void)ba_tabBarSetBadgeType:(BAKit_TabBarBadgeType)type
                    badgeValue:(NSInteger)badgeValue
-                        index:(NSInteger)index
-{
-    if (![[self valueForKey:kBadgeViewInitedKey] boolValue])
-    {
+                        index:(NSInteger)index {
+    if (![[self valueForKey:kBadgeViewInitedKey] boolValue]) {
         [self setValue:@(YES) forKey:kBadgeViewInitedKey];
         [self ba_addBadgeView];
     }
@@ -69,21 +65,16 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
     [badgeNumberViewArray[index] setHidden:YES];
     [badgeNewViewArray[index] setHidden:YES];
 
-    if (type == BAKit_TabBarBadgeTypeRedDot)
-    {
+    if (type == BAKit_TabBarBadgeTypeRedDot) {
         [badgeDotViewArray[index] setHidden:NO];
-    }
-    else if (type == BAKit_TabBarBadgeTypeNew)
-    {
+    } else if (type == BAKit_TabBarBadgeTypeNew) {
         [badgeNewViewArray[index] setHidden:NO];
         UILabel *label = badgeNewViewArray[index];
         label.text = @"new";
         label.font = BAKit_Font_systemFontOfSize_12;
         label.textColor = BAKit_Color_White;
         [label sizeToFit];
-    }
-    else if (type == BAKit_TabBarBadgeTypeNumber)
-    {
+    } else if (type == BAKit_TabBarBadgeTypeNumber) {
         [badgeNumberViewArray[index] setHidden:NO];
         UILabel *label = badgeNumberViewArray[index];
         
@@ -91,8 +82,7 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
     }
 }
 
-- (void)ba_tabBarBadgeViewClearWithIndndex:(NSInteger)index
-{
+- (void)ba_tabBarBadgeViewClearWithIndndex:(NSInteger)index {
     NSMutableArray *badgeDotViewArray = [self valueForKey:kBadgeDotViewsKey];
     NSMutableArray *badgeNumberViewArray = [self valueForKey:kBadgeNumberViewsKey];
     NSMutableArray *badgeNewViewArray = [self valueForKey:kBadgeNewViewsKey];
@@ -102,8 +92,7 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
     [badgeNewViewArray[index] setHidden:YES];
 }
 
-- (void)ba_addBadgeView
-{
+- (void)ba_addBadgeView {
     id idItemWidth = [self valueForKey:kTabBarItemWidthKey];
     id idBadgeTop = [self valueForKey:kBadgeTopKey];
 
@@ -115,8 +104,7 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
     
     // dot views
     NSMutableArray *badgeDotViews = [NSMutableArray new];
-    for(int i = 0;i < itemCount;i ++)
-    {
+    for(int i = 0;i < itemCount;i ++) {
         UIView *redDot = [UIView new];
         redDot.bounds = CGRectMake(0, 0, 10, 10);
         redDot.center = CGPointMake(itemWidth * (i + 0.5) + tabbarItemWidth / 2, badgeTop);
@@ -152,8 +140,7 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
 }
 
 - (void)ba_adjustBadgeNumberViewWithLabel:(UILabel *)label
-                                   number:(NSInteger)number
-{
+                                   number:(NSInteger)number {
     [label setText:(number > 99 ? @"..." : @(number).stringValue)];
     if(number < 10){
         label.bounds = CGRectMake(0, 0, 14, 14);
@@ -164,13 +151,11 @@ static NSString * const kBadgeTopKey = @"kBadgeTopKey";
     }
 }
 
-- (id)valueForUndefinedKey:(NSString *)key
-{
+- (id)valueForUndefinedKey:(NSString *)key {
     return objc_getAssociatedObject(self, (__bridge const void *)(key));
 }
 
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     objc_setAssociatedObject(self, (__bridge const void *)(key), value, OBJC_ASSOCIATION_COPY);
 }
 

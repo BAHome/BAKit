@@ -29,8 +29,7 @@
     [self setupUI];
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     self.title = @"BAPickView-OC";
     self.tableView.hidden = NO;
 }
@@ -44,23 +43,19 @@
 
 
 #pragma mark - UITableViewDataSource / UITableViewDelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataArray.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.dataArray[section] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
-    if ( !cell )
-    {
+    if ( !cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.textLabel.numberOfLines = 0;
         cell.accessoryType = (indexPath.section == 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
@@ -70,12 +65,10 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ( 0 == indexPath.section )
-    {
+    if ( 0 == indexPath.section ) {
         switch ( indexPath.row ) {
             case 0:
             {
@@ -106,9 +99,7 @@
             default:
                 break;
         }
-    }
-    else if (1 == indexPath.section)
-    {
+    } else if (1 == indexPath.section) {
         NSInteger type = 0;
         switch (indexPath.row) {
             case 0:
@@ -190,8 +181,7 @@
     }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [UIView new];
     
     UILabel *headerTitle = [UILabel new];
@@ -202,18 +192,15 @@
     
     headerTitle.frame = CGRectMake(20, 0, BAKit_SCREEN_WIDTH - 40, 40);
     switch (section) {
-        case 0:
-        {
+        case 0: {
             headerTitle.text = @"BAPickView 的几种日常用法！";
         }
             break;
-        case 1:
-        {
+        case 1: {
             headerTitle.text = @"自定义 DatePicker";
         }
             break;
-        case 2:
-        {
+        case 2: {
             headerTitle.text = @"BAPickView 的特点！";
         }
             break;
@@ -225,20 +212,17 @@
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return FLT_MIN;
 }
 
 #pragma mark - custom method
 
-- (void)pickView1
-{
+- (void)pickView1 {
     BAKit_WeakSelf
     [BAKit_PickerView ba_creatCityPickerViewWithConfiguration:^(BAKit_PickerView *tempView) {
         BAKit_StrongSelf
@@ -269,8 +253,7 @@
     }];
 }
 
-- (void)pickView2
-{
+- (void)pickView2 {
     NSArray *array = @[@"男", @"女"];
     
     BAKit_WeakSelf
@@ -288,8 +271,7 @@
     }];
 }
 
-- (void)pickView3
-{
+- (void)pickView3 {
     BAKit_WeakSelf
     [BAKit_PickerView ba_creatPickerViewWithType:BAKit_PickerViewTypeDate configuration:^(BAKit_PickerView *tempView) {
         BAKit_StrongSelf
@@ -313,8 +295,7 @@
     }];
 }
 
-- (void)pickView4
-{
+- (void)pickView4 {
     BAKit_WeakSelf
     [BAKit_PickerView ba_creatPickerViewWithType:BAKit_PickerViewTypeDateYM configuration:^(BAKit_PickerView *tempView) {
         BAKit_StrongSelf
@@ -329,8 +310,7 @@
     }];
 }
 
-- (void)pickView5
-{
+- (void)pickView5 {
     BAKit_WeakSelf
     [BAKit_PickerView ba_creatPickerViewWithType:BAKit_PickerViewTypeDateWeek configuration:^(BAKit_PickerView *tempView) {
         
@@ -344,10 +324,8 @@
 
 #pragma mark - setter / getter
 
-- (UITableView *)tableView
-{
-    if (!_tableView)
-    {
+- (UITableView *)tableView {
+    if (!_tableView) {
         _tableView = [UITableView new];
         self.tableView.delegate = self;
         self.tableView.dataSource =  self;
@@ -360,10 +338,8 @@
     return _tableView;
 }
 
-- (NSArray *)dataArray
-{
-    if ( !_dataArray )
-    {
+- (NSArray *)dataArray {
+    if ( !_dataArray ) {
         _dataArray = [NSArray arrayWithObjects:@[@"1、城市选择器，返回省市县和经纬度",
                                                  @"2、普通数组自定义数据",
                                                  @"3、日期选择器：年月日，可以完全自定义 NSDateFormatter",

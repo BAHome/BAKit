@@ -16,8 +16,7 @@
  
  @param columnSpace 间距
  */
-- (void)ba_labelSetColumnSpace:(CGFloat)columnSpace
-{
+- (void)ba_labelSetColumnSpace:(CGFloat)columnSpace {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
     // 调整间距
     [attributedString addAttribute:(__bridge NSString *)kCTKernAttributeName value:@(columnSpace) range:NSMakeRange(0, [attributedString length])];
@@ -29,8 +28,7 @@
  
  @param rowSpace 间距
  */
-- (void)ba_labelSetRowSpace:(CGFloat)rowSpace
-{
+- (void)ba_labelSetRowSpace:(CGFloat)rowSpace {
     self.numberOfLines = 0;
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
     // 调整行距
@@ -56,8 +54,7 @@
                           text:(NSString *)text
                       textFont:(UIFont *)textFont
                      textColor:(UIColor *)textColor
-                 textAlignment:(NSTextAlignment)textAlignment
-{
+                 textAlignment:(NSTextAlignment)textAlignment {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.text = text;
     label.font = textFont;

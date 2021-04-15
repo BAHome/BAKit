@@ -9,16 +9,14 @@
 
 @implementation NSTextAttachment (BAKit)
 
-+ (NSTextAttachment *)ba_creatTextAttachmentWithIconImage:(UIImage *)iconImage
-{
++ (NSTextAttachment *)ba_creatTextAttachmentWithIconImage:(UIImage *)iconImage {
     UIFont *textFont = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
     
     return [self creatTextAttachmentWithTextFont:textFont iconImage:iconImage];
 }
 
 + (NSTextAttachment *)ba_creatTextAttachmentWithTextFont:(UIFont *)textFont
-                                               iconImage:(UIImage *)iconImage
-{
+                                               iconImage:(UIImage *)iconImage {
     NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
     [textAttachment setBounds:CGRectMake(0, roundf(textFont.capHeight - iconImage.size.height)/2.f, iconImage.size.width, iconImage.size.height)];
     [textAttachment setImage:iconImage];
@@ -28,8 +26,7 @@
 
 + (NSMutableAttributedString *)ba_creatTextAttachmentWithIconImage:(UIImage *)iconImage
                                                           textFont:(UIFont *)textFont
-                                                  attributedString:(NSMutableAttributedString *)attributedString
-{
+                                                  attributedString:(NSMutableAttributedString *)attributedString {
     NSTextAttachment *textAttachment = [self creatTextAttachmentWithTextFont:textFont iconImage:iconImage];
     NSAttributedString *attrStringWithImage = [NSAttributedString attributedStringWithAttachment:textAttachment];
     [attributedString appendAttributedString:attrStringWithImage];

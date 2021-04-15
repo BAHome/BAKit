@@ -13,6 +13,7 @@
 #define BAKit_FormatString_YMD       @"yyyy-MM-dd"
 #define BAKit_FormatString_YMDHM     @"yyyy-MM-dd HH:mm"
 #define BAKit_FormatString_YMDHMS    @"yyyy-MM-dd HH:mm:ss"
+#define BAKit_FormatString_YMDHMSS    @"yyyy-MM-dd HH:mm:ss SSS"
 #define BAKit_FormatString_YMDEHMS   @"yyyy-MM-dd, EEE, HH:mm:ss"
 #define BAKit_FormatString_YM        @"yyyy-MM"
 #define BAKit_FormatString_MDHM      @"MM-dd HH:mm"

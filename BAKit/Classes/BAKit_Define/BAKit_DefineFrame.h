@@ -57,39 +57,6 @@
 
 
 
-#define BAKit_BaseScreenWidth   320.0f
-#define BAKit_BaseScreenHeight  568.0f
-
-/*! 屏幕适配（5S 标准屏幕：320 * 568） */
-// iPhone 7 屏幕：375 * 667
-//376/320 =
-//667/568 =
-#define BAKit_ScaleXAndWidth    BAKit_SCREEN_WIDTH/BAKit_BaseScreenWidth
-#define BAKit_ScaleYAndHeight   BAKit_SCREEN_HEIGHT/BAKit_BaseScreenHeight
-
-#define BAKit_FrameScaleXAndWidth(x)    BAKit_ScaleXAndWidth * x
-#define BAKit_FrameScaleYAndHeight(y)   BAKit_ScaleYAndHeight * y
-
-/**
- *  Status bar height.
- */
-#define BAKit_StatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
-
-/**
- *  Navigation bar height.
- */
-//#define BAKit_NavigationBarHeight (BAKit_SCREEN_HEIGHT == 812.0 ? 44 : 0)
-#define BAKit_NavigationBarHeight 44
-
-/**
- *  Status bar & navigation bar height.
- */
-#define  BAKit_StatusBarAndNavigationBarHeight   (BAKit_StatusBarHeight + BAKit_NavigationBarHeight)
-
-/**
- *  Tabbar height.
- */
-#define BAKit_TabbarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height > 20 ? 83 : 49)
 
 /**
  *  iPhone4 or iPhone4s
@@ -113,6 +80,58 @@
 
 // 判断是否是iPhone X
 #define  iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define  iPhoneXR ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(828, 1792), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define  iPhoneXS ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define  iPhoneXS_MAX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define IsStraightBangs (iPhoneX || iPhoneXR || iPhoneXS || iPhoneXS_MAX)
+
+#define IsiPhone ([(NSString*)[UIDevice currentDevice].model hasPrefix:@"iPhone"])
+
+
+#define BAKit_BaseScreenWidth   375.f
+#define BAKit_BaseScreenHeight  667.f
+
+/*! 屏幕适配（5S 标准屏幕：320 * 568） */
+// iPhone 7 屏幕：375 * 667
+//376/320 =
+//667/568 =
+#define BAKit_ScaleXAndWidth    BAKit_SCREEN_WIDTH/BAKit_BaseScreenWidth
+#define BAKit_ScaleYAndHeight   BAKit_SCREEN_HEIGHT/BAKit_BaseScreenHeight
+
+#define BAKit_FrameScaleXAndWidth(x)    BAKit_ScaleXAndWidth * x
+#define BAKit_FrameScaleYAndHeight(y)   BAKit_ScaleYAndHeight * y
+
+// 高度根据自定义宽度适配
+#define kWBFrameScaleCustomWidth(width, x)  width * (x / WBBaseScreenWidth)
+// 高度根据屏幕宽度适配
+#define kWBFrameScaleScreenWidth(x)         WBScreenWidth * (x / WBBaseScreenWidth)
+
+
+/**
+ *  Status bar height.
+ */
+#define BAKit_StatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
+
+/**
+ *  Navigation bar height.
+ */
+//#define BAKit_NavigationBarHeight (BAKit_SCREEN_HEIGHT == 812.0 ? 44 : 0)
+#define BAKit_NavigationBarHeight (IsStraightBangs? 88: 44)
+
+/**
+ *  Status bar & navigation bar height.
+ */
+#define  BAKit_StatusBarAndNavigationBarHeight   (BAKit_StatusBarHeight + BAKit_NavigationBarHeight)
+
+/**
+ *  Tabbar height.
+ */
+#define BAKit_TabbarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height > 20 ? 83 : 49)
+
 
 #pragma mark - 根据文字内容和大小返回 size
 CG_INLINE CGSize
@@ -171,7 +190,14 @@ BAKit_LabelWidthWithTextAndFont(NSString *text, CGFloat height, UIFont *font){
     return frame.size.width;
 }
 
-
+#pragma mark - 根据 NSAttributedString 文字内容、高度和字体返回 宽度
+CG_INLINE CGFloat
+BAKit_LabelWidthWithNSAttributedTextAndFont(NSAttributedString *text, CGFloat height, UIFont *font){
+    CGSize size = CGSizeMake(MAXFLOAT, height);
+    CGRect frame = [text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+    
+    return frame.size.width;
+}
 
 #pragma mark - 方法-C对象、结构操作
 

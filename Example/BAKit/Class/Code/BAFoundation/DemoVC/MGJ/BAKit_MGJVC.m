@@ -22,8 +22,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     BAKit_WeakSelf
     self.nextButton.ba_buttonActionBlock = ^(UIButton * _Nonnull button) {
         BAKit_StrongSelf
@@ -56,10 +55,8 @@
 
 #pragma mark - setter, getter
 
-- (UITextField *)textField
-{
-    if (!_textField)
-    {
+- (UITextField *)textField {
+    if (!_textField) {
         _textField = [UITextField new];
         _textField.backgroundColor = BAKit_Color_Gray_10;
         
@@ -68,10 +65,8 @@
     return _textField;
 }
 
-- (UIButton *)nextButton
-{
-    if (!_nextButton)
-    {
+- (UIButton *)nextButton {
+    if (!_nextButton) {
         _nextButton = [UIButton ba_buttonWithFrame:CGRectZero title:@"跳转" backgroundColor:BAKit_Color_Blue_SkyBlue];
         
         [self.view addSubview:_nextButton];

@@ -63,18 +63,15 @@
 @implementation BAKit_RegularExpression
 
 #pragma mark - ***** 是否为电话号码【简单写法】
-+ (BOOL)ba_regularIsPhoneNumber:(NSString *)phoneNum
-{
++ (BOOL)ba_regularIsPhoneNumber:(NSString *)phoneNum {
     NSString *MOBILE = @"^1(3[0-9]|4[57]|5[0-35-9]|7[01235678]|8[0-9])\\d{8}$";
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
     return [regextestmobile evaluateWithObject:phoneNum];
 }
 
 #pragma mark - ***** 是否为电话号码【复杂写法】
-+ (BOOL)ba_regularIsMobileNumber:(NSString *)mobileNum
-{
-    if (mobileNum.length != 11)
-    {
++ (BOOL)ba_regularIsMobileNumber:(NSString *)mobileNum {
+    if (mobileNum.length != 11) {
         return NO;
     }
     /**
@@ -110,19 +107,15 @@
     if (([regextestmobile evaluateWithObject:mobileNum] == YES)
         || ([regextestcm evaluateWithObject:mobileNum] == YES)
         || ([regextestct evaluateWithObject:mobileNum] == YES)
-        || ([regextestcu evaluateWithObject:mobileNum] == YES))
-    {
+        || ([regextestcu evaluateWithObject:mobileNum] == YES)) {
         return YES;
-    }
-    else
-    {
+    } else {
         return NO;
     }
 }
 
 #pragma mark - ***** 判断是否是：移动手机号
-+ (BOOL)ba_regularIsChinaMobile:(NSString *)phoneNum
-{
++ (BOOL)ba_regularIsChinaMobile:(NSString *)phoneNum {
     /*!
      * 中国移动：China Mobile
      * 134,135,136,137,138,139,150,151,152,157,158,159,182,183,184,187,188,147,178,1705
@@ -133,8 +126,7 @@
 }
 
 #pragma mark - ***** 判断是否是：联通手机号
-+ (BOOL)ba_regularIsChinaUnicom:(NSString *)phoneNum
-{
++ (BOOL)ba_regularIsChinaUnicom:(NSString *)phoneNum {
     /*!
      * 中国联通：China Unicom
      * 130,131,132,155,156,185,186,145,176,1709
@@ -145,8 +137,7 @@
 }
 
 #pragma mark - ***** 判断是否是：电信手机号
-+ (BOOL)ba_regularIsChinaTelecom:(NSString *)phoneNum
-{
++ (BOOL)ba_regularIsChinaTelecom:(NSString *)phoneNum {
     /*!
      * 中国电信：China Telecom
      * 133,153,180,181,189,177,1700
@@ -157,14 +148,12 @@
 }
 
 #pragma mark - ***** 判断具体是哪个运营商的手机号
-+ (NSString *)ba_getPhoneNumType:(NSString *)phoneNum
-{
++ (NSString *)ba_getPhoneNumType:(NSString *)phoneNum {
     return [BAKit_RegularExpression ba_regularIsChinaMobile:phoneNum]? @"中国移动": ([BAKit_RegularExpression ba_regularIsChinaUnicom:phoneNum]? @"中国联通":([BAKit_RegularExpression ba_regularIsChinaTelecom:phoneNum]? @"中国电信": @"未知号码"));
 }
 
 #pragma mark - ***** 检测是否为邮箱
-+ (BOOL)ba_regularIsEmailQualified:(NSString *)emailStr
-{
++ (BOOL)ba_regularIsEmailQualified:(NSString *)emailStr {
     NSString *pattern = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
     NSArray *results = [regex matchesInString:emailStr options:0 range:NSMakeRange(0, emailStr.length)];
@@ -172,8 +161,7 @@
 }
 
 #pragma mark - ***** 检测用户输入密码是否以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
-+ (BOOL)ba_regularIsPasswordQualified:(NSString *)passwordStr
-{
++ (BOOL)ba_regularIsPasswordQualified:(NSString *)passwordStr {
     //    NSString *pattern = @"^[a-zA-Z]\\w.{5,17}$";
     //    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
     //    NSArray *results = [regex matchesInString:passwordStr options:0 range:NSMakeRange(0, passwordStr.length)];
@@ -195,19 +183,14 @@
 }
 
 #pragma mark - ***** 验证身份证号（15位或18位数字）【最全的身份证校验，带校验位】
-+ (BOOL)ba_regularIsIdCardNumberQualified:(NSString *)idCardNumberStr
-{
++ (BOOL)ba_regularIsIdCardNumberQualified:(NSString *)idCardNumberStr {
     idCardNumberStr = [idCardNumberStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSInteger length = 0;
-    if (!idCardNumberStr)
-    {
+    if (!idCardNumberStr) {
         return NO;
-    }
-    else
-    {
+    } else {
         length = idCardNumberStr.length;
-        if (length != 15 && length !=18)
-        {
+        if (length != 15 && length !=18) {
             return NO;
         }
     }
@@ -216,16 +199,13 @@
     
     NSString *valueStart2 = [idCardNumberStr substringToIndex:2];
     BOOL areaFlag = NO;
-    for (NSString *areaCode in areasArray)
-    {
-        if ([areaCode isEqualToString:valueStart2])
-        {
+    for (NSString *areaCode in areasArray) {
+        if ([areaCode isEqualToString:valueStart2]) {
             areaFlag =YES;
             break;
         }
     }
-    if (!areaFlag)
-    {
+    if (!areaFlag) {
         return NO;
     }
     
@@ -233,20 +213,16 @@
     NSUInteger numberofMatch;
     
     NSInteger year = 0;
-    switch (length)
-    {
+    switch (length) {
         case 15:
             year = [idCardNumberStr substringWithRange:NSMakeRange(6,2)].intValue +1900;
             
-            if (year % 4 ==0 || (year % 100 ==0 && year % 4 ==0))
-            {
+            if (year % 4 ==0 || (year % 100 ==0 && year % 4 ==0)) {
                 /*! 测试出生日期的合法性 */
                 regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}$"
                                                                          options:NSRegularExpressionCaseInsensitive
                                                                            error:nil];
-            }
-            else
-            {
+            } else {
                 /*! 测试出生日期的合法性 */
                 regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}$"
                                                                          options:NSRegularExpressionCaseInsensitive
@@ -256,27 +232,21 @@
                                                                options:NSMatchingReportProgress
                                                                  range:NSMakeRange(0, idCardNumberStr.length)];
             
-            if(numberofMatch > 0)
-            {
+            if(numberofMatch > 0) {
                 return YES;
-            }
-            else
-            {
+            } else {
                 return NO;
             }
             break;
         case 18:
             
             year = [idCardNumberStr substringWithRange:NSMakeRange(6,4)].intValue;
-            if (year % 4 ==0 || (year % 100 ==0 && year % 4 ==0))
-            {
+            if (year % 4 ==0 || (year % 100 ==0 && year % 4 ==0)) {
                 /*! 测试出生日期的合法性 */
                 regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}[0-9Xx]$"
                                                                          options:NSRegularExpressionCaseInsensitive
                                                                            error:nil];
-            }
-            else
-            {
+            } else {
                 /*! 测试出生日期的合法性 */
                 regularExpression = [[NSRegularExpression alloc] initWithPattern:@"^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}[0-9Xx]$"
                                                                          options:NSRegularExpressionCaseInsensitive
@@ -286,27 +256,21 @@
                                                                options:NSMatchingReportProgress
                                                                  range:NSMakeRange(0, idCardNumberStr.length)];
             
-            if(numberofMatch > 0)
-            {
+            if(numberofMatch > 0) {
                 NSInteger S = ([idCardNumberStr substringWithRange:NSMakeRange(0,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(10,1)].intValue) *7 + ([idCardNumberStr substringWithRange:NSMakeRange(1,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(11,1)].intValue) *9 + ([idCardNumberStr substringWithRange:NSMakeRange(2,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(12,1)].intValue) *10 + ([idCardNumberStr substringWithRange:NSMakeRange(3,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(13,1)].intValue) *5 + ([idCardNumberStr substringWithRange:NSMakeRange(4,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(14,1)].intValue) *8 + ([idCardNumberStr substringWithRange:NSMakeRange(5,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(15,1)].intValue) *4 + ([idCardNumberStr substringWithRange:NSMakeRange(6,1)].intValue + [idCardNumberStr substringWithRange:NSMakeRange(16,1)].intValue) *2 + [idCardNumberStr substringWithRange:NSMakeRange(7,1)].intValue *1 + [idCardNumberStr substringWithRange:NSMakeRange(8,1)].intValue *6 + [idCardNumberStr substringWithRange:NSMakeRange(9,1)].intValue *3;
                 NSInteger Y = S % 11;
                 NSString *M = @"F";
                 NSString *JYM = @"10X98765432";
                 /*! 判断校验位 */
                 M = [JYM substringWithRange:NSMakeRange(Y,1)];
-                if ([M isEqualToString:[idCardNumberStr substringWithRange:NSMakeRange(17,1)]])
-                {
+                if ([M isEqualToString:[idCardNumberStr substringWithRange:NSMakeRange(17,1)]]) {
                     /*! 检测ID的校验位 */
                     return YES;
-                }
-                else
-                {
+                } else {
                     return NO;
                 }
                 
-            }
-            else
-            {
+            } else {
                 return NO;
             }
             break;
@@ -317,8 +281,7 @@
 }
 
 #pragma mark - ***** 验证IP地址（15位或18位数字）
-+ (BOOL)ba_regularIsIPAddress:(NSString *)iPAddressStr
-{
++ (BOOL)ba_regularIsIPAddress:(NSString *)iPAddressStr {
     NSString *pattern = @"((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)";
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
     NSArray *results = [regex matchesInString:iPAddressStr options:0 range:NSMakeRange(0, iPAddressStr.length)];
@@ -326,8 +289,7 @@
 }
 
 #pragma mark - ***** 验证输入的是否全为数字
-+ (BOOL)ba_regularIsAllNumber:(NSString *)allNumberStr
-{
++ (BOOL)ba_regularIsAllNumber:(NSString *)allNumberStr {
     NSString *pattern = @"^[0-9]*$";
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
     NSArray *results = [regex matchesInString:allNumberStr options:0 range:NSMakeRange(0, allNumberStr.length)];
@@ -335,24 +297,21 @@
 }
 
 #pragma mark - 验证输入的是否全为 int 类型数字
-+ (BOOL)ba_regularIsPureInt:(NSString*)string
-{
++ (BOOL)ba_regularIsPureInt:(NSString*)string {
     NSScanner *scan = [NSScanner scannerWithString:string];
     int val;
     return[scan scanInt:&val] && [scan isAtEnd];
 }
 
 #pragma mark - 验证输入的是否全为 float 类型数字
-+ (BOOL)ba_regularIsPureFloat:(NSString*)string
-{
++ (BOOL)ba_regularIsPureFloat:(NSString*)string {
     NSScanner *scan = [NSScanner scannerWithString:string];
     float val;
     return[scan scanFloat:&val] && [scan isAtEnd];
 }
 
 #pragma mark - ***** 验证由26个英文字母组成的字符串
-+ (BOOL)ba_regularIsEnglishAlphabet:(NSString *)englishAlphabetStr
-{
++ (BOOL)ba_regularIsEnglishAlphabet:(NSString *)englishAlphabetStr {
     NSString *pattern = @"^[A-Za-z]+$";
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
     NSArray *results = [regex matchesInString:englishAlphabetStr options:0 range:NSMakeRange(0, englishAlphabetStr.length)];
@@ -360,8 +319,7 @@
 }
 
 #pragma mark - ***** 验证输入的是否是URL地址
-+ (BOOL)ba_regularIsUrl:(NSString *)urlStr
-{
++ (BOOL)ba_regularIsUrl:(NSString *)urlStr {
     //    NSString* verifyRules=@"^http://([\\w-]+\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
     //    NSPredicate *verifyRulesPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",verifyRules];
     //    return [verifyRulesPre evaluateWithObject:urlStr];
@@ -373,8 +331,7 @@
 }
 
 #pragma mark - ***** 验证输入的是否是中文
-+ (BOOL)ba_regularIsChinese:(NSString *)chineseStr
-{
++ (BOOL)ba_regularIsChinese:(NSString *)chineseStr {
     NSString *pattern = @"[\u4e00-\u9fa5]+";
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
     NSArray *results = [regex matchesInString:chineseStr options:0 range:NSMakeRange(0, chineseStr.length)];
@@ -382,8 +339,7 @@
 }
 
 #pragma mark - ***** 验证输入的是否是高亮显示
-+ (BOOL)ba_regularIsNormalText:(NSString *)normalStr highLightText:(NSString *)highLightStr
-{
++ (BOOL)ba_regularIsNormalText:(NSString *)normalStr highLightText:(NSString *)highLightStr {
     NSString *pattern = [NSString stringWithFormat:@"%@",highLightStr];
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:0 error:nil];
     NSArray *results = [regex matchesInString:normalStr options:0 range:NSMakeRange(0, normalStr.length)];
@@ -394,16 +350,14 @@
 }
 
 #pragma mark - ***** 是否为常用用户名（根据自己需求改）
-+ (BOOL)ba_regularIsUserNameInGeneral:(NSString *)userNameStr
-{
++ (BOOL)ba_regularIsUserNameInGeneral:(NSString *)userNameStr {
     NSString* verifyRules = @"^[A-Za-z0-9]{8,20}+$";
     NSPredicate *verifyRulesPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",verifyRules];
     return [verifyRulesPre evaluateWithObject:userNameStr];
 }
 
 #pragma mark - ***** 车牌号验证
-+ (BOOL)ba_regularIsValidateCarNumber:(NSString *)carNumber
-{
++ (BOOL)ba_regularIsValidateCarNumber:(NSString *)carNumber {
     /*! 车牌号:湘K-DE829 香港车牌号码:粤Z-J499港 */
     NSString *carRegex = @"^[\u4e00-\u9fa5]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{4}[a-zA-Z_0-9_\u4e00-\u9fa5]$";
     /*! 其中\u4e00-\u9fa5表示unicode编码中汉字已编码部分，\u9fa5-\u9fff是保留部分，将来可能会添加 */
@@ -412,24 +366,21 @@
 }
 
 #pragma mark - ***** 车型验证
-+ (BOOL)ba_regularIsValidateCarType:(NSString *)CarType
-{
++ (BOOL)ba_regularIsValidateCarType:(NSString *)CarType {
     NSString *CarTypeRegex = @"^[\u4E00-\u9FFF]+$";
     NSPredicate *carTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",CarTypeRegex];
     return [carTest evaluateWithObject:CarType];
 }
 
 #pragma mark - ***** 昵称验证
-+ (BOOL)ba_regularIsValidateNickname:(NSString *)nickname
-{
++ (BOOL)ba_regularIsValidateNickname:(NSString *)nickname {
     NSString *nicknameRegex = @"^[\u4e00-\u9fa5]{4,8}$";
     NSPredicate *passWordPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",nicknameRegex];
     return [passWordPredicate evaluateWithObject:nickname];
 }
 
 #pragma mark - ***** 邮政编码验证
-+ (BOOL)ba_regularIsValidPostalcode:(NSString *)postalcode
-{
++ (BOOL)ba_regularIsValidPostalcode:(NSString *)postalcode {
     NSString *postalRegex = @"^[0-8]\\d{5}(?!\\d)$";
     NSPredicate *postalcodePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",postalRegex];
     
@@ -437,8 +388,7 @@
 }
 
 #pragma mark - ***** 工商税号验证
-+ (BOOL)ba_regularIsValidTaxNo:(NSString *)taxNo
-{
++ (BOOL)ba_regularIsValidTaxNo:(NSString *)taxNo {
     NSString *taxNoRegex = @"[0-9]\\d{13}([0-9]|X)$";
     NSPredicate *taxNoPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",taxNoRegex];
     
@@ -446,8 +396,7 @@
 }
 
 #pragma mark - ***** Mac地址有效性验证
-+ (BOOL)ba_regularIsMacAddress:(NSString *)macAddress
-{
++ (BOOL)ba_regularIsMacAddress:(NSString *)macAddress {
     NSString *macAddRegex = @"([A-Fa-f\\d]{2}:){5}[A-Fa-f\\d]{2}";
     NSPredicate *macAddressPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",macAddRegex];
     
@@ -463,21 +412,18 @@
  *  3，将加法和加上校验位能被 10 整除。
  */
 #pragma mark - ***** 银行卡号有效性问题Luhn算法
-+ (BOOL)ba_regularIsBankCardlNumCheck:(NSString *)bankCardlNum
-{
++ (BOOL)ba_regularIsBankCardlNumCheck:(NSString *)bankCardlNum {
     NSString *lastNum = [[bankCardlNum substringFromIndex:(bankCardlNum.length-1)] copy];//取出最后一位
     NSString *forwardNum = [[bankCardlNum substringToIndex:(bankCardlNum.length -1)] copy];//前15或18位
     
     NSMutableArray * forwardArr = [[NSMutableArray alloc] initWithCapacity:0];
-    for (int i=0; i<forwardNum.length; i++)
-    {
+    for (int i=0; i<forwardNum.length; i++) {
         NSString * subStr = [forwardNum substringWithRange:NSMakeRange(i, 1)];
         [forwardArr addObject:subStr];
     }
     
     NSMutableArray * forwardDescArr = [[NSMutableArray alloc] initWithCapacity:0];
-    for (int i = (int)(forwardArr.count-1); i> -1; i--)
-    {//前15位或者前18位倒序存进数组
+    for (int i = (int)(forwardArr.count-1); i> -1; i--) {//前15位或者前18位倒序存进数组
         [forwardDescArr addObject:forwardArr[i]];
     }
     
@@ -485,21 +431,14 @@
     NSMutableArray * arrOddNum2 = [[NSMutableArray alloc] initWithCapacity:0];//奇数位*2的积 > 9
     NSMutableArray * arrEvenNum = [[NSMutableArray alloc] initWithCapacity:0];//偶数位数组
     
-    for (int i=0; i< forwardDescArr.count; i++)
-    {
+    for (int i=0; i< forwardDescArr.count; i++) {
         NSInteger num = [forwardDescArr[i] intValue];
-        if (i%2)
-        {//偶数位
+        if (i%2) {//偶数位
             [arrEvenNum addObject:[NSNumber numberWithInteger:num]];
-        }
-        else
-        {//奇数位
-            if (num * 2 < 9)
-            {
+        } else {//奇数位
+            if (num * 2 < 9) {
                 [arrOddNum addObject:[NSNumber numberWithInteger:num * 2]];
-            }
-            else
-            {
+            } else {
                 NSInteger decadeNum = (num * 2) / 10;
                 NSInteger unitNum = (num * 2) % 10;
                 [arrOddNum2 addObject:[NSNumber numberWithInteger:unitNum]];
@@ -531,16 +470,14 @@
 }
 
 #pragma mark - ***** 判断字符串是否是字母或数字
-+ (BOOL)ba_regularIsLetterOrNumberString:(NSString *)string
-{
++ (BOOL)ba_regularIsLetterOrNumberString:(NSString *)string {
     NSString *letterOrNumberRegex = @"[A-Z0-9a-z]+";
     NSPredicate *letterOrNumberTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", letterOrNumberRegex];
     return [letterOrNumberTest evaluateWithObject:string];
 }
 
 #pragma mark - ***** 判断字符串是否是小数点后两位
-+ (BOOL)ba_regularIsValidateMoney:(NSString *)money
-{
++ (BOOL)ba_regularIsValidateMoney:(NSString *)money {
     NSString *phoneRegex = @"^[0-9]+(\\.[0-9]{1,2})?$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
     return [phoneTest evaluateWithObject:money];

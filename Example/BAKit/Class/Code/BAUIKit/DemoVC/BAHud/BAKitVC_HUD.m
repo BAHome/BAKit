@@ -26,8 +26,7 @@ static NSString * const kTitle = @"加载中...";
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     [self ba_creatData];
     
     
@@ -110,15 +109,13 @@ static NSString * const kTitle = @"加载中...";
     
 }
 
-- (void)dismiss
-{
+- (void)dismiss {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self hud_dismiss];
     });
 }
 
-- (void)ba_creatData
-{
+- (void)ba_creatData {
     
     [self ba_addCellWithTitle:@"hud_showLoadingView"];
     [self ba_addCellWithTitle:@"hud_showLoadingViewOnView"];
@@ -132,13 +129,11 @@ static NSString * const kTitle = @"加载中...";
     
 }
 
-- (void)ba_addCellWithTitle:(NSString *)title
-{
+- (void)ba_addCellWithTitle:(NSString *)title {
     [self.titlesArray addObject:title];
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
     BAKit_UITableViewSetSeparator(self.tableView, BAKit_Color_Cyan, UIEdgeInsetsMake(0, 0, 0, 0));
@@ -146,28 +141,22 @@ static NSString * const kTitle = @"加载中...";
 }
 
 #pragma mark - setter, getter
-- (NSMutableArray *)titlesArray
-{
-    if (!_titlesArray)
-    {
+- (NSMutableArray *)titlesArray {
+    if (!_titlesArray) {
         _titlesArray = @[].mutableCopy;
     }
     return _titlesArray;
 }
 
-- (NSMutableArray *)classNamesArray
-{
-    if (!_classNamesArray)
-    {
+- (NSMutableArray *)classNamesArray {
+    if (!_classNamesArray) {
         _classNamesArray = @[].mutableCopy;
     }
     return _classNamesArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
@@ -175,8 +164,7 @@ static NSString * const kTitle = @"加载中...";
         //        NSArray *detailArray = @[@"图上文下1", @"两行文字2"];
         //        NSArray *imageArray = @[@"tabbar_contactsHL", @"tabbar_contactsHL"];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

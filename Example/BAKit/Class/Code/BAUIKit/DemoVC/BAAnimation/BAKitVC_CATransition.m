@@ -22,8 +22,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)ba_base_setupUI
-{
+- (void)ba_base_setupUI {
     self.dataArray = [self.mutableDataArray mutableCopy];
     [self ba_changeBackgroundImageWithImageName:@"test6"];
 
@@ -39,16 +38,13 @@
     };
 }
 
-- (void)ba_changeBackgroundImageWithImageName:(NSString *)imageName
-{
+- (void)ba_changeBackgroundImageWithImageName:(NSString *)imageName {
     BAKit_UITableViewSetBackgroundImage(self.tableView, BAKit_ImageName(imageName));
 }
 
 #pragma mark - setter getter
-- (NSArray *)titleArray
-{
-    if (!_titleArray)
-    {
+- (NSArray *)titleArray {
+    if (!_titleArray) {
         _titleArray = @[@"淡化效果",
                          @"Push效果",
                          @"揭开效果",
@@ -69,16 +65,13 @@
     return _titleArray;
 }
 
-- (NSMutableArray *)mutableDataArray
-{
-    if (!_mutableDataArray)
-    {
+- (NSMutableArray *)mutableDataArray {
+    if (!_mutableDataArray) {
         _mutableDataArray = @[].mutableCopy;
         
         NSArray *sectionTitleArray = @[@""];
         
-        for (NSInteger i = 0; i < sectionTitleArray.count; i ++)
-        {
+        for (NSInteger i = 0; i < sectionTitleArray.count; i ++) {
             BABaseListViewSectionModel *sectionModel = [BABaseListViewSectionModel new];
             sectionModel.sectionTitle = sectionTitleArray[i];
             

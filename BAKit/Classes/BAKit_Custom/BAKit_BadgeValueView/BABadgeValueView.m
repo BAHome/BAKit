@@ -17,17 +17,14 @@
 
 @implementation BABadgeValueView
 
-- (instancetype)init
-{
-    if (self = [super init])
-    {
+- (instancetype)init {
+    if (self = [super init]) {
         [self setupUI];
     }
     return self;
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     self.ba_badgeViewSensitiveWidth     = 10;
     self.ba_badgeViewFixedHeight        = 20;
     self.ba_badgeViewSensitiveTextWidth = 4;
@@ -37,8 +34,7 @@
     self.ba_badgeViewBackgroundColor    = [UIColor redColor];
 }
 
-- (void)ba_badgeViewMakeEffect
-{
+- (void)ba_badgeViewMakeEffect {
     // 标签
     self.label               = [[UILabel alloc] init];
     self.label.textColor     = self.ba_badgeViewTextColor;
@@ -56,25 +52,20 @@
     [_ba_badgeViewContentView addSubview:self];
 }
 
-- (void)ba_badgeViewSetBadgeValue:(NSString *)badgeValue animated:(BOOL)animated
-{
+- (void)ba_badgeViewSetBadgeValue:(NSString *)badgeValue animated:(BOOL)animated {
     _ba_badgeViewBadgeValue = badgeValue;
     
     // 是否执行动画
-    if (animated)
-    {
+    if (animated) {
         [UIView animateWithDuration:0.15f animations:^{
             self.alpha = badgeValue.length == 0 ? 0 : 1;
         }];
-    }
-    else
-    {
+    } else {
         self.alpha = badgeValue.length == 0 ? 0 : 1;
     }
     
     // 如果值为空，则不执行后续操作
-    if (badgeValue.length <= 0)
-    {
+    if (badgeValue.length <= 0) {
         return;
     }
     
@@ -83,12 +74,9 @@
     [self.label sizeToFit];
     
     // 更新尺寸
-    if (self.label.width + self.ba_badgeViewSensitiveTextWidth > self.width)
-    {
+    if (self.label.width + self.ba_badgeViewSensitiveTextWidth > self.width) {
         self.width += self.ba_badgeViewSensitiveWidth;
-    }
-    else
-    {
+    } else {
         self.width = self.ba_badgeViewFixedHeight;
     }
     
